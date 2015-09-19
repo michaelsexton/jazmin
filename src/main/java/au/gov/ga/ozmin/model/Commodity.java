@@ -1,0 +1,116 @@
+package au.gov.ga.ozmin.model;
+
+import javax.persistence.*;
+
+
+@Entity
+@Table(name="COMMODTYPES")
+public class Commodity  {
+
+    @Id
+    @Column(name="commodid")
+    private String id;
+
+    @Column(name="commodname")
+    private String name;
+
+    @Column(name = "convertedcommod")
+    private String convertedCommodity;
+
+    @Column(name = "conversionfactor")
+    private double conversionFactor;
+
+    @ManyToOne
+    @JoinColumn(name = "displayunit")
+    private Unit mineralUnit;
+
+    @ManyToOne
+    @JoinColumn(name = "oreunit")
+    private Unit oreUnit;
+
+    @ManyToOne
+    @JoinColumn(name = "gradeunit")
+    private Unit gradeUnit;
+
+    @ManyToOne
+    @JoinColumn(name = "priceunit")
+    private Unit priceUnit;
+    
+    protected Commodity() {}
+    
+    public Commodity(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+
+        return name;
+    }
+
+    public void setName(String name) {
+
+        this.name = name;
+    }
+
+    public String getConvertedCommodity() {
+        return convertedCommodity;
+    }
+
+    public void setConvertedCommodity(String convertedCommodity) {
+        this.convertedCommodity = convertedCommodity;
+    }
+
+    public double getConversionFactor() {
+        return conversionFactor;
+    }
+
+    public void setConversionFactor(double conversionFactor) {
+        this.conversionFactor = conversionFactor;
+    }
+
+    public Unit getPriceUnit() {
+        return priceUnit;
+    }
+
+    public void setPriceUnit(Unit priceUnit) {
+        this.priceUnit = priceUnit;
+    }
+
+    public Unit getMineralUnit() {
+        return mineralUnit;
+    }
+
+    public void setMineralUnit(Unit mineralUnit) {
+        this.mineralUnit = mineralUnit;
+    }
+
+    public Unit getOreUnit() {
+        return oreUnit;
+    }
+
+    public void setOreUnit(Unit oreUnit) {
+        this.oreUnit = oreUnit;
+    }
+
+    public Unit getGradeUnit() {
+        return gradeUnit;
+    }
+
+    public void setGradeUnit(Unit gradeUnit) {
+        this.gradeUnit = gradeUnit;
+    }
+
+    @Override
+    public String toString(){
+        return "id="+id+", name="+name ;
+    }
+}
