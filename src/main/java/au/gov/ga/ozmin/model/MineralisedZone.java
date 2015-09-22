@@ -1,6 +1,8 @@
 package au.gov.ga.ozmin.model;
 
 
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -13,4 +15,30 @@ public class MineralisedZone extends SpatialEntity {
     @ManyToOne
     @JoinColumn(name = "PARENT")
     private MineralDeposit mineralDeposit;
+    
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralisedZone")
+    private List<MineralResource> mineralResources;
+
+
+	public MineralDeposit getMineralDeposit() {
+		return mineralDeposit;
+	}
+
+
+	public void setMineralDeposit(MineralDeposit mineralDeposit) {
+		this.mineralDeposit = mineralDeposit;
+	}
+
+
+	public List<MineralResource> getMineralResources() {
+		return mineralResources;
+	}
+
+
+	public void setMineralResources(List<MineralResource> mineralResources) {
+		this.mineralResources = mineralResources;
+	}
+    
+    
 }

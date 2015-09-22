@@ -30,9 +30,21 @@
             <td>${deposit.x}</td>
             <td>${deposit.y}</td>
             <td>${deposit.z}</td>
-
     </tr>
     </table>
+    
+</c:if>
+<c:if test="${!empty mineralisedZones}">
+	<c:forEach items="${mineralisedZones}" var="mineralisedZone">
+	<h2> ${mineralisedZone.name}</h2>
+	<c:if test="${!empty mineralisedZone.mineralResources}">
+	<table class="tg">
+		<c:forEach items="${mineralisedZone.mineralResources}" var="mineralResource">
+		<tr><td>${mineralResource.recordDate}</td></tr>
+		</c:forEach>
+	</table >
+	</c:if>
+	</c:forEach>
 </c:if>
 </body>
 </html>

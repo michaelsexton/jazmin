@@ -38,9 +38,9 @@
                 destroy-method="close">
         <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
         <beans:property name="url"
-                        value="jdbc:oracle:thin:@montgomery:1521:XE" />
-        <beans:property name="username" value="" />
-        <beans:property name="password" value="" />
+                        value="jdbc:oracle:thin:@dummy:dummy/dummy" />
+        <beans:property name="username" value="dummy" />
+        <beans:property name="password" value="dummy" />
     </beans:bean>
 
     <!-- Hibernate 4 SessionFactory Bean definition -->
@@ -53,6 +53,7 @@
                 <beans:value>au.gov.ga.ozmin.model.Unit</beans:value>
                 <beans:value>au.gov.ga.ozmin.model.MineralDeposit</beans:value>
                 <beans:value>au.gov.ga.ozmin.model.MineralisedZone</beans:value>
+                <beans:value>au.gov.ga.ozmin.model.MineralResource</beans:value>
                 <beans:value>au.gov.ga.ozmin.model.MineralProject</beans:value>
                 <beans:value>au.gov.ga.ozmin.model.SpatialEntity</beans:value>
             </beans:list>
@@ -83,44 +84,8 @@
     </beans:bean>
 
 
-    <!--
-    <beans:bean id="hibernate4AnnotatedSessionFactory"
-                class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <beans:property name="dataSource" ref="dataSource" />
-        <beans:property name="annotatedClasses">
-            <beans:list>
-                <beans:value>au.gov.ga.ozmin.model.Commodity</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.Unit</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.MineralDepositDeposit</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.MineralisedZone</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.MineralProject</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.SpatialEntity</beans:value>
-            </beans:list>
-        </beans:property>
-        <beans:property name="hibernateProperties">
-            <beans:props>
-                <beans:prop key="hibernate.dialect">org.hibernate.spatial.dialect.oracle.OracleSpatial10gDialect</beans:prop>
-                <beans:prop key="hibernate.spatial.connection_finder">org.hibernate.spatial.dialect.oracle.DefaultConnectionFinder</beans:prop>
-                <beans:prop key="hibernate.show_sql">true</beans:prop>
-            </beans:props>
-        </beans:property>
-    </beans:bean>-->
-
-
     <beans:bean id="commodityService" class="au.gov.ga.ozmin.service.impl.CommodityServiceImpl"/>
     <beans:bean id="mineralDepositService" class="au.gov.ga.ozmin.service.impl.MineralDepositServiceImpl"/>
-    <!--<beans:bean id="commodityDAO" class="au.gov.ga.ozmin.dao.hibernate.CommodityDAOImpl">-->
-        <!--<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />-->
-    <!--</beans:bean>-->
-    <!--<beans:bean id="commodityService" class="au.gov.ga.ozmin.service.impl.CommodityServiceImpl">-->
-        <!--<beans:property name="commodityDAO" ref="commodityDAO" />-->
-    <!--</beans:bean>-->
-    <!--<beans:bean id="depositDAO" class="au.gov.ga.ozmin.dao.hibernate.DepositDAOImpl">-->
-        <!--<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />-->
-    <!--</beans:bean>-->
-    <!--<beans:bean id="depositService" class="au.gov.ga.ozmin.service.impl.MineralDepositServiceImpliceImpl">-->
-        <!--<beans:property name="depositDAO" ref="depositDAO" />-->
-    <!--</beans:bean>-->
 
 
     <tx:annotation-driven transaction-manager="transactionManager"/>

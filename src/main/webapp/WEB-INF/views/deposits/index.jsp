@@ -25,11 +25,12 @@
     <c:forEach items="${listDeposits.content}" var="deposit">
         <tr>
             <td>${deposit.id}</td>
-            <td>${deposit.name}</td>
+            <td><a href="<c:url value='/deposits/${deposit.id}' />">${deposit.name}</a></td>
             <td>${deposit.x}</td>
             <td>${deposit.y}</td>
-            <td>${deposit.z}</td>
             <td>${deposit.mineralProject.name}</td>
+            <td>${deposit.operatingStatus}</td>
+             <td>${deposit.state}</td>
         </tr>
     </c:forEach>
     </table>

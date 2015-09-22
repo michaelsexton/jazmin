@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="COMMODTYPES")
+@Table(schema="MGD",name="COMMODTYPES")
 public class Commodity  {
 
     @Id

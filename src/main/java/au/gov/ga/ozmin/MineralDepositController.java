@@ -2,9 +2,9 @@ package au.gov.ga.ozmin;
 
 import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.service.MineralDepositService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Optional;
 
 /**
  * Created by michael on 10/09/2015.
@@ -29,14 +28,8 @@ public class MineralDepositController {
 
     //Index
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String listDeposits(Model model, @RequestParam("page") Optional<Integer> pageNumber ) {
-        int page;
-        if (pageNumber.isPresent()) {
-            page = pageNumber.get();
-        } else {
-            page=1;
-        }
-        Page<MineralDeposit> depositPage = mineralDepositService.listMineralDeposits(page);
+    public String listDeposits(Model model, @RequestParam(value="page", defaultValue="1") Integer pageNumber  ) {
+        Page<MineralDeposit> depositPage = mineralDepositService.listMineralDeposits(pageNumber);
 
         int current = depositPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);
@@ -55,7 +48,9 @@ public class MineralDepositController {
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String showDeposit(@PathVariable("id") Long id, Model model) {
-    model.addAttribute("deposit", this.mineralDepositService.getDepositById((id)));
+    	MineralDeposit mineralDeposit =  this.mineralDepositService.getDepositById(id);
+    	model.addAttribute("deposit", mineralDeposit);
+    	model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
     return "deposits/show";
 }
 }

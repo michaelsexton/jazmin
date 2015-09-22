@@ -4,7 +4,6 @@ import com.vividsolutions.jts.geom.Point;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 /**
  * Created by michael on 10/09/2015.
@@ -12,7 +11,7 @@ import java.util.Optional;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "ENTITY_TYPE", discriminatorType = DiscriminatorType.STRING )
-@Table(name="ENTITIES")
+@Table(schema="A",name="ENTITIES")
 public abstract class SpatialEntity {
 
     @Id

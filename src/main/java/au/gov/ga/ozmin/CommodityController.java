@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+
 
 /**
  * Created by michael on 9/09/2015.
@@ -30,14 +30,9 @@ public class CommodityController {
 
     // Index
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String listCommodities(Model model, @RequestParam("page") Optional<Integer> pageNumber ) {
-        int page;
-        if (pageNumber.isPresent()) {
-            page = pageNumber.get();
-        } else {
-            page=1;
-        }
-        Page<Commodity> commodityPage = commodityService.listCommodities(page);
+    public String listCommodities(Model model, @RequestParam(value="page", defaultValue="1") Integer pageNumber ) {
+
+        Page<Commodity> commodityPage = commodityService.listCommodities(pageNumber);
 
         int current = commodityPage.getNumber() + 1;
         int begin = Math.max(1, current - 5);

@@ -2,6 +2,7 @@ package au.gov.ga.ozmin.model;
 
 
 import javax.persistence.*;
+
 import java.util.List;
 
 /**
@@ -9,16 +10,31 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("MINERAL DEPOSIT")
+@SecondaryTable(schema="MGD",name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name="ENO"))
 public class MineralDeposit extends SpatialEntity {
 
     @ManyToOne
     @JoinColumn(name = "PARENT")
     private MineralProject mineralProject;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralDeposit")
     private List<MineralisedZone> mineralisedZones;
 
-    public MineralProject getMineralProject() {
+    @Column(name="OPERATING_STATUS",table="DEPOSITS")
+    private String operatingStatus;
+    
+    @Column(name="STATE",table="DEPOSITS")
+    private String state;
+    
+    public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public MineralProject getMineralProject() {
         return mineralProject;
     }
 
@@ -33,4 +49,12 @@ public class MineralDeposit extends SpatialEntity {
     public void setMineralisedZones(List<MineralisedZone> mineralisedZones) {
         this.mineralisedZones = mineralisedZones;
     }
+
+	public String getOperatingStatus() {
+		return operatingStatus;
+	}
+
+	public void setOperatingStatus(String operatingStatus) {
+		this.operatingStatus = operatingStatus;
+	}
 }
