@@ -1,33 +1,28 @@
 package au.gov.ga.ozmin.model;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema="MGD",name="RESOURCES")
-public class MineralResource {
+@Table(schema="MGD",name="RESOURCE_GRADES")
+public class ResourceGrade {
 
 	@Id
-	@Column(name="RESOURCENO") 
+	@Column(name="RESCOMMNO") 
 	private Long id;
 	
-	@Column(name="RECORDDATE")
-	private Date recordDate;
-
 	@ManyToOne
-	@JoinColumn(name = "UNIT_QUANTITY")
-	private Unit oreUnit;
-
+	@JoinColumn(name = "COMMODID")
+	private Commodity commodity;
+	
+	@ManyToOne
+	@JoinColumn(name = "UNIT_GRADE")
+	private Unit gradeUnit;
+	
 	@Column(name = "PVR")
 	private Double proven;
 
@@ -51,20 +46,33 @@ public class MineralResource {
 
 	@Column(name = "OTHER")
 	private Double other;
-
-	@ManyToOne
-	@JoinColumn(name = "ENO")
-	private MineralisedZone mineralisedZone;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralResource")
-    private List<ResourceGrade> resourceGrades;
 	
-	public List<ResourceGrade> getResourceGrades() {
-		return resourceGrades;
+	@ManyToOne
+	@JoinColumn(name = "RESOURCENO")
+	private MineralResource mineralResource;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setResourceGrades(List<ResourceGrade> resourceGrades) {
-		this.resourceGrades = resourceGrades;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Commodity getCommodity() {
+		return commodity;
+	}
+
+	public void setCommodity(Commodity commodity) {
+		this.commodity = commodity;
+	}
+
+	public Unit getGradeUnit() {
+		return gradeUnit;
+	}
+
+	public void setGradeUnit(Unit gradeUnit) {
+		this.gradeUnit = gradeUnit;
 	}
 
 	public Double getProven() {
@@ -131,35 +139,13 @@ public class MineralResource {
 		this.other = other;
 	}
 
-	public Unit getOreUnit() {
-		return oreUnit;
+	public MineralResource getMineralResource() {
+		return mineralResource;
 	}
 
-	public void setOreUnit(Unit oreUnit) {
-		this.oreUnit = oreUnit;
+	public void setMineralResource(MineralResource mineralResource) {
+		this.mineralResource = mineralResource;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Date getRecordDate() {
-		return recordDate;
-	}
-
-	public void setRecordDate(Date recordDate) {
-		this.recordDate = recordDate;
-	}
-
-	public MineralisedZone getMineralisedZone() {
-		return mineralisedZone;
-	}
-
-	public void setMineralisedZone(MineralisedZone mineralisedZone) {
-		this.mineralisedZone = mineralisedZone;
-	}
+	
 }
