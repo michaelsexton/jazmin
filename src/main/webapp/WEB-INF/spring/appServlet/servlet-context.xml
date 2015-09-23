@@ -38,9 +38,9 @@
                 destroy-method="close">
         <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
         <beans:property name="url"
-                        value="jdbc:oracle:thin:@dummy:dummy/dummy" />
-        <beans:property name="username" value="dummy" />
-        <beans:property name="password" value="dummy" />
+                        value="jdbc:oracle:thin:@" />
+        <beans:property name="username" value="" />
+        <beans:property name="password" value="" />
     </beans:bean>
 
     <!-- Hibernate 4 SessionFactory Bean definition -->
@@ -54,7 +54,10 @@
                 <beans:value>au.gov.ga.ozmin.model.MineralDeposit</beans:value>
                 <beans:value>au.gov.ga.ozmin.model.MineralisedZone</beans:value>
                 <beans:value>au.gov.ga.ozmin.model.MineralResource</beans:value>
+                <beans:value>au.gov.ga.ozmin.model.ResourceGrade</beans:value>
                 <beans:value>au.gov.ga.ozmin.model.MineralProject</beans:value>
+                <beans:value>au.gov.ga.ozmin.model.Province</beans:value>
+                <beans:value>au.gov.ga.ozmin.model.Reference</beans:value>
                 <beans:value>au.gov.ga.ozmin.model.SpatialEntity</beans:value>
             </beans:list>
         </beans:property>

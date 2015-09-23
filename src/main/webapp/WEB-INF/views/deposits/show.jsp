@@ -62,9 +62,20 @@
 				<td>${deposit.y}</td>
 				<td>${deposit.mineralProject.name}</td>
 				<td>${deposit.operatingStatus}</td>
+				
 			</tr>
+			
 		</table>
-
+		<c:if test="${!empty provinces }">
+		<table>
+			<c:forEach items="${provinces }" var="province">
+			<tr>
+				<td>${province.name} </td>
+			</tr>
+			
+			</c:forEach>
+		</table>
+		</c:if>
 	</c:if>
 	<c:if test="${!empty mineralisedZones}">
 		<c:forEach items="${mineralisedZones}" var="mineralisedZone">

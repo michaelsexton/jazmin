@@ -1,6 +1,6 @@
 package au.gov.ga.ozmin.model;
 
-import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Geometry;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -25,11 +25,11 @@ public abstract class SpatialEntity {
 
     @Column(name = "GEOM",updatable = false)
     @Type(type="org.hibernate.spatial.GeometryType")
-    private Point geometry;
+    private Geometry geometry;
 
     @Column(name = "GEOM_ORIGINAL")
     @Type(type="org.hibernate.spatial.GeometryType")
-    private Point originalGeometry;
+    private Geometry originalGeometry;
 /*
     @ManyToOne
     @JoinColumn(name = "PARENT")
@@ -51,7 +51,7 @@ public abstract class SpatialEntity {
         this.name = name;
     }
 
-    public Point getGeometry() {
+    public Geometry getGeometry() {
         return geometry;
     }
 
@@ -80,11 +80,11 @@ public abstract class SpatialEntity {
     }
 
 
-    public Point getOriginalGeometry() {
+    public Geometry getOriginalGeometry() {
         return originalGeometry;
     }
 
-    public void setOriginalGeometry(Point originalGeometry) {
+    public void setOriginalGeometry(Geometry originalGeometry) {
         this.originalGeometry = originalGeometry;
     }
 

@@ -3,10 +3,10 @@ package au.gov.ga.ozmin.service.impl;
 
 
 import au.gov.ga.ozmin.model.MineralDeposit;
-
 import au.gov.ga.ozmin.repository.MineralDepositRepository;
 import au.gov.ga.ozmin.service.MineralDepositService;
 
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -38,8 +38,14 @@ public class MineralDepositServiceImpl implements MineralDepositService {
     @Override
     @Transactional
     public MineralDeposit getDepositById(Long id) {
-        return this.mineralDepositRepository.findOne(id);
+    	MineralDeposit mineralDeposit = this.mineralDepositRepository.findOne(id);
+    	Hibernate.initialize(mineralDeposit.getMineralisedZones());
+    	Hibernate.initialize(mineralDeposit.getProvinces());
+    	Hibernate.initialize(mineralDeposit.getCommodities());
+        return mineralDeposit;
     }
+    
+    
 
 //    @Override
 //    @Transactional

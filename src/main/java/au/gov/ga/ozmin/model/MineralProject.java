@@ -11,7 +11,7 @@ import java.util.List;
 @DiscriminatorValue("MINERAL PROJECT")
 public class MineralProject extends SpatialEntity {
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralProject")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralProject")
     private List<MineralDeposit> mineralDeposits;
 
     public List<MineralDeposit> getMineralDeposits() {

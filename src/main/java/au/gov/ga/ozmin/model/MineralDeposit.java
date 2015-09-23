@@ -17,7 +17,7 @@ public class MineralDeposit extends SpatialEntity {
     @JoinColumn(name = "PARENT")
     private MineralProject mineralProject;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralDeposit")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralDeposit")
     private List<MineralisedZone> mineralisedZones;
 
     @Column(name="OPERATING_STATUS",table="DEPOSITS")
@@ -25,6 +25,22 @@ public class MineralDeposit extends SpatialEntity {
     
     @Column(name="STATE",table="DEPOSITS")
     private String state;
+    
+    @ManyToMany
+    @JoinTable(schema="MGD",name="COMMODS",
+    	joinColumns={@JoinColumn(name="ENO",referencedColumnName="ENO")},
+    	inverseJoinColumns={@JoinColumn(name="COMMODID", referencedColumnName="COMMODID")})
+    private List<Commodity> commodities;
+    
+    @ManyToMany
+    @JoinTable(schema="PROVS",name="PROVDEPOS",
+    	joinColumns={@JoinColumn(name="DEPOSNO",referencedColumnName="ENO")},
+        inverseJoinColumns={@JoinColumn(name="ENO", referencedColumnName="ENO")})
+    private List<Province> provinces;
+    
+//    @ManyToMany
+//    @JoinTable(schema="MGD",name="REFLINKS")
+//    private List<Reference> references;
     
     public String getState() {
 		return state;
@@ -57,4 +73,22 @@ public class MineralDeposit extends SpatialEntity {
 	public void setOperatingStatus(String operatingStatus) {
 		this.operatingStatus = operatingStatus;
 	}
+
+	public List<Commodity> getCommodities() {
+		return commodities;
+	}
+
+	public void setCommodities(List<Commodity> commodities) {
+		this.commodities = commodities;
+	}
+
+	public List<Province> getProvinces() {
+		return provinces;
+	}
+
+	public void setProvinces(List<Province> provinces) {
+		this.provinces = provinces;
+	}
+	
+	
 }
