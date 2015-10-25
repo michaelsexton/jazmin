@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="templates/layout">
+  <head>
+    <title layout:fragment="title">Glib glob</title>
+    <script src="content-script.js"></script>
+  </head>
+  <body>
+  	<div layout:fragment="actionContent">
+  		<div id="map"></div>
+  	</div>
+    <div layout:fragment="sidebar">
+		<h2 th:text="${deposit.name}"></h2>
+		<table>
+			<tr>
+				<td>Synonyms:</td>
+				<td th:text="${deposit.synonyms}"></td>
+			</tr>
+			<tr>
+				<td>State:</td>
+				<td th:text="${deposit.state}"></td>
+			</tr>
+			<tr>
+				<td>Commodities:</td>
+				<td th:text="${deposit.orderedCommodities}"></td>
+			</tr>
+			<tr>
+				<td>Operating Status:</td>
+				<td th:text="${deposit.operatingStatus}"></td>
+			</tr>
+			<tr>
+				<td>Mineral Project:</td>
+				<td th:text="${deposit.mineralProject}"></td>
+			</tr>
+		</table>
+		<h3>Location</h3>
+		<table>
+			<tr>
+				<td>Longitude:</td>
+				<td th:text="${deposit.x}"></td>
+			</tr>
+			<tr>
+				<td>Latitude:</td>
+				<td th:text="${deposit.y}"></td>
+			</tr>
+			<tr>
+				<td>Height:</td>
+				<td th:text="${deposit.z}"></td>
+			</tr>
+		</table>
+	
+		<h3>Provinces</h3>
+		<h3>Mineralised Zones</h3>
+	</div>
+    
+  </body>
+</html>
