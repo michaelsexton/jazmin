@@ -17,7 +17,7 @@ public class MineralisedZone extends SpatialEntity {
     private MineralDeposit mineralDeposit;
     
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralisedZone")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralisedZone")
     private List<MineralResource> mineralResources;
 
 
