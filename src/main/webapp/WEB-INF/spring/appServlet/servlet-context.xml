@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:beans="http://www.springframework.org/schema/beans"
-             xmlns:context="http://www.springframework.org/schema/context"
-             xmlns:tx="http://www.springframework.org/schema/tx"
-             xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-             xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
@@ -20,47 +20,25 @@
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving
         up static resources in the ${webappRoot}/resources directory -->
-    <resources mapping="/resources/**" location="/resources/" />
+    <resources mapping="/css/**" location="/css/" />
 
     <jpa:repositories base-package="au.gov.ga.ozmin" />
     <context:component-scan base-package="au.gov.ga.ozmin" />
-    <!-- Resolves views selected for rendering by @Controllers to .jsp resources
-        in the /WEB-INF/views directory -->
-    <beans:bean
-            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <beans:property name="prefix" value="/WEB-INF/views/" />
-        <beans:property name="suffix" value=".jsp" />
-    </beans:bean>
-
 
 
     <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
                 destroy-method="close">
         <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
         <beans:property name="url"
-                        value="jdbc:oracle:thin:@" />
-        <beans:property name="username" value="" />
-        <beans:property name="password" value="" />
+                        value="jdbc:oracle:thin:@montgomery:1521/xe" />
+        <beans:property name="username" value="michael" />
+        <beans:property name="password" value="Ueyr7289" />
     </beans:bean>
 
     <!-- Hibernate 4 SessionFactory Bean definition -->
 
     <beans:bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <beans:property name="dataSource" ref="dataSource"/>
-        <beans:property name="annotatedClasses">
-            <beans:list>
-                <beans:value>au.gov.ga.ozmin.model.Commodity</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.Unit</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.MineralDeposit</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.MineralisedZone</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.MineralResource</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.ResourceGrade</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.MineralProject</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.Province</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.Reference</beans:value>
-                <beans:value>au.gov.ga.ozmin.model.SpatialEntity</beans:value>
-            </beans:list>
-        </beans:property>
         <beans:property name="hibernateProperties">
             <beans:props>
                 <beans:prop key="hibernate.dialect">org.hibernate.spatial.dialect.oracle.OracleSpatial10gDialect</beans:prop>
@@ -94,4 +72,29 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
 
+    <beans:bean id="templateResolver"
+    	class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+    	<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
+    	<beans:property name="suffix" value=".html"></beans:property>
+    	<beans:property name="templateMode" value="HTML5"></beans:property>
+    	<beans:property name="cacheable" value="false"></beans:property>
+    </beans:bean>
+    <beans:bean id="templateEngine"
+    	class="org.thymeleaf.spring4.SpringTemplateEngine">
+    	<beans:property name="templateResolver" ref="templateResolver"></beans:property>
+    	<beans:property name="additionalDialects">
+    		<beans:set>
+    			<beans:bean class="nz.net.ultraq.thymeleaf.LayoutDialect" />
+    		</beans:set>
+    	</beans:property>
+    </beans:bean>
+    <beans:bean
+    	class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+    	<beans:property name="templateEngine" ref="templateEngine"></beans:property>
+    	<beans:property name="order" value="1"></beans:property>
+
+
+    	<beans:property name="viewNames" value="**">
+    	</beans:property>
+    </beans:bean>
 </beans:beans>
