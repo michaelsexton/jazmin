@@ -26,7 +26,7 @@ public class MineralDepositCommodityOrder {
 	private MineralDepositCommodityOrderKey id = new MineralDepositCommodityOrderKey();
 	
 	@Column(name="COMMORDER")
-	private int commodityOrder;
+	private Integer commodityOrder;
 	
 	
 	public MineralDepositCommodityOrderKey getId() {
@@ -37,11 +37,11 @@ public class MineralDepositCommodityOrder {
 		this.id = id;
 	}
 
-	public int getCommodityOrder() {
+	public Integer getCommodityOrder() {
 		return commodityOrder;
 	}
 
-	public void setCommodityOrder(int commodityOrder) {
+	public void setCommodityOrder(Integer commodityOrder) {
 		this.commodityOrder = commodityOrder;
 	}
 	
