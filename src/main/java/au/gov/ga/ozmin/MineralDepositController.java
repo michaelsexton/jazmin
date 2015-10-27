@@ -51,7 +51,7 @@ public class MineralDepositController {
     	MineralDeposit mineralDeposit =  this.mineralDepositService.getDepositById(id);
     	model.addAttribute("deposit", mineralDeposit);
     	model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
-    	
+    	model.addAttribute("orders", mineralDeposit.getOrderedCommodities().values());
     	model.addAttribute("provinces", mineralDeposit.getProvinces());
     return "deposits/show";
 }
