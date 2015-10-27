@@ -116,10 +116,10 @@ public class MineralDeposit extends SpatialEntity {
 		this.synonyms = synonyms;
 	}
 	
-	public LinkedHashMap<Integer, Commodity> getOrderedCommodities() {
-		LinkedHashMap<Integer, Commodity> orderedCommodities = new LinkedHashMap<Integer, Commodity>();
+	public LinkedHashMap<Commodity, Integer> getOrderedCommodities() {
+		LinkedHashMap<Commodity, Integer> orderedCommodities = new LinkedHashMap<Commodity, Integer>();
 		for (MineralDepositCommodityOrder mdco : getMineralDepositCommodityOrder()) {
-			orderedCommodities.put(mdco.getCommodityOrder(), mdco.getCommodity());
+			orderedCommodities.put(mdco.getCommodity(), mdco.getCommodityOrder());
 		}
 		return orderedCommodities;
 	}
