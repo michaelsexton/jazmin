@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * Created by michael on 10/09/2015.
  */
@@ -13,6 +16,7 @@ import javax.persistence.*;
 public class MineralisedZone extends SpatialEntity {
 
     @ManyToOne
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "PARENT")
     private MineralDeposit mineralDeposit;
     
