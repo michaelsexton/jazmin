@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorator="templates/layout">
   <head>
-    <title layout:fragment="title">Glib glob</title>
+    <title layout:fragment="title">Deposit</title>
     <script src="content-script.js"></script>
   </head>
   <body>
@@ -26,11 +26,11 @@
 			</tr>
 			<tr>
 				<td>Operating Status:</td>
-				<td th:text="${deposit.operatingStatus}"></td>
+				<td th:text="${#strings.capitalizeWords(deposit.operatingStatus)}"></td>
 			</tr>
-			<tr>
+			<tr th:if="${deposit.mineralProject}">
 				<td>Mineral Project:</td>
-				<td th:text="${deposit.mineralProject}"></td>
+				<td th:text="${deposit.mineralProject.name}"></td>
 			</tr>
 		</table>
 		<h3>Location</h3>
@@ -43,7 +43,7 @@
 				<td>Latitude:</td>
 				<td th:text="${deposit.y}"></td>
 			</tr>
-			<tr>
+			<tr th:if="${deposit.z==null}">
 				<td>Height:</td>
 				<td th:text="${deposit.z}"></td>
 			</tr>
