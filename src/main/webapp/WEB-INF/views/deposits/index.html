@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="templates/layout">
+<head>
+<link th:href="@{/css/deposits.css}" rel="stylesheet" />
+<title>Deposits</title>
+</head>
+<body>
+	<div layout:fragment="actionContent">
+	<div class="deposit" th:each="deposit : ${listDeposits}">
+		<div class="coordinates" th:text="${deposit.x + ', '+ deposit.y}"></div>
+		<div class="eno" th:text="${deposit.id}"></div>
+		<div class="name" >
+		<a href="." th:href="@{'/deposits/'+${deposit.id}}" th:text="${deposit.name}"></a>
+		</div>
+		<div class="commodities"></div>
+	</div>
+
+</div>
+</body>
+</html>

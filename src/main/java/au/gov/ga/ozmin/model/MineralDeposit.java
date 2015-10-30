@@ -3,6 +3,7 @@ package au.gov.ga.ozmin.model;
 
 import javax.persistence.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -26,17 +27,34 @@ public class MineralDeposit extends SpatialEntity {
     @Column(name="STATE",table="DEPOSITS")
     private String state;
     
-    @ManyToMany
-    @JoinTable(schema="MGD",name="COMMODS",
-    	joinColumns={@JoinColumn(name="ENO",referencedColumnName="ENO")},
-    	inverseJoinColumns={@JoinColumn(name="COMMODID", referencedColumnName="COMMODID")})
-    private List<Commodity> commodities;
+    @Column(name="SYNONYMS",table="DEPOSITS")
+    private String synonyms;
     
-    @ManyToMany
+//    @ManyToMany
+//    @JoinTable(schema="MGD",name="COMMODS",
+//    	joinColumns={@JoinColumn(name="ENO",referencedColumnName="ENO")},
+//    	inverseJoinColumns={@JoinColumn(name="COMMODID", referencedColumnName="COMMODID")})
+//    private List<Commodity> commodities;
+    
+    
+    @OneToMany(mappedBy="id.mineralDeposit")
+    List<MineralDepositCommodityOrder> mineralDepositCommodityOrder;
+    
+    public List<MineralDepositCommodityOrder> getMineralDepositCommodityOrder() {
+		return mineralDepositCommodityOrder;
+	}
+
+	public void setMineralDepositCommodityOrder(List<MineralDepositCommodityOrder> mineralDepositCommodityOrder) {
+		this.mineralDepositCommodityOrder = mineralDepositCommodityOrder;
+	}
+
+	@ManyToMany
     @JoinTable(schema="PROVS",name="PROVDEPOS",
     	joinColumns={@JoinColumn(name="DEPOSNO",referencedColumnName="ENO")},
         inverseJoinColumns={@JoinColumn(name="ENO", referencedColumnName="ENO")})
     private List<Province> provinces;
+    
+    
     
 //    @ManyToMany
 //    @JoinTable(schema="MGD",name="REFLINKS")
@@ -74,13 +92,13 @@ public class MineralDeposit extends SpatialEntity {
 		this.operatingStatus = operatingStatus;
 	}
 
-	public List<Commodity> getCommodities() {
-		return commodities;
-	}
-
-	public void setCommodities(List<Commodity> commodities) {
-		this.commodities = commodities;
-	}
+//	public List<Commodity> getCommodities() {
+//		return commodities;
+//	}
+//
+//	public void setCommodities(List<Commodity> commodities) {
+//		this.commodities = commodities;
+//	}
 
 	public List<Province> getProvinces() {
 		return provinces;
@@ -89,6 +107,20 @@ public class MineralDeposit extends SpatialEntity {
 	public void setProvinces(List<Province> provinces) {
 		this.provinces = provinces;
 	}
+
+	public String getSynonyms() {
+		return synonyms;
+	}
+
+	public void setSynonyms(String synonyms) {
+		this.synonyms = synonyms;
+	}
 	
-	
+	public LinkedHashMap<Commodity, Integer> getOrderedCommodities() {
+		LinkedHashMap<Commodity, Integer> orderedCommodities = new LinkedHashMap<Commodity, Integer>();
+		for (MineralDepositCommodityOrder mdco : getMineralDepositCommodityOrder()) {
+			orderedCommodities.put(mdco.getCommodity(), mdco.getCommodityOrder());
+		}
+		return orderedCommodities;
+	}
 }

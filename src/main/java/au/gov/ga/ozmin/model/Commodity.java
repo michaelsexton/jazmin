@@ -1,5 +1,7 @@
 package au.gov.ga.ozmin.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -8,7 +10,7 @@ import javax.persistence.*;
 public class Commodity  {
 
     @Id
-    @Column(name="commodid")
+    @Column(name="COMMODID")
     private String id;
 
     @Column(name="commodname")
@@ -35,6 +37,9 @@ public class Commodity  {
     @ManyToOne
     @JoinColumn(name = "priceunit")
     private Unit priceUnit;
+    
+//    @OneToMany(mappedBy="id.commodity")
+//    List<MineralDepositCommodityOrder> mineralDepositCommodityOrder;
     
     protected Commodity() {}
     

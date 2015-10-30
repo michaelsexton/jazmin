@@ -40,8 +40,8 @@ public class MineralDepositServiceImpl implements MineralDepositService {
     public MineralDeposit getDepositById(Long id) {
     	MineralDeposit mineralDeposit = this.mineralDepositRepository.findOne(id);
     	Hibernate.initialize(mineralDeposit.getMineralisedZones());
-    	Hibernate.initialize(mineralDeposit.getProvinces());
-    	Hibernate.initialize(mineralDeposit.getCommodities());
+    	/*Hibernate.initialize(mineralDeposit.getProvinces());*/
+    	Hibernate.initialize(mineralDeposit.getOrderedCommodities());
         return mineralDeposit;
     }
     

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="templates/layout">
+<head>
+<title>Resources</title>
+<link th:href="@{/css/deposits.css}" rel="stylesheet" />
+</head>
+<body>
+	<div layout:fragment="actionContent">
+		<table>
+			<tr>
+				<th>RESOURCENO</th>
+				<th>Deposit</th>
+				<th>Zone</th>
+				<th>Entry Date</th>
+				<th>Record Date</th>
+			</tr>
+			<tr th:each="mineralResource : ${listMineralResources.page}">
+			<td><a href="."
+					th:href="@{'/resources/'+${mineralResource.id}}"
+					th:text="${mineralResource.id}"></a></td>
+
+				<td><a href="."
+					th:href="@{'/deposits/'+${mineralResource.mineralisedZone.mineralDeposit.id}}"
+					th:text="${mineralResource.mineralisedZone.mineralDeposit.name}"></a>
+				</td>
+				<td th:text="${mineralResource.mineralisedZone.name}">Resource
+					ID</td>
+				<td
+					th:text="${#dates.format(mineralResource.entryDate,'dd-MMM-yyyy')}">Resource
+					ID</td>
+				<td
+					th:text="${#dates.format(mineralResource.recordDate,'dd-MMM-yyyy')}">Resource
+					ID</td>
+			</tr>
+		</table>
+		<!-- Pagination Bar -->
+		<div>
+			<div class='pagination pagination-centered'>
+				<ul>
+					<li th:class="${listMineralResources.firstPage}? 'disabled' : ''"><span
+						th:if='${listMineralResources.firstPage}'>&larr; First</span> <a
+						th:if='${not listMineralResources.firstPage}'
+						th:href='@{${listMineralResources.url}(page=1,size=${listMineralResources.size})}'>&larr;
+							First</a></li>
+					<li
+						th:class="${listMineralResources.hasPreviousPage}? '' : 'disabled'"><span
+						th:if='${not listMineralResources.hasPreviousPage}'>«</span> <a
+						th:if='${listMineralResources.hasPreviousPage}'
+						th:href='@{${listMineralResources.url}(page=${listMineralResources.number-1},size=${listMineralResources.size})}'
+						title='Go to previous page'>«</a></li>
+					<li th:each="item : ${listMineralResources.items}"
+						th:class="${item.current}? 'active' : ''"><span
+						th:if='${item.current}' th:text='${item.number}'>1</span> <a
+						th:if='${not item.current}'
+						th:href='@{${listMineralResources.url}(page=${item.number},size=${listMineralResources.size})}'><span
+							th:text='${item.number}'>1</span></a></li>
+					<li th:class="${listMineralResources.hasNextPage}? '' : 'disabled'"><span
+						th:if='${not listMineralResources.hasNextPage}'>»</span> <a
+						th:if='${listMineralResources.hasNextPage}'
+						th:href='@{${listMineralResources.url}(page=${listMineralResources.number+1},size=${listMineralResources.size})}'
+						title='Go to next page'>»</a></li>
+					<li th:class="${listMineralResources.lastPage}? 'disabled' : ''"><span
+						th:if='${listMineralResources.lastPage}'>Last &rarr;</span> <a
+						th:if='${not listMineralResources.lastPage}'
+						th:href='@{${listMineralResources.url}(page=${listMineralResources.totalPages-1},size=${listMineralResources.size})}'>Last
+							&rarr;</a></li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

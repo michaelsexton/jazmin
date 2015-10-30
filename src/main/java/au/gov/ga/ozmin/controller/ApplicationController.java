@@ -1,4 +1,4 @@
-package au.gov.ga.ozmin;
+package au.gov.ga.ozmin.controller;
 
 //import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ public class ApplicationController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String listEntities(Model model,
 			@RequestParam(value = "page", defaultValue = "1") Integer pageNumber) {
-		return "home";
+		return "index";
 		// Page<Commodity> commodityPage =
 		// commodityService.listCommodities(pageNumber);
 		//
