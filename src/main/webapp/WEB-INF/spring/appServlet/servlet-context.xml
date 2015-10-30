@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -12,89 +10,106 @@
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <!-- DispatcherServlet Context: defines this servlet's request-processing
-        infrastructure -->
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
 
-    <!-- Enables the Spring MVC @Controller programming model -->
-    <annotation-driven />
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<ref bean="sortResolver" />
+			<ref bean="pageableResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 
-    <!-- Handles HTTP GET requests for /resources/** by efficiently serving
-        up static resources in the ${webappRoot}/resources directory -->
-    <resources mapping="/css/**" location="/css/" />
+	<bean id="sortResolver"
+		class="org.springframework.data.web.SortHandlerMethodArgumentResolver" />
+	<bean id="pageableResolver"
+		class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+		<constructor-arg ref="sortResolver" />
+	</bean>
 
-    <jpa:repositories base-package="au.gov.ga.ozmin" />
-    <context:component-scan base-package="au.gov.ga.ozmin" />
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/css/**" location="/css/" />
 
-
-    <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-                destroy-method="close">
-        <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-        <beans:property name="url"
-                        value="jdbc:oracle:thin:@montgomery:1521/xe" />
-        <beans:property name="username" value="michael" />
-        <beans:property name="password" value="Ueyr7289" />
-    </beans:bean>
-
-    <!-- Hibernate 4 SessionFactory Bean definition -->
-
-    <beans:bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <beans:property name="dataSource" ref="dataSource"/>
-        <beans:property name="hibernateProperties">
-            <beans:props>
-                <beans:prop key="hibernate.dialect">org.hibernate.spatial.dialect.oracle.OracleSpatial10gDialect</beans:prop>
-                <beans:prop key="hibernate.spatial.connection_finder">org.hibernate.spatial.dialect.oracle.DefaultConnectionFinder</beans:prop>
-                <beans:prop key="hibernate.show_sql">true</beans:prop>
-            </beans:props>
-        </beans:property>
-    </beans:bean>
-
-    <beans:bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <beans:property name="showSql" value="true"/>
-        <beans:property name="generateDdl" value="false"/>
-        <beans:property name="databasePlatform" value="org.hibernate.spatial.dialect.oracle.OracleSpatial10gDialect" />
-    </beans:bean>
-
-    <beans:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <beans:property name="dataSource" ref="dataSource"/>
-        <beans:property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-        <beans:property name="packagesToScan" value="au.gov.ga.ozmin"/>
-    </beans:bean>
-
-    <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-    </beans:bean>
+	<jpa:repositories base-package="au.gov.ga.ozmin" />
+	<context:component-scan base-package="au.gov.ga.ozmin.controller" />
 
 
-    <beans:bean id="commodityService" class="au.gov.ga.ozmin.service.impl.CommodityServiceImpl"/>
-    <beans:bean id="mineralDepositService" class="au.gov.ga.ozmin.service.impl.MineralDepositServiceImpl"/>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@montgomery:1521/xe" />
+		<property name="username" value="michael" />
+		<property name="password" value="Ueyr7289" />
+	</bean>
+
+	<!-- Hibernate 4 SessionFactory Bean definition -->
+
+	<bean id="hibernate4AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.spatial.dialect.oracle.OracleSpatial10gDialect
+				</prop>
+				<prop key="hibernate.spatial.connection_finder">org.hibernate.spatial.dialect.oracle.DefaultConnectionFinder
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="showSql" value="true" />
+		<property name="generateDdl" value="false" />
+		
+		<property name="databasePlatform"
+			value="org.hibernate.spatial.dialect.oracle.OracleSpatial10gDialect" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="packagesToScan" value="au.gov.ga.ozmin" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
 
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+	<bean id="commodityService" class="au.gov.ga.ozmin.service.impl.CommodityServiceImpl" />
+	<bean id="mineralDepositService" class="au.gov.ga.ozmin.service.impl.MineralDepositServiceImpl" />
+	<bean id="mineralResourceService" class="au.gov.ga.ozmin.service.impl.MineralResourceServiceImpl" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 
-    <beans:bean id="templateResolver"
-    	class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
-    	<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
-    	<beans:property name="suffix" value=".html"></beans:property>
-    	<beans:property name="templateMode" value="HTML5"></beans:property>
-    	<beans:property name="cacheable" value="false"></beans:property>
-    </beans:bean>
-    <beans:bean id="templateEngine"
-    	class="org.thymeleaf.spring4.SpringTemplateEngine">
-    	<beans:property name="templateResolver" ref="templateResolver"></beans:property>
-    	<beans:property name="additionalDialects">
-    		<beans:set>
-    			<beans:bean class="nz.net.ultraq.thymeleaf.LayoutDialect" />
-    		</beans:set>
-    	</beans:property>
-    </beans:bean>
-    <beans:bean
-    	class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
-    	<beans:property name="templateEngine" ref="templateEngine"></beans:property>
-    	<beans:property name="order" value="1"></beans:property>
+	<bean id="templateResolver"
+		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="prefix" value="/WEB-INF/views/"></property>
+		<property name="suffix" value=".html"></property>
+		<property name="templateMode" value="HTML5"></property>
+		<property name="cacheable" value="false"></property>
+	</bean>
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver"></property>
+		<property name="additionalDialects">
+			<set>
+				<bean class="nz.net.ultraq.thymeleaf.LayoutDialect" />
+			</set>
+		</property>
+	</bean>
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine"></property>
+		<property name="order" value="1"></property>
 
 
-    	<beans:property name="viewNames" value="**">
-    	</beans:property>
-    </beans:bean>
-</beans:beans>
+		<property name="viewNames" value="**">
+		</property>
+	</bean>
+</beans>
