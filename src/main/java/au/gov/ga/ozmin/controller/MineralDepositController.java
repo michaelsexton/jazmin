@@ -1,4 +1,4 @@
-package au.gov.ga.ozmin;
+package au.gov.ga.ozmin.controller;
 
 import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.service.MineralDepositService;
