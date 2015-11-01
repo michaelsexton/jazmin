@@ -3,25 +3,25 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="templates/layout">
 <head>
-<meta charset="UTF-8">
+
 <title>Insert title here</title>
 </head>
 <body>
-
-<table class="tg">
-    <tr>
-        <th width="80">Commodity ID</th>
-        <th width="120">Commodity Name</th>
-        <th width="120">&nbsp;</th>
-    </tr>
-    <tr th:each="commodity : ${listCommodities.content}">
-        <tr>
-            <td th:text=${commodity.id}></td>
-             <td th:text=${commodity.name}></td>
-            <td><a th:href="/commodities/${commodity.id}">Show</a></td>
-        </tr>
-
-    </table>
-
+	<div layout:fragment="actionContent">
+		<table class="tg">
+			<tr>
+				<th width="80">Commodity ID</th>
+				<th width="120">Commodity Name</th>
+				<th width="120">&nbsp;</th>
+			</tr>
+			<tr th:each="commodity : ${listCommodities.content}">
+	
+				<td th:text="${commodity.id}"></td>
+				<td th:text="${commodity.name}"></td>
+				<td><a th:href="@{'/commodities/'+${commodity.id}}">Show</a></td>
+			</tr>
+		</table>
+		
+	</div>
 </body>
 </html>
