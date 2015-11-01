@@ -5,7 +5,6 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -36,9 +35,7 @@ public class MineralResourceController {
 		Paginator<MineralResource> resourcesPage = new Paginator<MineralResource>(
 				mineralResourceService.listMineralResources(pageable), "/resources");
 
-		int current = resourcesPage.getNumber() + 1;
-		int begin = Math.max(1, current - 5);
-		int end = Math.min(begin + 10, resourcesPage.getTotalPages());
+
 
 		model.addAttribute("listMineralResources", resourcesPage);
 

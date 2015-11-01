@@ -1,6 +1,6 @@
 package au.gov.ga.ozmin.model;
 
-import java.util.List;
+
 
 import javax.persistence.*;
 
