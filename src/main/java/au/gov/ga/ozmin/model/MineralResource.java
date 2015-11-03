@@ -31,6 +31,10 @@ public class MineralResource {
 	@ManyToOne
 	@JoinColumn(name = "UNIT_QUANTITY")
 	private Unit oreUnit;
+	
+	// TODO: Make a boolean
+	@Column(name = "INCLUSIVE")
+	private String inclusive;
 
 	@Column(name = "PVR")
 	private Double proven;
@@ -58,8 +62,7 @@ public class MineralResource {
 
 	// CDM Admin fields
 
-	@Column(name = "ACCESS_CODE")
-	private String accessCode;
+	
 
 	@Column(name = "QA_STATUS_CODE")
 	private String qaStatus;
@@ -69,6 +72,9 @@ public class MineralResource {
 
 	@Column(name = "QADATE")
 	private Date qaDate;
+	
+	@Column(name = "ACCESS_CODE")
+	private String accessCode;
 
 	@Column(name = "ENTEREDBY")
 	private String enteredBy;
@@ -76,6 +82,16 @@ public class MineralResource {
 	@Column(name = "ENTRYDATE")
 	private Date entryDate;
 
+	
+	@Column(name = "LASTUPDATE")
+	private Date lastUpdate;
+	
+	@Column(name = "UPDATEDBY")
+	private String updatedBy;
+	
+	@Column(name = "ACTIVITY_CODE")
+	private String activityCode;
+	
 	// Related models
 	
 	@ManyToOne
@@ -83,127 +99,15 @@ public class MineralResource {
 	@JoinColumn(name = "ENO")
 	private MineralisedZone mineralisedZone;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralResource")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralResource")
 	private List<ResourceGrade> resourceGrades;
-
-	public List<ResourceGrade> getResourceGrades() {
-		return resourceGrades;
-	}
-
-	public void setResourceGrades(List<ResourceGrade> resourceGrades) {
-		this.resourceGrades = resourceGrades;
-	}
-
-	public Double getProven() {
-		return proven;
-	}
-
-	public void setProven(Double proven) {
-		this.proven = proven;
-	}
-
-	public Double getProbable() {
-		return probable;
-	}
-
-	public void setProbable(Double probable) {
-		this.probable = probable;
-	}
-
-	public Double getProvenAndProbable() {
-		return provenAndProbable;
-	}
-
-	public void setProvenAndProbable(Double provenAndProbable) {
-		this.provenAndProbable = provenAndProbable;
-	}
-
-	public Double getMeasured() {
-		return measured;
-	}
-
-	public void setMeasured(Double measured) {
-		this.measured = measured;
-	}
-
-	public Double getIndicated() {
-		return indicated;
-	}
-
-	public void setIndicated(Double indicated) {
-		this.indicated = indicated;
-	}
-
-	public Double getMeasuredAndIndicated() {
-		return measuredAndIndicated;
-	}
-
-	public void setMeasuredAndIndicated(Double measuredAndIndicated) {
-		this.measuredAndIndicated = measuredAndIndicated;
-	}
-
-	public Double getInferred() {
-		return inferred;
-	}
-
-	public void setInferred(Double inferred) {
-		this.inferred = inferred;
-	}
-
-	public Double getOther() {
-		return other;
-	}
-
-	public void setOther(Double other) {
-		this.other = other;
-	}
-
-	public Unit getOreUnit() {
-		return oreUnit;
-	}
-
-	public void setOreUnit(Unit oreUnit) {
-		this.oreUnit = oreUnit;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Date getRecordDate() {
-		return recordDate;
-	}
-
-	public void setRecordDate(Date recordDate) {
-		this.recordDate = recordDate;
-	}
-
-	public MineralisedZone getMineralisedZone() {
-		return mineralisedZone;
-	}
-
-	public void setMineralisedZone(MineralisedZone mineralisedZone) {
-		this.mineralisedZone = mineralisedZone;
-	}
 
 	public String getAccessCode() {
 		return accessCode;
 	}
 
-	public String getQaStatus() {
-		return qaStatus;
-	}
-
-	public String getQaBy() {
-		return qaBy;
-	}
-
-	public Date getQaDate() {
-		return qaDate;
+	public String getActivityCode() {
+		return activityCode;
 	}
 
 	public String getEnteredBy() {
@@ -214,20 +118,84 @@ public class MineralResource {
 		return entryDate;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public Double getIndicated() {
+		return indicated;
+	}
+
+	public Double getInferred() {
+		return inferred;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public Double getMeasured() {
+		return measured;
+	}
+
+	public Double getMeasuredAndIndicated() {
+		return measuredAndIndicated;
+	}
+
+	public MineralisedZone getMineralisedZone() {
+		return mineralisedZone;
+	}
+
+	public Unit getOreUnit() {
+		return oreUnit;
+	}
+
+	public Double getOther() {
+		return other;
+	}
+
+	public Double getProbable() {
+		return probable;
+	}
+
+	public Double getProven() {
+		return proven;
+	}
+
+	public Double getProvenAndProbable() {
+		return provenAndProbable;
+	}
+
+	public String getQaBy() {
+		return qaBy;
+	}
+
+	public Date getQaDate() {
+		return qaDate;
+	}
+
+	public String getQaStatus() {
+		return qaStatus;
+	}
+
+	public Date getRecordDate() {
+		return recordDate;
+	}
+
+	public List<ResourceGrade> getResourceGrades() {
+		return resourceGrades;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
 	public void setAccessCode(String accessCode) {
 		this.accessCode = accessCode;
 	}
 
-	public void setQaStatus(String qaStatus) {
-		this.qaStatus = qaStatus;
-	}
-
-	public void setQaBy(String qaBy) {
-		this.qaBy = qaBy;
-	}
-
-	public void setQaDate(Date qaDate) {
-		this.qaDate = qaDate;
+	public void setActivityCode(String activityCode) {
+		this.activityCode = activityCode;
 	}
 
 	public void setEnteredBy(String enteredBy) {
@@ -238,4 +206,78 @@ public class MineralResource {
 		this.entryDate = entryDate;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setIndicated(Double indicated) {
+		this.indicated = indicated;
+	}
+
+	public void setInferred(Double inferred) {
+		this.inferred = inferred;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public void setMeasured(Double measured) {
+		this.measured = measured;
+	}
+
+	public void setMeasuredAndIndicated(Double measuredAndIndicated) {
+		this.measuredAndIndicated = measuredAndIndicated;
+	}
+
+	public void setMineralisedZone(MineralisedZone mineralisedZone) {
+		this.mineralisedZone = mineralisedZone;
+	}
+
+	public void setOreUnit(Unit oreUnit) {
+		this.oreUnit = oreUnit;
+	}
+
+	public void setOther(Double other) {
+		this.other = other;
+	}
+
+	public void setProbable(Double probable) {
+		this.probable = probable;
+	}
+
+	public void setProven(Double proven) {
+		this.proven = proven;
+	}
+
+	public void setProvenAndProbable(Double provenAndProbable) {
+		this.provenAndProbable = provenAndProbable;
+	}
+
+	public void setQaBy(String qaBy) {
+		this.qaBy = qaBy;
+	}
+
+	public void setQaDate(Date qaDate) {
+		this.qaDate = qaDate;
+	}
+
+	public void setQaStatus(String qaStatus) {
+		this.qaStatus = qaStatus;
+	}
+
+	public void setRecordDate(Date recordDate) {
+		this.recordDate = recordDate;
+	}
+
+	public void setResourceGrades(List<ResourceGrade> resourceGrades) {
+		this.resourceGrades = resourceGrades;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	
+	
 }
