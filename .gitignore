@@ -5,3 +5,6 @@ target
 /ozmin.iml
 /.idea
 /bin/
+.DS_Store
+.springBeans
+*.properties
