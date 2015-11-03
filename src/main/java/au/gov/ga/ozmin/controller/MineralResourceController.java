@@ -10,10 +10,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.model.MineralResource;
 import au.gov.ga.ozmin.service.MineralResourceService;
 import au.gov.ga.ozmin.util.Paginator;
@@ -35,15 +37,15 @@ public class MineralResourceController {
 		Paginator<MineralResource> resourcesPage = new Paginator<MineralResource>(
 				mineralResourceService.listMineralResources(pageable), "/resources");
 
-
-
 		model.addAttribute("listMineralResources", resourcesPage);
 
 		return "resources/index";
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String getResourceById(Model model) {
+	public String getResourceById(@PathVariable("id") Long id, Model model) {
+		MineralResource mineralResource = this.mineralResourceService.getMineralResourceById(id);
+		model.addAttribute("mineralResource", mineralResource);
 		return "resources/show";
 	}
 
