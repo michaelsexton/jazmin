@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import au.gov.ga.ozmin.model.MineralResource;
 import au.gov.ga.ozmin.repository.MineralResourceRepository;
@@ -27,9 +28,11 @@ public class MineralResourceServiceImpl implements MineralResourceService {
 	}
 
 	@Override
+	@Transactional
 	public MineralResource getMineralResourceById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		MineralResource mineralResource= this.mineralResourceRepository.findOne(id);
+
+		return mineralResource;
 	}
 
 	@Override
