@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="templates/layout">
+<head>
+<title layout:fragment="title">Resources</title>
+<script src="content-script.js"></script>
+</head>
+<body>
+	<div layout:fragment="actionContent">
+		<span
+			th:text="${#dates.format(mineralResource.recordDate,'dd-MMM-YYYY')}"></span>
+		<table>
+			<tr>
+				<th rowspan='2'>Commodity</th>
+				<th>Units</th>
+				<th>PVR</th>
+				<th>PBR</th>
+				<th>PPR</th>
+				<th>MRS</th>
+				<th>IDR</th>
+				<th>MID</th>
+				<th>IFR</th>
+				<th>OTH</th>
+			</tr>
+			<tr>
+
+				<td th:text="${mineralResource.oreUnit.code}"
+					th:title="${mineralResource.oreUnit.name}"></td>
+				<td th:text="${mineralResource.proven}"></td>
+				<td th:text="${mineralResource.probable}"></td>
+				<td th:text="${mineralResource.provenAndProbable}"></td>
+				<td th:text="${mineralResource.measured}"></td>
+				<td th:text="${mineralResource.indicated}"></td>
+				<td th:text="${mineralResource.measuredAndIndicated}"></td>
+				<td th:text="${mineralResource.inferred}"></td>
+				<td th:text="${mineralResource.other}"></td>
+			</tr>
+			<tr th:each="resourceGrade : ${mineralResource.resourceGrades}">
+				<td th:text="${resourceGrade.commodity.id}"
+					th:title="${resourceGrade.commodity.name}"></td>
+				<td th:text="${resourceGrade.gradeUnit.code}"
+					th:title="${resourceGrade.gradeUnit.name}"></td>
+				<td th:text="${resourceGrade.proven}"></td>
+				<td th:text="${resourceGrade.probable}"></td>
+				<td th:text="${resourceGrade.provenAndProbable}"></td>
+				<td th:text="${resourceGrade.measured}"></td>
+				<td th:text="${resourceGrade.indicated}"></td>
+				<td th:text="${resourceGrade.measuredAndIndicated}"></td>
+				<td th:text="${resourceGrade.inferred}"></td>
+				<td th:text="${resourceGrade.other}"></td>
+			</tr>
+		</table>
+		<h2>Administration</h2>
+		<table>
+			<tr>
+				<td>Entered by:</td>
+				<td th:text="${mineralResource.enteredBy}"></td>				
+			
+				<td>Entry Date:</td>
+				<td th:text="${#dates.format(mineralResource.entryDate,'dd-MMM-YYYY')}"></td>				
+			</tr>
+			<tr>
+				<td>Updated by:</td>
+				<td th:text="${mineralResource.updatedBy}"></td>				
+			
+				<td>Last update:</td>
+				<td th:if="${mineralResource.lastUpdate}" th:text="${#dates.format(mineralResource.lastUpdate,'dd-MMM-YYYY')}"></td>				
+			</tr>
+			<tr>
+				<td>QA by:</td>
+				<td th:text="${mineralResource.qaBy}"></td>				
+	
+				<td>QA Date:</td>
+				
+				<td th:if="${mineralResource.qaDate}" th:text="${#dates.format(mineralResource.qaDate,'dd-MMM-YYYY')}"></td>				
+			</tr>
+		</table>
+	</div>
+	<div layout:fragment="sidebar">
+		<h2 th:text="${mineralResource.mineralisedZone.mineralDeposit.name}"></h2>
+		<table>
+			<tr>
+				<td>Synonyms:</td>
+				<td
+					th:text="${mineralResource.mineralisedZone.mineralDeposit.synonyms}"></td>
+			</tr>
+			<tr>
+				<td>State:</td>
+				<td
+					th:text="${mineralResource.mineralisedZone.mineralDeposit.state}"></td>
+			</tr>
+			<!-- <tr>
+				<td>Commodities:</td>
+				<td th:text="${mineralResource.mineralisedZone.mineralDeposit.orderedCommodities}"></td>
+			</tr> -->
+			<tr>
+				<td>Operating Status:</td>
+				<td
+					th:text="${#strings.capitalizeWords(mineralResource.mineralisedZone.mineralDeposit.operatingStatus)}"></td>
+			</tr>
+			<tr
+				th:if="${mineralResource.mineralisedZone.mineralDeposit.mineralProject}">
+				<td>Mineral Project:</td>
+				<td
+					th:text="${mineralResource.mineralisedZone.mineralDeposit.mineralProject.name}"></td>
+			</tr>
+		</table>
+		<h3>Location</h3>
+		<table>
+			<tr>
+				<td>Longitude:</td>
+				<td th:text="${mineralResource.mineralisedZone.mineralDeposit.x}"></td>
+			</tr>
+			<tr>
+				<td>Latitude:</td>
+				<td th:text="${mineralResource.mineralisedZone.mineralDeposit.y}"></td>
+			</tr>
+			<tr th:if="${mineralResource.mineralisedZone.mineralDeposit.z==null}">
+				<td>Height:</td>
+				<td th:text="${mineralResource.mineralisedZone.mineralDeposit.z}"></td>
+			</tr>
+		</table>
+	</div>
+
+</body>
+</html>
