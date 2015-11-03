@@ -2,3 +2,9 @@ target
 /.settings
 /.classpath
 /.project
+/ozmin.iml
+/.idea
+/bin/
+.DS_Store
+.springBeans
+*.properties

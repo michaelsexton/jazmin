@@ -1,7 +1,6 @@
-package au.gov.ga.ozmin;
+package au.gov.ga.ozmin.controller;
 
 import au.gov.ga.ozmin.model.Commodity;
-import au.gov.ga.ozmin.repository.CommodityRepository;
 import au.gov.ga.ozmin.service.CommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
