@@ -73,7 +73,8 @@ public class Paginator<T> {
 	}
 
 	public int getSize() {
-		return page.getSize() ;
+		// TODO : Remove when updating spring-data-commons
+		return page.getSize() + 1;
 	}
 
 	public int getTotalPages() {
