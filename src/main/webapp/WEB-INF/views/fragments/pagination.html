@@ -17,10 +17,10 @@
 							First</a></li>
 					<li
 						th:class="${paginator.hasPreviousPage}? '' : 'disabled'"><span
-						th:if='${not paginator.hasPreviousPage}'>«</span> <a
+						th:if='${not paginator.hasPreviousPage}'>&laquo;</span> <a
 						th:if='${paginator.hasPreviousPage}'
 						th:href='@{${paginator.url}(page=${paginator.number-1},size=${paginator.size})}'
-						title='Go to previous page'>«</a></li>
+						title='Go to previous page'>&laquo;</a></li>
 					<li th:each="item : ${paginator.items}"
 						th:class="${item.current}? 'active' : ''"><span
 						th:if='${item.current}' th:text='${item.number}'>1</span> <a
@@ -28,18 +28,22 @@
 						th:href='@{${paginator.url}(page=${item.number},size=${paginator.size})}'><span
 							th:text='${item.number}'>1</span></a></li>
 					<li th:class="${paginator.hasNextPage}? '' : 'disabled'"><span
-						th:if='${not paginator.hasNextPage}'>»</span> <a
+						th:if='${not paginator.hasNextPage}'>&raquo;</span> <a
 						th:if='${paginator.hasNextPage}'
 						th:href='@{${paginator.url}(page=${paginator.number+1},size=${paginator.size})}'
-						title='Go to next page'>»</a></li>
+						title='Go to next page'>&raquo;</a></li>
 					<li th:class="${paginator.lastPage}? 'disabled' : ''"><span
 						th:if='${paginator.lastPage}'>Last &rarr;</span> <a
 						th:if='${not paginator.lastPage}'
-						th:href='@{${paginator.url}(page=${paginator.totalPages-1},size=${paginator.size})}'>Last
+						th:href='@{${paginator.url}(page=${paginator.totalPages},size=${paginator.size})}'>Last
 							&rarr;</a></li>
 
 				</ul>
 			</div>
+			
+			<span th:text="${paginator.url}"></span>
+			<span th:text="${paginator.number}"></span>
+			<span th:text="${paginator.size}"></span>
 		</div>
 </body>
 </html>
