@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 public class Paginator<T> {
+	// TODO : Import new spring-data-commons when package fixes size issue.
 	public static final int MAX_PAGE_ITEM_DISPLAY = 10;
 	private Page<T> page;
 	private List<PageItem> items;
