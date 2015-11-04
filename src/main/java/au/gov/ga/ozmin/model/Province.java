@@ -14,6 +14,17 @@ import javax.persistence.SecondaryTable;
 public class Province extends SpatialEntity {
 	
 	@AttributeOverride(name="id", column = @Column(name = "PROVNO"))
-	int id;
+	Long id;
 
+	@Override
+	public Long getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
 }
