@@ -32,8 +32,8 @@ public class Paginator<T> {
 		this.page = page;
 		this.url = url;
 		items = new ArrayList<PageItem>();
-		currentNumber = page.getNumber(); // start from 1 to match
-											// page.page
+		currentNumber = page.getNumber()+1; 
+											
 
 		int start, size;
 		if (page.getTotalPages() <= MAX_PAGE_ITEM_DISPLAY) {
@@ -72,7 +72,7 @@ public class Paginator<T> {
 	}
 
 	public int getSize() {
-		return page.getSize();
+		return page.getSize() ;
 	}
 
 	public int getTotalPages() {
