@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="templates/layout">
 <head>
-
+<link th:href="@{/css/deposits.css}" rel="stylesheet" />
 <title>Insert title here</title>
 </head>
 <body>
@@ -14,14 +14,15 @@
 				<th width="120">Commodity Name</th>
 				<th width="120">&nbsp;</th>
 			</tr>
-			<tr th:each="commodity : ${listCommodities.content}">
+			<tr th:each="commodity : ${commoditiesPage.page}">
 	
 				<td th:text="${commodity.id}"></td>
 				<td th:text="${commodity.name}"></td>
 				<td><a th:href="@{'/commodities/'+${commodity.id}}">Show</a></td>
 			</tr>
 		</table>
-		
+		<div th:with="paginator=${commoditiesPage}"
+			th:include="fragments/pagination :: pagination"></div>
 	</div>
 </body>
 </html>
