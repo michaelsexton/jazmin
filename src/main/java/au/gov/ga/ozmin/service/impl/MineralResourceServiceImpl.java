@@ -21,8 +21,7 @@ public class MineralResourceServiceImpl implements MineralResourceService {
 
 	@Override
 	public Page<MineralResource> listMineralResources(Pageable pageRequest) {
-		// PageRequest pageRequest = new PageRequest(pageNumber - 1, PAGE_SIZE,
-		// Sort.Direction.ASC, "recordDate");
+
 		return this.mineralResourceRepository.findAll(pageRequest);
 
 	}
@@ -30,7 +29,7 @@ public class MineralResourceServiceImpl implements MineralResourceService {
 	@Override
 	@Transactional
 	public MineralResource getMineralResourceById(Long id) {
-		MineralResource mineralResource= this.mineralResourceRepository.findOne(id);
+		MineralResource mineralResource = this.mineralResourceRepository.findOne(id);
 
 		return mineralResource;
 	}
