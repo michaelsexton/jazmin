@@ -70,7 +70,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public PageableHandlerMethodArgumentResolver pageable() {
 		PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver = new PageableHandlerMethodArgumentResolver();
-		//pageableHandlerMethodArgumentResolver.setOneIndexedParameters(true);
+		// TODO :  Import new spring-data-commons when package fixes size issue.
+		pageableHandlerMethodArgumentResolver.setOneIndexedParameters(true);
 		return pageableHandlerMethodArgumentResolver;
 	}
 
