@@ -32,10 +32,12 @@ import au.gov.ga.ozmin.service.CommodityService;
 import au.gov.ga.ozmin.service.MineralDepositService;
 import au.gov.ga.ozmin.service.MineralResourceService;
 import au.gov.ga.ozmin.service.ProvinceService;
+import au.gov.ga.ozmin.service.SurveyService;
 import au.gov.ga.ozmin.service.impl.CommodityServiceImpl;
 import au.gov.ga.ozmin.service.impl.MineralDepositServiceImpl;
 import au.gov.ga.ozmin.service.impl.MineralResourceServiceImpl;
 import au.gov.ga.ozmin.service.impl.ProvinceServiceImpl;
+import au.gov.ga.ozmin.service.impl.SurveyServiceImpl;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
@@ -95,6 +97,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public MineralResourceService mineralResourceService() {
 		return new MineralResourceServiceImpl();
+
+	}
+	
+	@Bean
+	public SurveyService surveyService()  {
+		return new SurveyServiceImpl();
 
 	}
 

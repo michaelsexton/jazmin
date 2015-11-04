@@ -10,4 +10,5 @@ import javax.persistence.SecondaryTable;
 @SecondaryTable(schema="A", name="SURVEYS",pkJoinColumns=@PrimaryKeyJoinColumn(name="ENO"))
 public class Survey extends SpatialEntity {
 
+	// TODO: Investigate Attribute override
 }
