@@ -2,6 +2,7 @@ package au.gov.ga.ozmin.service;
 
 import au.gov.ga.ozmin.model.MineralDeposit;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 
@@ -9,7 +10,7 @@ import org.springframework.data.domain.Page;
  * Created by michael on 10/09/2015.
  */
 public interface MineralDepositService {
-    Page<MineralDeposit> listMineralDeposits(Integer pageNumber);
+    Page<MineralDeposit> mineralDepositsPage(Pageable pageable);
 //    void addDeposit(MineralDeposit deposit);
 //    void updateDeposit(MineralDeposit deposit);
 //    List<MineralDeposit> listDeposits();
