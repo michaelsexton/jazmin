@@ -2,10 +2,12 @@ package au.gov.ga.ozmin.controller;
 
 import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.service.MineralDepositService;
+import au.gov.ga.ozmin.util.Paginator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Created by michael on 10/09/2015.
  */
 @Controller
-@RequestMapping("/deposits")
+@RequestMapping("/mineralDeposits")
 public class MineralDepositController {
     private MineralDepositService mineralDepositService;
 
@@ -28,19 +30,9 @@ public class MineralDepositController {
 
     //Index
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String listDeposits(Model model, @RequestParam(value="page", defaultValue="1") Integer pageNumber  ) {
-        Page<MineralDeposit> depositPage = mineralDepositService.listMineralDeposits(pageNumber);
-
-        int current = depositPage.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, depositPage.getTotalPages());
-
-        model.addAttribute("listDeposits", depositPage);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-
-
+    public String mineralDepositsPage(Model model, Pageable pageable  ) {
+        Paginator<MineralDeposit> mineralDepositsPage = new Paginator<MineralDeposit>(mineralDepositService.mineralDepositsPage(pageable),"/mineralDeposits");
+        model.addAttribute("mineralDepositsPage", mineralDepositsPage);
 
 
         return "deposits/index";
