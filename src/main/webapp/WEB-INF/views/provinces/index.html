@@ -10,7 +10,14 @@
 <body>
 	<div layout:fragment="actionContent">
 		
-
+<div class="province" th:each="province : ${provincesPage}">
+		
+		<div class="eno" th:text="${province.id}"></div>
+		<div class="name" >
+		<a href="." th:href="@{'/provinces/'+${province.id}}" th:text="${province.name}"></a>
+		</div>
+		<div class="commodities"></div>
+	</div>
 	</div>
 </body>
 </html>
