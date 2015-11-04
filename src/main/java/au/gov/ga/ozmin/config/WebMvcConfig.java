@@ -31,9 +31,11 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import au.gov.ga.ozmin.service.CommodityService;
 import au.gov.ga.ozmin.service.MineralDepositService;
 import au.gov.ga.ozmin.service.MineralResourceService;
+import au.gov.ga.ozmin.service.ProvinceService;
 import au.gov.ga.ozmin.service.impl.CommodityServiceImpl;
 import au.gov.ga.ozmin.service.impl.MineralDepositServiceImpl;
 import au.gov.ga.ozmin.service.impl.MineralResourceServiceImpl;
+import au.gov.ga.ozmin.service.impl.ProvinceServiceImpl;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
@@ -77,6 +79,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public CommodityService commodityService() {
 		return new CommodityServiceImpl();
 
+	}
+	
+	@Bean
+	public ProvinceService provinceService() {
+		return new ProvinceServiceImpl();
 	}
 
 	@Bean
