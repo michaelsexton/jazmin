@@ -32,40 +32,8 @@
 			</tr>
 		</table>
 		<!-- Pagination Bar -->
-		<div>
-			<div class='pagination pagination-centered'>
-				<ul>
-					<li th:class="${listMineralResources.firstPage}? 'disabled' : ''"><span
-						th:if='${listMineralResources.firstPage}'>&larr; First</span> <a
-						th:if='${not listMineralResources.firstPage}'
-						th:href='@{${listMineralResources.url}(page=1,size=${listMineralResources.size})}'>&larr;
-							First</a></li>
-					<li
-						th:class="${listMineralResources.hasPreviousPage}? '' : 'disabled'"><span
-						th:if='${not listMineralResources.hasPreviousPage}'>«</span> <a
-						th:if='${listMineralResources.hasPreviousPage}'
-						th:href='@{${listMineralResources.url}(page=${listMineralResources.number-1},size=${listMineralResources.size})}'
-						title='Go to previous page'>«</a></li>
-					<li th:each="item : ${listMineralResources.items}"
-						th:class="${item.current}? 'active' : ''"><span
-						th:if='${item.current}' th:text='${item.number}'>1</span> <a
-						th:if='${not item.current}'
-						th:href='@{${listMineralResources.url}(page=${item.number},size=${listMineralResources.size})}'><span
-							th:text='${item.number}'>1</span></a></li>
-					<li th:class="${listMineralResources.hasNextPage}? '' : 'disabled'"><span
-						th:if='${not listMineralResources.hasNextPage}'>»</span> <a
-						th:if='${listMineralResources.hasNextPage}'
-						th:href='@{${listMineralResources.url}(page=${listMineralResources.number+1},size=${listMineralResources.size})}'
-						title='Go to next page'>»</a></li>
-					<li th:class="${listMineralResources.lastPage}? 'disabled' : ''"><span
-						th:if='${listMineralResources.lastPage}'>Last &rarr;</span> <a
-						th:if='${not listMineralResources.lastPage}'
-						th:href='@{${listMineralResources.url}(page=${listMineralResources.totalPages-1},size=${listMineralResources.size})}'>Last
-							&rarr;</a></li>
-
-				</ul>
-			</div>
-		</div>
+		<div th:with="paginator=${listMineralResources}"
+			th:include="fragments/pagination :: pagination"></div>
 	</div>
 
 </body>
