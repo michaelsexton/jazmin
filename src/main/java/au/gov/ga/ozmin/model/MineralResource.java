@@ -32,7 +32,7 @@ public class MineralResource {
 	@JoinColumn(name = "UNIT_QUANTITY")
 	private Unit oreUnit;
 	
-	// TODO: Make a boolean
+	// TODO: Make a boolean or enum
 	@Column(name = "INCLUSIVE")
 	private String inclusive;
 
