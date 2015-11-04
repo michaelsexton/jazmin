@@ -69,7 +69,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public PageableHandlerMethodArgumentResolver pageable() {
-		return new PageableHandlerMethodArgumentResolver();
+		PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver = new PageableHandlerMethodArgumentResolver();
+		pageableHandlerMethodArgumentResolver.setOneIndexedParameters(true);
+		return pageableHandlerMethodArgumentResolver;
 	}
 
 	@Bean
