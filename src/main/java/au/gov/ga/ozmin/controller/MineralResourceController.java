@@ -34,7 +34,7 @@ public class MineralResourceController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String listResources(Model model, Pageable pageable) {
 		Paginator<MineralResource> resourcesPage = new Paginator<MineralResource>(
-				mineralResourceService.listMineralResources(pageable), "/resources");
+				mineralResourceService.listMineralResources(pageable), "/mineralResources");
 
 		model.addAttribute("listMineralResources", resourcesPage);
 
@@ -92,7 +92,7 @@ public class MineralResourceController {
 
 		Paginator<MineralResource> resourcesPage = new Paginator<MineralResource>(
 				mineralResourceService.listMineralResourcesForAdministration(pageable, enteredBy, startDate, endDate),
-				"/resources/admin");
+				"/mineralResources/admin");
 
 		model.addAttribute("listMineralResources", resourcesPage);
 
