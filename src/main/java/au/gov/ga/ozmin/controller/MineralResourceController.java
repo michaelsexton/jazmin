@@ -20,7 +20,7 @@ import au.gov.ga.ozmin.service.MineralResourceService;
 import au.gov.ga.ozmin.util.Paginator;
 
 @Controller
-@RequestMapping("/resources")
+@RequestMapping("/mineralResources")
 public class MineralResourceController {
 	private MineralResourceService mineralResourceService;
 
@@ -38,14 +38,14 @@ public class MineralResourceController {
 
 		model.addAttribute("listMineralResources", resourcesPage);
 
-		return "resources/index";
+		return "mineralResources/index";
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getResourceById(@PathVariable("id") Long id, Model model) {
 		MineralResource mineralResource = this.mineralResourceService.getMineralResourceById(id);
 		model.addAttribute("mineralResource", mineralResource);
-		return "resources/show";
+		return "mineralResources/show";
 	}
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -96,7 +96,7 @@ public class MineralResourceController {
 
 		model.addAttribute("listMineralResources", resourcesPage);
 
-		return "resources/admin";
+		return "mineralResources/admin";
 	}
 
 	@RequestMapping(value = "/qa", method = RequestMethod.POST)
