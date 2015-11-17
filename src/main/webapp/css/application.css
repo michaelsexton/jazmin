@@ -51,6 +51,31 @@ a img {
     margin: 20px 80px;
     background: white url(/assets/bg.png) repeat-x scroll left top; }
 
+#action_content {
+  overflow: -moz-scrollbars-horizontal;
+  overflow-x: auto;
+  overflow-y: hidden; }
+
+#content {
+  float: left;
+  background: white url(/assets/threecolbg.gif) repeat-y 66% 0;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+#main {
+  font-size: 90%;
+  float: left;
+  width: 65%;
+  padding-right: 2px; }
+
+#sidebar {
+  width: 33%;
+  float: right;
+  font-size: 0.8em;
+  color: #777777; }
+
+
 
 #flash_notice,
 #flash_error {
