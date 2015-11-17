@@ -33,7 +33,7 @@ public class MineralDepositController {
         model.addAttribute("mineralDepositsPage", mineralDepositsPage);
 
 
-        return "deposits/index";
+        return "mineralDeposits/index";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -43,6 +43,6 @@ public class MineralDepositController {
     	model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
     	model.addAttribute("orders", mineralDeposit.getOrderedCommodities().values());
     	model.addAttribute("provinces", mineralDeposit.getProvinces());
-    return "deposits/show";
+    return "mineralDeposits/show";
 }
 }
