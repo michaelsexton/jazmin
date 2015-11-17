@@ -22,7 +22,7 @@
 					th:text="${mineralResource.id}"></a></td>
 
 				<td><a href="."
-					th:href="@{'/deposits/'+${mineralResource.mineralisedZone.mineralDeposit.id}}"
+					th:href="@{'/mineralDeposits/'+${mineralResource.mineralisedZone.mineralDeposit.id}}"
 					th:text="${mineralResource.mineralisedZone.mineralDeposit.name}"></a>
 				</td>
 				<td th:text="${mineralResource.mineralisedZone.name}">Resource
