@@ -18,7 +18,7 @@
 			</tr>
 			<tr th:each="mineralResource : ${listMineralResources.page}">
 				<td><a href="."
-					th:href="@{'/resources/'+${mineralResource.id}}"
+					th:href="@{'/mineralResources/'+${mineralResource.id}}"
 					th:text="${mineralResource.id}"></a></td>
 
 				<td><a href="."
