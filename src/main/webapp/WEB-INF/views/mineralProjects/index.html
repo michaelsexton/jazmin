@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="templates/layout">
+<head>
+<link th:href="@{/css/deposits.css}" rel="stylesheet" />
+<title>Deposits</title>
+</head>
+<body>
+	<div layout:fragment="actionContent">
+
+
+		<table>
+			<tr>
+				<th title="ENO">ID</th>
+				<th title="Entity ID">Name</th>
+				<th>Longitude</th>
+				<th>Latitude</th>
+				<th>Height</th>
+			</tr>
+			<tr th:each="mineralDeposit : ${mineralDepositsPage.page}">
+				<td th:text="${mineralDeposit.id}">1</td>
+				<td th:text="${mineralDeposit.name}">1</td>
+				<td th:text="${mineralDeposit.x}">1</td>
+				<td th:text="${mineralDeposit.y}">1</td>
+				<td th:text="${mineralDeposit.z}">1</td>
+			</tr>
+		</table>
+
+	<div th:with="paginator=${mineralDepositsPage}" th:include="fragments/pagination :: pagination"></div>
+	</div>
+	
+</body>
+</html>
