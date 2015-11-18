@@ -20,7 +20,9 @@
 			</tr>
 			<tr th:each="mineralDeposit : ${mineralDepositsPage.page}">
 				<td th:text="${mineralDeposit.id}">1</td>
-				<td th:text="${mineralDeposit.name}">1</td>
+				<td><a href="."
+					th:href="@{'/mineralDeposits/'+${mineralDeposit.id}}"
+					th:text="${mineralDeposit.name}"></a></td>
 				<td th:text="${mineralDeposit.x}">1</td>
 				<td th:text="${mineralDeposit.y}">1</td>
 				<td th:text="${mineralDeposit.z}">1</td>
