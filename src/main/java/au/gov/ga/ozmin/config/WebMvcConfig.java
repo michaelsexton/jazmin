@@ -3,6 +3,8 @@ package au.gov.ga.ozmin.config;
 import java.util.List;
 import java.util.Properties;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ import au.gov.ga.ozmin.service.impl.MineralDepositServiceImpl;
 import au.gov.ga.ozmin.service.impl.MineralResourceServiceImpl;
 import au.gov.ga.ozmin.service.impl.ProvinceServiceImpl;
 import au.gov.ga.ozmin.service.impl.SurveyServiceImpl;
-import nz.net.ultraq.thymeleaf.LayoutDialect;
+import au.gov.ga.ozmin.view.ResourceQualityCheckPdfView;
 
 @Configuration
 @ComponentScan(basePackages = "au.gov.ga.ozmin")
@@ -108,6 +110,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public SurveyService surveyService()  {
 		return new SurveyServiceImpl();
 
+	}
+	
+	
+	@Bean
+	public ResourceQualityCheckPdfView resourceQualityCheckPdfView() {
+		return new ResourceQualityCheckPdfView();
 	}
 
 	@Bean(destroyMethod = "close")
