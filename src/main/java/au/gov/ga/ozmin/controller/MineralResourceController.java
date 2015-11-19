@@ -2,6 +2,7 @@ package au.gov.ga.ozmin.controller;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import au.gov.ga.ozmin.model.MineralResource;
 import au.gov.ga.ozmin.service.MineralResourceService;
 import au.gov.ga.ozmin.util.Paginator;
+import au.gov.ga.ozmin.view.ResourceQualityCheckPdfView;
 
 @Controller
 @RequestMapping("/mineralResources")
@@ -29,6 +31,10 @@ public class MineralResourceController {
 	public void setMineralResourceService(MineralResourceService mrs) {
 		this.mineralResourceService = mrs;
 	}
+	
+	@Autowired
+	@Qualifier(value = "resourceQualityCheckPdfView")
+	private ResourceQualityCheckPdfView resourceQualityCheckPdfView;
 
 	// Index
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -99,9 +105,19 @@ public class MineralResourceController {
 		return "mineralResources/admin";
 	}
 
-	@RequestMapping(value = "/qa", method = RequestMethod.POST)
-	public void resourcesQualityCheck(Model model) {
-
+	@RequestMapping(value = "/qa", method = RequestMethod.GET)
+	public String resourcesQualityCheck(Model model, Pageable pageable) {
+		return "mineralResources/qa";
+	}
+	
+	@RequestMapping(value = "/qa.pdf", method = RequestMethod.GET)
+	public void resourcesQualityCheckPrintable(
+			@RequestParam(value = "qaStatus", defaultValue = "U") String qaStatus,
+			@RequestParam(value = "enteredBy", defaultValue = "MSEXTON1") String enteredBy
+			) {
+		Set<MineralResource> resourcesCollection = mineralResourceService.mineralResourcesCollectionForQualityCheck(qaStatus,enteredBy);
+		
+		//return new ModelAndView(resourceQualityCheckPdfView, "resourcesCollection", resourcesCollection);
 	}
 
 	private enum Range {
