@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import au.gov.ga.ozmin.model.MineralResource;
 import au.gov.ga.ozmin.service.MineralResourceService;
@@ -111,13 +112,13 @@ public class MineralResourceController {
 	}
 	
 	@RequestMapping(value = "/qa.pdf", method = RequestMethod.GET)
-	public void resourcesQualityCheckPrintable(
+	public ModelAndView resourcesQualityCheckPrintable(
 			@RequestParam(value = "qaStatus", defaultValue = "U") String qaStatus,
 			@RequestParam(value = "enteredBy", defaultValue = "MSEXTON1") String enteredBy
 			) {
 		Set<MineralResource> resourcesCollection = mineralResourceService.mineralResourcesCollectionForQualityCheck(qaStatus,enteredBy);
 		
-		//return new ModelAndView(resourceQualityCheckPdfView, "resourcesCollection", resourcesCollection);
+		return new ModelAndView(resourceQualityCheckPdfView, "resourcesCollection", resourcesCollection);
 	}
 
 	private enum Range {
