@@ -6,7 +6,9 @@
 <title layout:fragment="title"
 	th:text="@{'Mineral Deposits : ' +${deposit.name}}">>Mineral
 	Deposit : Unknown ()</title>
-<script src='http://maps.googleapis.com/maps/api/js?key=AIzaSyB_xu5kdq5JMKUWzG921BRVW5iBj4PINOI' type='text/javascript'></script>
+<script
+	src='http://maps.googleapis.com/maps/api/js?key=AIzaSyB_xu5kdq5JMKUWzG921BRVW5iBj4PINOI'
+	type='text/javascript'></script>
 <script type="text/javascript"
 	src="../webjars/openlayers/2.13.1/OpenLayers.js"></script>
 
@@ -38,7 +40,6 @@ function init() {
 		</script>
 
 <style type="text/css">
-
 </style>
 </head>
 <body onload="init()">
@@ -46,7 +47,7 @@ function init() {
 	<div layout:fragment="actionContent">
 		<div id="map" class="smallmap"></div>
 
-		
+
 
 	</div>
 	<div layout:fragment="sidebar">
@@ -90,7 +91,25 @@ function init() {
 		</table>
 
 		<h3>Provinces</h3>
+		<table>
+			<tr th:each="province : ${provinces}">
+				<td th:text="${province.name}"></td>
+			</tr>
+		</table>
 		<h3>Mineralised Zones</h3>
+		<table>
+			<tr th:each="mineralisedZone : ${mineralisedZones}">
+				<td th:text="${mineralisedZone.name}"></td>
+				<td th:text="${#sets.size(mineralisedZone.mineralResources)}"></td>
+				<td><table>
+						<tr th:each="mineralResource : ${mineralisedZone.mineralResources}">
+							<td th:text="${mineralResource.id}"></td>
+							<td th:text="${mineralResource.recordDate}"></td>
+						</tr>
+					</table></td>
+			</tr>
+
+		</table>
 	</div>
 
 </body>
