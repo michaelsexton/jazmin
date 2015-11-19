@@ -23,7 +23,7 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 		// TODO Auto-generated method stub
 		
 
-		Set<MineralResource> mineralResourcesCollection = (Set<MineralResource>) model.get("mineralResourcesCollection");
+		Set<MineralResource> mineralResourcesCollection = (Set<MineralResource>) model.get("resourcesCollection");
 		
 		Table table = new Table(2);
 		table.addCell("RESOURCENO");
