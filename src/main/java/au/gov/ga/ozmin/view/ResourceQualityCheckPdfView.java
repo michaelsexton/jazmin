@@ -11,6 +11,8 @@ import org.springframework.web.servlet.view.document.AbstractPdfView;
 import au.gov.ga.ozmin.model.MineralResource;
 
 import com.lowagie.text.Document;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Rectangle;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -20,7 +22,10 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 	protected void buildPdfDocument(Map<String, Object> model,
 			Document document, PdfWriter writer, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
+
+
+		Rectangle rectangle = PageSize.A4.rotate();
+		document.setPageSize(rectangle);
 		
 
 		Set<MineralResource> mineralResourcesCollection = (Set<MineralResource>) model.get("resourcesCollection");
@@ -34,7 +39,17 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 			table.addCell(mineralResource.getRecordDate().toString());
 		}
 		
+		
+		
+		
 		document.add(table);
 	}
+	
+	@Override
+	protected Document newDocument() {
+		return new Document(PageSize.A4.rotate());
+		
+	}
+	
 
 }
