@@ -4,7 +4,7 @@ package au.gov.ga.ozmin.model;
 import javax.persistence.*;
 
 import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by michael on 10/09/2015.
@@ -19,7 +19,7 @@ public class MineralDeposit extends SpatialEntity {
     private MineralProject mineralProject;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralDeposit")
-    private List<MineralisedZone> mineralisedZones;
+    private Set<MineralisedZone> mineralisedZones;
 
     @Column(name="OPERATING_STATUS",table="DEPOSITS")
     private String operatingStatus;
@@ -38,21 +38,21 @@ public class MineralDeposit extends SpatialEntity {
     
     
     @OneToMany(mappedBy="id.mineralDeposit")
-    List<MineralDepositCommodityOrder> mineralDepositCommodityOrder;
+    Set<MineralDepositCommodityOrder> mineralDepositCommodityOrders;
     
-    public List<MineralDepositCommodityOrder> getMineralDepositCommodityOrder() {
-		return mineralDepositCommodityOrder;
+    public Set<MineralDepositCommodityOrder> getMineralDepositCommodityOrder() {
+		return mineralDepositCommodityOrders;
 	}
 
-	public void setMineralDepositCommodityOrder(List<MineralDepositCommodityOrder> mineralDepositCommodityOrder) {
-		this.mineralDepositCommodityOrder = mineralDepositCommodityOrder;
+	public void setMineralDepositCommodityOrder(Set<MineralDepositCommodityOrder> mineralDepositCommodityOrder) {
+		this.mineralDepositCommodityOrders = mineralDepositCommodityOrder;
 	}
 
 	@ManyToMany
     @JoinTable(schema="PROVS",name="PROVDEPOS",
     	joinColumns={@JoinColumn(name="DEPOSNO",referencedColumnName="ENO")},
         inverseJoinColumns={@JoinColumn(name="ENO", referencedColumnName="ENO")})
-    private List<Province> provinces;
+    private Set<Province> provinces;
     
     
     
@@ -76,11 +76,11 @@ public class MineralDeposit extends SpatialEntity {
         this.mineralProject = mineralProject;
     }
 
-    public List<MineralisedZone> getMineralisedZones() {
+    public Set<MineralisedZone> getMineralisedZones() {
         return mineralisedZones;
     }
 
-    public void setMineralisedZones(List<MineralisedZone> mineralisedZones) {
+    public void setMineralisedZones(Set<MineralisedZone> mineralisedZones) {
         this.mineralisedZones = mineralisedZones;
     }
 
@@ -100,11 +100,11 @@ public class MineralDeposit extends SpatialEntity {
 //		this.commodities = commodities;
 //	}
 
-	public List<Province> getProvinces() {
+	public Set<Province> getProvinces() {
 		return provinces;
 	}
 
-	public void setProvinces(List<Province> provinces) {
+	public void setProvinces(Set<Province> provinces) {
 		this.provinces = provinces;
 	}
 

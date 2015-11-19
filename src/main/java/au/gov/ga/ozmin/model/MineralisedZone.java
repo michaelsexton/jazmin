@@ -1,7 +1,7 @@
 package au.gov.ga.ozmin.model;
 
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -22,7 +22,7 @@ public class MineralisedZone extends SpatialEntity {
     
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralisedZone")
-    private List<MineralResource> mineralResources;
+    private Set<MineralResource> mineralResources;
 
 
 	public MineralDeposit getMineralDeposit() {
@@ -35,12 +35,12 @@ public class MineralisedZone extends SpatialEntity {
 	}
 
 
-	public List<MineralResource> getMineralResources() {
+	public Set<MineralResource> getMineralResources() {
 		return mineralResources;
 	}
 
 
-	public void setMineralResources(List<MineralResource> mineralResources) {
+	public void setMineralResources(Set<MineralResource> mineralResources) {
 		this.mineralResources = mineralResources;
 	}
     

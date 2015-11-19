@@ -1,7 +1,7 @@
 package au.gov.ga.ozmin.model;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -100,7 +100,7 @@ public class MineralResource {
 	private MineralisedZone mineralisedZone;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralResource")
-	private List<ResourceGrade> resourceGrades;
+	private Set<ResourceGrade> resourceGrades;
 
 	public String getAccessCode() {
 		return accessCode;
@@ -182,7 +182,7 @@ public class MineralResource {
 		return recordDate;
 	}
 
-	public List<ResourceGrade> getResourceGrades() {
+	public Set<ResourceGrade> getResourceGrades() {
 		return resourceGrades;
 	}
 
@@ -270,7 +270,7 @@ public class MineralResource {
 		this.recordDate = recordDate;
 	}
 
-	public void setResourceGrades(List<ResourceGrade> resourceGrades) {
+	public void setResourceGrades(Set<ResourceGrade> resourceGrades) {
 		this.resourceGrades = resourceGrades;
 	}
 
