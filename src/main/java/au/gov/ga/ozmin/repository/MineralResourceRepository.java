@@ -1,9 +1,9 @@
 package au.gov.ga.ozmin.repository;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -18,4 +18,9 @@ public interface MineralResourceRepository extends PagingAndSortingRepository<Mi
 
 	Page<MineralResource> findByQaStatusAndEnteredByAndEntryDateBetween(Pageable pageable, String qaStatus,
 			String enteredBy, Date lowerDate, Date upperDate);
+
+	Set<MineralResource> findByQaStatusAndEnteredBy(String qaStatus,
+			String enteredBy);
+	
+	//List<MineralResource> findAll();
 }
