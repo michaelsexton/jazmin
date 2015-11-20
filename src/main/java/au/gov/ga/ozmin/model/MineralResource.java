@@ -99,7 +99,7 @@ public class MineralResource {
 	@JoinColumn(name = "ENO")
 	private MineralisedZone mineralisedZone;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralResource")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralResource")
 	private Set<ResourceGrade> resourceGrades;
 
 	public String getAccessCode() {
