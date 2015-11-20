@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import au.gov.ga.ozmin.model.MineralResource;
@@ -23,4 +24,15 @@ public interface MineralResourceRepository extends PagingAndSortingRepository<Mi
 			String enteredBy);
 	
 	//List<MineralResource> findAll();
+	
+	@Query("select mr from MineralResource as mr "
+			+ "left join fetch mr.resourceGrades as rg "
+			+ "inner join fetch mr.mineralisedZone as mz "
+			+ "inner join fetch mz.mineralDeposit as md "
+			+ "where mr.qaStatus = ?1 and "
+			+ "mr.enteredBy = ?2")
+	Set<MineralResource> findResourcesForQA(String qaStatus,
+			String enteredBy);
+	
+	
 }

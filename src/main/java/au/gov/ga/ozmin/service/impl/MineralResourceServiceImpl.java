@@ -29,7 +29,7 @@ public class MineralResourceServiceImpl implements MineralResourceService {
 
 	@Override
 	public Set<MineralResource> mineralResourcesCollectionForQualityCheck(String qaStatus, String enteredBy) {
-		return this.mineralResourceRepository.findByQaStatusAndEnteredBy(qaStatus,enteredBy);
+		return this.mineralResourceRepository.findResourcesForQA(qaStatus,enteredBy);
 	}
 
 	@Override
