@@ -7,6 +7,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(schema="MGD",name="RESOURCE_GRADES")
 public class ResourceGrade {
@@ -48,6 +51,7 @@ public class ResourceGrade {
 	private Double other;
 	
 	@ManyToOne
+	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name = "RESOURCENO")
 	private MineralResource mineralResource;
 
