@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.model.MineralResource;
 import au.gov.ga.ozmin.repository.MineralResourceRepository;
 import au.gov.ga.ozmin.service.MineralResourceService;
@@ -28,8 +29,8 @@ public class MineralResourceServiceImpl implements MineralResourceService {
 	}
 
 	@Override
-	public Set<MineralResource> mineralResourcesCollectionForQualityCheck(String qaStatus, String enteredBy) {
-		return this.mineralResourceRepository.findResourcesForQA(qaStatus,enteredBy);
+	public Set<MineralDeposit> mineralResourcesCollectionForQualityCheck(String qaStatus, String enteredBy) {
+		return this.mineralResourceRepository.findResourcesCollectionForQaByDeposit(qaStatus,enteredBy);
 	}
 
 	@Override
