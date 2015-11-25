@@ -1,5 +1,6 @@
 package au.gov.ga.ozmin.view;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -50,75 +51,83 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 		Rectangle rectangle = PageSize.A4.rotate();
 		document.setPageSize(rectangle);
 
+		@SuppressWarnings("unchecked")
 		Set<MineralDeposit> mineralDepositsCollection = (Set<MineralDeposit>) model.get("resourcesCollection");
-
-		Paragraph paragraph = new Paragraph();
-		PdfPTable table = new PdfPTable(numberOfColumns());
-
-		// table.getDefaultCell().setBorder(0);
-		// table.getDefaultCell().setPhrase(phrase);
-
-		// table.setPadding(2);
-
-		// table.setBorderWidth(0);
 
 		document.setHeader(header);
 		document.setFooter(footer);
 
-		for (String headerItem : headerRow) {
-			table.addCell(tableString(headerItem));
-		}
 		for (MineralDeposit mineralDeposit : mineralDepositsCollection) {
-			System.out.println(mineralDeposit.getId().toString());
+			PdfPTable depositTable = new PdfPTable(1);
+			depositTable.setWidthPercentage(100);
+			depositTable.setSpacingAfter(10);
+			PdfPCell depositCell = new PdfPCell();
+			depositCell.setPadding(0);
+			depositCell.disableBorderSide(1);
+
+			PdfPTable resourcesTable = new PdfPTable(numberOfColumns());
+			
+			resourcesTable.setWidthPercentage(100);
+			resourcesTable.getDefaultCell().setBorder(0);
+			for (String headerItem : headerRow) {
+				PdfPCell headerCell = new PdfPCell();
+				headerCell.addElement(tableString(headerItem));
+				headerCell.setPadding(1);
+				headerCell.setBackgroundColor(Color.gray);
+				resourcesTable.addCell(headerCell);
+			}
+			// System.out.println(mineralDeposit.getId().toString());
 			int i = 0;
 			for (MineralisedZone mineralisedZone : mineralDeposit.getMineralisedZones()) {
 				if (i == 0) {
-					table.addCell(mineralDeposit.getName());
+					resourcesTable.addCell(mineralDeposit.getName());
 				} else {
-					table.addCell(new String());
+					resourcesTable.addCell(new String());
 				}
 				int j = 0;
 				for (MineralResource mineralResource : mineralisedZone.getMineralResources()) {
 					if (j == 0) {
-						table.addCell(mineralisedZone.getName());
+						resourcesTable.addCell(mineralisedZone.getName());
 					} else {
-						table.addCell(new String());
-						table.addCell(new String());
+						resourcesTable.addCell(new String());
+						resourcesTable.addCell(new String());
 					}
-					table.addCell(oracleDate.format(mineralResource.getRecordDate()).toString().toUpperCase());
-					table.addCell(new String());
-					table.addCell(ObjectUtils.toString(mineralResource.getOreUnit().getCode()));
-					table.addCell(ObjectUtils.toString(mineralResource.getProven()));
-					table.addCell(ObjectUtils.toString(mineralResource.getProbable()));
-					table.addCell(ObjectUtils.toString(mineralResource.getProvenAndProbable()));
-					table.addCell(ObjectUtils.toString(mineralResource.getMeasured()));
-					table.addCell(ObjectUtils.toString(mineralResource.getIndicated()));
-					table.addCell(ObjectUtils.toString(mineralResource.getMeasuredAndIndicated()));
-					table.addCell(ObjectUtils.toString(mineralResource.getInferred()));
-					table.addCell(ObjectUtils.toString(mineralResource.getOther()));
+					resourcesTable.addCell(oracleDate.format(mineralResource.getRecordDate()).toString().toUpperCase());
+					resourcesTable.addCell(new String());
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getOreUnit().getCode()));
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getProven()));
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getProbable()));
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getProvenAndProbable()));
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getMeasured()));
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getIndicated()));
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getMeasuredAndIndicated()));
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getInferred()));
+					resourcesTable.addCell(ObjectUtils.toString(mineralResource.getOther()));
 					for (ResourceGrade resourceGrade : mineralResource.getResourceGrades()) {
-						table.addCell(new String());
-						table.addCell(new String());
-						table.addCell(new String());
-						table.addCell(ObjectUtils.toString(resourceGrade.getCommodity().getId()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getGradeUnit().getCode()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getProven()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getProbable()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getProvenAndProbable()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getMeasured()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getIndicated()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getMeasuredAndIndicated()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getInferred()));
-						table.addCell(ObjectUtils.toString(resourceGrade.getOther()));
+						resourcesTable.addCell(new String());
+						resourcesTable.addCell(new String());
+						resourcesTable.addCell(new String());
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getCommodity().getId()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getGradeUnit().getCode()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getProven()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getProbable()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getProvenAndProbable()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getMeasured()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getIndicated()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getMeasuredAndIndicated()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getInferred()));
+						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getOther()));
 					}
 					j++;
 				}
 
 				i++;
 			}
-
+			depositCell.addElement(resourcesTable);
+			depositTable.addCell(depositCell);
+			document.add(depositTable);
 		}
-		document.add(table);
+
 	}
 
 	private HeaderFooter header = new HeaderFooter(new Phrase("OZMIN Resources and Grades (QA Sheet)"), false);
@@ -129,8 +138,9 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 	protected Document newDocument() {
 		Document document = new Document();
 		document.setPageSize(PageSize.A4.rotate());
-		document.setMargins(0, 0, 0, 0);
-		document.setMarginMirroring(true);
+		//document.setMargins(0, 0, 0, 0);
+		//document.setMarginMirroring(true);
+	
 		return document;
 	}
 
