@@ -65,9 +65,13 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 			depositCell.disableBorderSide(1);
 
 			PdfPTable resourcesTable = new PdfPTable(numberOfColumns());
-			
+
 			resourcesTable.setWidthPercentage(100);
 			resourcesTable.getDefaultCell().setBorder(0);
+			PdfPTable classificationTable = new PdfPTable(numberOfColumns());
+
+			classificationTable.setWidthPercentage(100);
+			classificationTable.getDefaultCell().setBorder(0);
 			for (String headerItem : headerRow) {
 				PdfPCell headerCell = new PdfPCell();
 				headerCell.addElement(tableString(headerItem));
@@ -116,6 +120,19 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getMeasuredAndIndicated()));
 						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getInferred()));
 						resourcesTable.addCell(ObjectUtils.toString(resourceGrade.getOther()));
+						classificationTable.addCell(new String());
+						classificationTable.addCell(new String());
+						classificationTable.addCell(new String());
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getCommodity().getId()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getGradeUnit().getCode()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getProvenClassification()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getProbableClassification()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getProvenAndProbableClassification()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getMeasuredClassification()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getIndicatedClassification()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getMeasuredAndIndicatedClassification()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getInferredClassification()));
+						classificationTable.addCell(ObjectUtils.toString(resourceGrade.getOtherClassification()));
 					}
 					j++;
 				}
@@ -123,6 +140,7 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 				i++;
 			}
 			depositCell.addElement(resourcesTable);
+			depositCell.addElement(classificationTable);
 			depositTable.addCell(depositCell);
 			document.add(depositTable);
 		}
@@ -137,9 +155,9 @@ public class ResourceQualityCheckPdfView extends AbstractPdfView {
 	protected Document newDocument() {
 		Document document = new Document();
 		document.setPageSize(PageSize.A4.rotate());
-		//document.setMargins(0, 0, 0, 0);
-		//document.setMarginMirroring(true);
-	
+		// document.setMargins(0, 0, 0, 0);
+		// document.setMarginMirroring(true);
+
 		return document;
 	}
 
