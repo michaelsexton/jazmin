@@ -4,6 +4,10 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class GaClassification {
+	
+	public GaClassification() {
+		
+	};
 
 	public GaClassification(String mainClassification, Double mainPercentage, String secondClassification,
 			Double secondPercentage) {
