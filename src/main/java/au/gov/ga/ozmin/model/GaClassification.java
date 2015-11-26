@@ -64,4 +64,12 @@ public class GaClassification {
 		this.secondPercentage = secondPercentage;
 	}
 
+	@Override
+	public String toString() {
+		return "GaClassification [mainClassification=" + mainClassification + ", mainPercentage=" + mainPercentage
+				+ ", secondClassification=" + secondClassification + ", secondPercentage=" + secondPercentage + "]";
+	}
+	
+	
+
 }
