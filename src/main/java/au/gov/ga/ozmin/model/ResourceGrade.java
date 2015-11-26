@@ -1,5 +1,7 @@
 package au.gov.ga.ozmin.model;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,21 +13,21 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 @Entity
-@Table(schema="MGD",name="RESOURCE_GRADES")
+@Table(schema = "MGD", name = "RESOURCE_GRADES")
 public class ResourceGrade {
 
 	@Id
-	@Column(name="RESCOMMNO") 
+	@Column(name = "RESCOMMNO")
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "COMMODID")
 	private Commodity commodity;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "UNIT_GRADE")
 	private Unit gradeUnit;
-	
+
 	@Column(name = "PVR")
 	private Double proven;
 
@@ -49,7 +51,55 @@ public class ResourceGrade {
 
 	@Column(name = "OTHER")
 	private Double other;
-	
+
+	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "PVR_CLASS1") ),
+			@AttributeOverride(name = "secondClassification", column = @Column(name = "PVR_CLASS2") ),
+			@AttributeOverride(name = "mainPercentage", column = @Column(name = "PVR_PCNT1") ),
+			@AttributeOverride(name = "secondPercentage", column = @Column(name = "PVR_PCNT2") ) })
+	private GaClassification provenClassification;
+
+	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "PBR_CLASS1") ),
+			@AttributeOverride(name = "secondClassification", column = @Column(name = "PBR_CLASS2") ),
+			@AttributeOverride(name = "mainPercentage", column = @Column(name = "PBR_PCNT1") ),
+			@AttributeOverride(name = "secondPercentage", column = @Column(name = "PBR_PCNT2") ) })
+	private GaClassification probableClassification;
+
+	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "PPR_CLASS1") ),
+			@AttributeOverride(name = "secondClassification", column = @Column(name = "PPR_CLASS2") ),
+			@AttributeOverride(name = "mainPercentage", column = @Column(name = "PPR_PCNT1") ),
+			@AttributeOverride(name = "secondPercentage", column = @Column(name = "PPR_PCNT2") ) })
+	private GaClassification provenAndProbableClassification;
+
+	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "MRS_CLASS1") ),
+			@AttributeOverride(name = "secondClassification", column = @Column(name = "MRS_CLASS2") ),
+			@AttributeOverride(name = "mainPercentage", column = @Column(name = "MRS_PCNT1") ),
+			@AttributeOverride(name = "secondPercentage", column = @Column(name = "MRS_PCNT2") ) })
+	private GaClassification measuredClassification;
+
+	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "IDR_CLASS1") ),
+			@AttributeOverride(name = "secondClassification", column = @Column(name = "IDR_CLASS2") ),
+			@AttributeOverride(name = "mainPercentage", column = @Column(name = "IDR_PCNT1") ),
+			@AttributeOverride(name = "secondPercentage", column = @Column(name = "IDR_PCNT2") ) })
+	private GaClassification indicatedClassification;
+
+	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "MID_CLASS1") ),
+			@AttributeOverride(name = "secondClassification", column = @Column(name = "MID_CLASS2") ),
+			@AttributeOverride(name = "mainPercentage", column = @Column(name = "MID_PCNT1") ),
+			@AttributeOverride(name = "secondPercentage", column = @Column(name = "MID_PCNT2") ) })
+	private GaClassification measuredAndIndicatedClassification;
+
+	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "IFR_CLASS1") ),
+			@AttributeOverride(name = "secondClassification", column = @Column(name = "IFR_CLASS2") ),
+			@AttributeOverride(name = "mainPercentage", column = @Column(name = "IFR_PCNT1") ),
+			@AttributeOverride(name = "secondPercentage", column = @Column(name = "IFR_PCNT2") ) })
+	private GaClassification inferredClassification;
+
+	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "OTHER_CLASS1") ),
+			@AttributeOverride(name = "secondClassification", column = @Column(name = "OTHER_CLASS2") ),
+			@AttributeOverride(name = "mainPercentage", column = @Column(name = "OTHER_PCNT1") ),
+			@AttributeOverride(name = "secondPercentage", column = @Column(name = "OTHER_PCNT2") ) })
+	private GaClassification otherClassification;
+
 	@ManyToOne
 	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name = "RESOURCENO")
@@ -65,6 +115,70 @@ public class ResourceGrade {
 
 	public Commodity getCommodity() {
 		return commodity;
+	}
+
+	public GaClassification getProvenClassification() {
+		return provenClassification;
+	}
+
+	public void setProvenClassification(GaClassification provenClassification) {
+		this.provenClassification = provenClassification;
+	}
+
+	public GaClassification getProbableClassification() {
+		return probableClassification;
+	}
+
+	public void setProbableClassification(GaClassification probableClassification) {
+		this.probableClassification = probableClassification;
+	}
+
+	public GaClassification getProvenAndProbableClassification() {
+		return provenAndProbableClassification;
+	}
+
+	public void setProvenAndProbableClassification(GaClassification provenAndProbableClassification) {
+		this.provenAndProbableClassification = provenAndProbableClassification;
+	}
+
+	public GaClassification getMeasuredClassification() {
+		return measuredClassification;
+	}
+
+	public void setMeasuredClassification(GaClassification measuredClassification) {
+		this.measuredClassification = measuredClassification;
+	}
+
+	public GaClassification getIndicatedClassification() {
+		return indicatedClassification;
+	}
+
+	public void setIndicatedClassification(GaClassification indicatedClassification) {
+		this.indicatedClassification = indicatedClassification;
+	}
+
+	public GaClassification getMeasuredAndIndicatedClassification() {
+		return measuredAndIndicatedClassification;
+	}
+
+	public void setMeasuredAndIndicatedClassification(GaClassification measuredAndIndicatedClassification) {
+		this.measuredAndIndicatedClassification = measuredAndIndicatedClassification;
+	}
+
+	public GaClassification getInferredClassification() {
+		return inferredClassification;
+	}
+
+	public void setInferredClassification(GaClassification inferredClassification) {
+		this.inferredClassification = inferredClassification;
+	}
+
+	public GaClassification getOtherClassification() {
+		return otherClassification;
+	}
+
+	public void setOtherClassification(GaClassification otherClassification) {
+		this.otherClassification = otherClassification;
 	}
 
 	public void setCommodity(Commodity commodity) {
@@ -151,5 +265,4 @@ public class ResourceGrade {
 		this.mineralResource = mineralResource;
 	}
 
-	
 }
