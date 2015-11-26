@@ -13,7 +13,7 @@ public class GaClassification {
 		this.secondClassification = secondClassification;
 		this.secondPercentage = secondPercentage;
 	}
-	
+
 	public GaClassification(String mainClassification, Double mainPercentage) {
 		super();
 		this.mainClassification = mainClassification;
@@ -21,36 +21,43 @@ public class GaClassification {
 		this.secondClassification = null;
 		this.secondPercentage = null;
 	}
-	
+
 	private String mainClassification;
 	private Double mainPercentage;
-	
+
 	private String secondClassification;
 	private Double secondPercentage;
+
 	public String getMainClassification() {
 		return mainClassification;
 	}
+
 	public void setMainClassification(String mainClassification) {
 		this.mainClassification = mainClassification;
 	}
+
 	public Double getMainPercentage() {
 		return mainPercentage;
 	}
+
 	public void setMainPercentage(Double mainPercentage) {
 		this.mainPercentage = mainPercentage;
 	}
+
 	public String getSecondClassification() {
 		return secondClassification;
 	}
+
 	public void setSecondClassification(String secondClassification) {
 		this.secondClassification = secondClassification;
 	}
+
 	public Double getSecondPercentage() {
 		return secondPercentage;
 	}
+
 	public void setSecondPercentage(Double secondPercentage) {
 		this.secondPercentage = secondPercentage;
 	}
-	
-	
+
 }
