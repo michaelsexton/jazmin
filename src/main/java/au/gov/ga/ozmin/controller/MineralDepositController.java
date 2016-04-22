@@ -13,36 +13,37 @@ import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.service.MineralDepositService;
 import au.gov.ga.ozmin.util.Paginator;
 
-
 /**
  * Created by michael on 10/09/2015.
  */
 @Controller
 @RequestMapping("/mineralDeposits")
 public class MineralDepositController {
-    private MineralDepositService mineralDepositService;
+	private MineralDepositService mineralDepositService;
 
-    @Autowired(required = true)
-    @Qualifier(value = "mineralDepositService")
-    public void setMineralDepositService(MineralDepositService ds) { this.mineralDepositService = ds;}
+	@Autowired(required = true)
+	@Qualifier(value = "mineralDepositService")
+	public void setMineralDepositService(MineralDepositService ds) {
+		this.mineralDepositService = ds;
+	}
 
-    //Index
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String mineralDepositsPage(Model model, Pageable pageable  ) {
-        Paginator<MineralDeposit> mineralDepositsPage = new Paginator<MineralDeposit>(mineralDepositService.mineralDepositsPage(pageable),"/mineralDeposits");
-        model.addAttribute("mineralDepositsPage", mineralDepositsPage);
+	// Index
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String mineralDepositsPage(Model model, Pageable pageable) {
+		Paginator<MineralDeposit> mineralDepositsPage = new Paginator<MineralDeposit>(
+				mineralDepositService.mineralDepositsPage(pageable), "/mineralDeposits");
+		model.addAttribute("mineralDepositsPage", mineralDepositsPage);
 
+		return "mineralDeposits/index";
+	}
 
-        return "mineralDeposits/index";
-    }
-    
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String showDeposit(@PathVariable("id") Long id, Model model) {
-    	MineralDeposit mineralDeposit =  this.mineralDepositService.getDepositById(id);
-    	model.addAttribute("deposit", mineralDeposit);
-    	model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
-    	model.addAttribute("orders", mineralDeposit.getOrderedCommodities().values());
-    	model.addAttribute("provinces", mineralDeposit.getProvinces());
-    return "mineralDeposits/show";
-}
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public String showDeposit(@PathVariable("id") Long id, Model model) {
+		MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
+		model.addAttribute("deposit", mineralDeposit);
+		model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
+		model.addAttribute("orders", mineralDeposit.getOrderedCommodities().values());
+		model.addAttribute("provinces", mineralDeposit.getProvinces());
+		return "mineralDeposits/show";
+	}
 }
