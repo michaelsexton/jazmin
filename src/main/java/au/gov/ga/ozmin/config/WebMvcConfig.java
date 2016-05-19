@@ -3,8 +3,6 @@ package au.gov.ga.ozmin.config;
 import java.util.List;
 import java.util.Properties;
 
-import nz.net.ultraq.thymeleaf.LayoutDialect;
-
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +14,27 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.SortHandlerMethodArgumentResolver;
+import org.springframework.http.MediaType;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+
+import com.bedatadriven.jackson.datatype.jts.JtsModule;
+import com.fasterxml.jackson.databind.Module;
 
 import au.gov.ga.ozmin.service.CommodityService;
 import au.gov.ga.ozmin.service.MineralDepositService;
@@ -41,6 +47,8 @@ import au.gov.ga.ozmin.service.impl.MineralResourceServiceImpl;
 import au.gov.ga.ozmin.service.impl.ProvinceServiceImpl;
 import au.gov.ga.ozmin.service.impl.SurveyServiceImpl;
 import au.gov.ga.ozmin.view.ResourceQualityCheckPdfView;
+import au.gov.ga.ozmin.viewresolver.JsonViewResolver;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
 @ComponentScan(basePackages = "au.gov.ga.ozmin")
@@ -74,7 +82,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public PageableHandlerMethodArgumentResolver pageable() {
 		PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver = new PageableHandlerMethodArgumentResolver();
-		// TODO :  Import new spring-data-commons when package fixes size issue.
+		// TODO : Import new spring-data-commons when package fixes size issue.
 		pageableHandlerMethodArgumentResolver.setOneIndexedParameters(true);
 		return pageableHandlerMethodArgumentResolver;
 	}
@@ -84,12 +92,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		return new SortHandlerMethodArgumentResolver();
 	}
 
+//	@Bean
+//	public ServiceConfig services() {
+//		return new ServiceConfig();
+//	}
 	@Bean
 	public CommodityService commodityService() {
 		return new CommodityServiceImpl();
 
 	}
-	
+
 	@Bean
 	public ProvinceService provinceService() {
 		return new ProvinceServiceImpl();
@@ -106,14 +118,13 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		return new MineralResourceServiceImpl();
 
 	}
-	
+
 	@Bean
-	public SurveyService surveyService()  {
+	public SurveyService surveyService() {
 		return new SurveyServiceImpl();
 
 	}
-	
-	
+
 	@Bean
 	public ResourceQualityCheckPdfView resourceQualityCheckPdfView() {
 		return new ResourceQualityCheckPdfView();
@@ -130,7 +141,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	}
 
-	@Bean
+	@Bean(name = "thymeleafViewResolver")
 	public ThymeleafViewResolver viewResolver() {
 		ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
 		thymeleafViewResolver.setOrder(1);
@@ -193,6 +204,30 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		servletContextTemplateResolver.setTemplateMode("HTML5");
 		servletContextTemplateResolver.setCacheable(false);
 		return servletContextTemplateResolver;
+	}
+
+	@Bean
+	public ViewResolver contentNegotiatingViewResolver(
+			ContentNegotiationManager manager) {
+		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+		resolver.setContentNegotiationManager(manager);
+		return resolver;
+	}
+	
+	@Bean(name = "jsonViewResolver")
+	public ViewResolver getJsonViewResolver() {
+		return new JsonViewResolver();
+	}
+	
+	@Override
+	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+		configurer.defaultContentType(MediaType.TEXT_HTML).favorPathExtension(true).ignoreAcceptHeader(true)
+				.mediaType("json", MediaType.APPLICATION_JSON);
+	}
+	
+	@Bean
+	public Module jtsModule() {
+		return new JtsModule();
 	}
 
 	private Properties hibernateProperties() {
