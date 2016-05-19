@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("MINERAL PROJECT")
 public class MineralProject extends SpatialEntity {
-
+/*
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralProject")
     private Set<MineralDeposit> mineralDeposits;
 
@@ -20,5 +20,5 @@ public class MineralProject extends SpatialEntity {
 
     public void setMineralDeposits(Set<MineralDeposit> mineralDeposits) {
         this.mineralDeposits = mineralDeposits;
-    }
+    }*/
 }

@@ -1,5 +1,7 @@
 package au.gov.ga.ozmin.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +29,11 @@ public class MineralDepositController {
 		this.mineralDepositService = ds;
 	}
 
+	@RequestMapping(value = "", method = RequestMethod.GET, produces = { "application/xml", "application/json" })
+	public List<MineralDeposit> mineralDeposits() {
+		return this.mineralDepositService.mineralDeposits();
+	}
+
 	// Index
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String mineralDepositsPage(Model model, Pageable pageable) {
@@ -42,7 +49,7 @@ public class MineralDepositController {
 		MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
 		model.addAttribute("deposit", mineralDeposit);
 		model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
-		model.addAttribute("orders", mineralDeposit.getOrderedCommodities().values());
+		//model.addAttribute("orders", mineralDeposit.getOrderedCommodities().values());
 		model.addAttribute("provinces", mineralDeposit.getProvinces());
 		return "mineralDeposits/show";
 	}

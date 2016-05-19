@@ -1,5 +1,7 @@
 package au.gov.ga.ozmin.service.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.data.domain.Page;
@@ -28,11 +30,16 @@ public class MineralDepositServiceImpl implements MineralDepositService {
 	@Override
 	@Transactional
 	public MineralDeposit getDepositById(Long id) {
-		MineralDeposit mineralDeposit = this.mineralDepositRepository.findDepositWithAssociatedData(id);
+		//MineralDeposit mineralDeposit = this.mineralDepositRepository.findDepositWithAssociatedData(id);
 		/*Hibernate.initialize(mineralDeposit.getMineralisedZones());
 		 Hibernate.initialize(mineralDeposit.getProvinces()); 
 		Hibernate.initialize(mineralDeposit.getOrderedCommodities());*/
-		return mineralDeposit;
+		return null;
+	}
+
+	@Override
+	public List<MineralDeposit> mineralDeposits() {
+		return this.mineralDepositRepository.findAll();
 	}
 
 	// @Override

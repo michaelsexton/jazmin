@@ -1,7 +1,12 @@
 package au.gov.ga.ozmin.model;
 
-
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -11,56 +16,58 @@ import java.util.Set;
  */
 @Entity
 @DiscriminatorValue("MINERAL DEPOSIT")
-@SecondaryTable(schema="MGD",name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name="ENO"))
+@SecondaryTable(schema = "MGD", name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name = "ENO"))
 public class MineralDeposit extends SpatialEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "PARENT")
-    private MineralProject mineralProject;
+	/*@ManyToOne
+	@JoinColumn(name = "PARENT")
+	@JsonBackReference
+	private MineralProject mineralProject;*/
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralDeposit")
-    private Set<MineralisedZone> mineralisedZones;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralDeposit")
+	@JsonIgnore
+	private Set<MineralisedZone> mineralisedZones;
 
-    @Column(name="OPERATING_STATUS",table="DEPOSITS")
-    private String operatingStatus;
-    
-    @Column(name="STATE",table="DEPOSITS")
-    private String state;
-    
-    @Column(name="SYNONYMS",table="DEPOSITS")
-    private String synonyms;
-    
-//    @ManyToMany
-//    @JoinTable(schema="MGD",name="COMMODS",
-//    	joinColumns={@JoinColumn(name="ENO",referencedColumnName="ENO")},
-//    	inverseJoinColumns={@JoinColumn(name="COMMODID", referencedColumnName="COMMODID")})
-//    private List<Commodity> commodities;
-    
-    
-    @OneToMany(mappedBy="id.mineralDeposit")
-    Set<MineralDepositCommodityOrder> mineralDepositCommodityOrders;
-    
-    public Set<MineralDepositCommodityOrder> getMineralDepositCommodityOrder() {
+	@Column(name = "OPERATING_STATUS", table = "DEPOSITS")
+	private String operatingStatus;
+
+	@Column(name = "STATE", table = "DEPOSITS")
+	private String state;
+
+	@Column(name = "SYNONYMS", table = "DEPOSITS")
+	private String synonyms;
+
+	// @ManyToMany
+	// @JoinTable(schema="MGD",name="COMMODS",
+	// joinColumns={@JoinColumn(name="ENO",referencedColumnName="ENO")},
+	// inverseJoinColumns={@JoinColumn(name="COMMODID",
+	// referencedColumnName="COMMODID")})
+	// private List<Commodity> commodities;
+
+	/*@OneToMany(mappedBy = "id.mineralDeposit")
+	@JsonIgnore
+	Set<MineralDepositCommodityOrder> mineralDepositCommodityOrders;
+
+	public Set<MineralDepositCommodityOrder> getMineralDepositCommodityOrder() {
 		return mineralDepositCommodityOrders;
 	}
 
 	public void setMineralDepositCommodityOrder(Set<MineralDepositCommodityOrder> mineralDepositCommodityOrder) {
 		this.mineralDepositCommodityOrders = mineralDepositCommodityOrder;
-	}
+	}*/
 
 	@ManyToMany
-    @JoinTable(schema="PROVS",name="PROVDEPOS",
-    	joinColumns={@JoinColumn(name="DEPOSNO",referencedColumnName="ENO")},
-        inverseJoinColumns={@JoinColumn(name="ENO", referencedColumnName="ENO")})
-    private Set<Province> provinces;
-    
-    
-    
-//    @ManyToMany
-//    @JoinTable(schema="MGD",name="REFLINKS")
-//    private List<Reference> references;
-    
-    public String getState() {
+	@JsonIgnore
+	@JoinTable(schema = "PROVS", name = "PROVDEPOS", joinColumns = {
+			@JoinColumn(name = "DEPOSNO", referencedColumnName = "ENO") }, inverseJoinColumns = {
+					@JoinColumn(name = "ENO", referencedColumnName = "ENO") })
+	private Set<Province> provinces;
+
+	// @ManyToMany
+	// @JoinTable(schema="MGD",name="REFLINKS")
+	// private List<Reference> references;
+
+	public String getState() {
 		return state;
 	}
 
@@ -68,21 +75,21 @@ public class MineralDeposit extends SpatialEntity {
 		this.state = state;
 	}
 
-	public MineralProject getMineralProject() {
-        return mineralProject;
-    }
+	/*public MineralProject getMineralProject() {
+		return mineralProject;
+	}
 
-    public void setMineralProject(MineralProject mineralProject) {
-        this.mineralProject = mineralProject;
-    }
+	public void setMineralProject(MineralProject mineralProject) {
+		this.mineralProject = mineralProject;
+	}*/
 
-    public Set<MineralisedZone> getMineralisedZones() {
-        return mineralisedZones;
-    }
+	public Set<MineralisedZone> getMineralisedZones() {
+		return mineralisedZones;
+	}
 
-    public void setMineralisedZones(Set<MineralisedZone> mineralisedZones) {
-        this.mineralisedZones = mineralisedZones;
-    }
+	public void setMineralisedZones(Set<MineralisedZone> mineralisedZones) {
+		this.mineralisedZones = mineralisedZones;
+	}
 
 	public String getOperatingStatus() {
 		return operatingStatus;
@@ -92,13 +99,13 @@ public class MineralDeposit extends SpatialEntity {
 		this.operatingStatus = operatingStatus;
 	}
 
-//	public List<Commodity> getCommodities() {
-//		return commodities;
-//	}
-//
-//	public void setCommodities(List<Commodity> commodities) {
-//		this.commodities = commodities;
-//	}
+	// public List<Commodity> getCommodities() {
+	// return commodities;
+	// }
+	//
+	// public void setCommodities(List<Commodity> commodities) {
+	// this.commodities = commodities;
+	// }
 
 	public Set<Province> getProvinces() {
 		return provinces;
@@ -115,12 +122,12 @@ public class MineralDeposit extends SpatialEntity {
 	public void setSynonyms(String synonyms) {
 		this.synonyms = synonyms;
 	}
-	
-	public LinkedHashMap<Commodity, Integer> getOrderedCommodities() {
+
+/*	public LinkedHashMap<Commodity, Integer> getOrderedCommodities() {
 		LinkedHashMap<Commodity, Integer> orderedCommodities = new LinkedHashMap<Commodity, Integer>();
 		for (MineralDepositCommodityOrder mdco : getMineralDepositCommodityOrder()) {
 			orderedCommodities.put(mdco.getCommodity(), mdco.getCommodityOrder());
 		}
 		return orderedCommodities;
-	}
+	}*/
 }
