@@ -30,11 +30,7 @@ public class MineralDepositServiceImpl implements MineralDepositService {
 	@Override
 	@Transactional
 	public MineralDeposit getDepositById(Long id) {
-		//MineralDeposit mineralDeposit = this.mineralDepositRepository.findDepositWithAssociatedData(id);
-		/*Hibernate.initialize(mineralDeposit.getMineralisedZones());
-		 Hibernate.initialize(mineralDeposit.getProvinces()); 
-		Hibernate.initialize(mineralDeposit.getOrderedCommodities());*/
-		return null;
+		return (MineralDeposit) this.mineralDepositRepository.findOne(id);
 	}
 
 	@Override
@@ -42,33 +38,4 @@ public class MineralDepositServiceImpl implements MineralDepositService {
 		return this.mineralDepositRepository.findAll();
 	}
 
-	// @Override
-	// @Transactional
-	// public void removeDeposit(int id) {
-	// this.depositDAO.removeDeposit(id);
-	// }
-	//
-	// @Override
-	// @Transactional
-	// public void addDeposit(MineralDeposit deposit) {
-	// this.depositDAO.addDeposit(deposit);
-	// }
-	//
-	// @Override
-	// @Transactional
-	// public void updateDeposit(MineralDeposit deposit) {
-	// this.depositDAO.updateDeposit(deposit);
-	// }
-	//
-	// @Override
-	// @Transactional
-	// public List<MineralDeposit> listDeposits() {
-	// return this.depositDAO.listDeposits();
-	// }
-	//
-	// @Override
-	// @Transactional
-	// public MineralDeposit getDepositById(int id) {
-	// return this.depositDAO.getDepositById(id);
-	// }
 }

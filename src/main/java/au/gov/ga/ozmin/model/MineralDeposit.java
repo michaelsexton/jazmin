@@ -1,28 +1,31 @@
 package au.gov.ga.ozmin.model;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import java.util.LinkedHashMap;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
+
+import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vividsolutions.jts.geom.Point;
 
 /**
  * Created by michael on 10/09/2015.
  */
 @Entity
 @DiscriminatorValue("MINERAL DEPOSIT")
-@SecondaryTable(schema = "MGD", name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name = "ENO"))
+@SecondaryTable(schema = "MGD", name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name = "ENO") )
 public class MineralDeposit extends SpatialEntity {
-
-	/*@ManyToOne
-	@JoinColumn(name = "PARENT")
-	@JsonBackReference
-	private MineralProject mineralProject;*/
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralDeposit")
 	@JsonIgnore
@@ -37,24 +40,10 @@ public class MineralDeposit extends SpatialEntity {
 	@Column(name = "SYNONYMS", table = "DEPOSITS")
 	private String synonyms;
 
-	// @ManyToMany
-	// @JoinTable(schema="MGD",name="COMMODS",
-	// joinColumns={@JoinColumn(name="ENO",referencedColumnName="ENO")},
-	// inverseJoinColumns={@JoinColumn(name="COMMODID",
-	// referencedColumnName="COMMODID")})
-	// private List<Commodity> commodities;
+	@Column(name = "GEOM", updatable = false)
+	@Type(type = "org.hibernate.spatial.GeometryType")
+	private Point geometry;
 
-	/*@OneToMany(mappedBy = "id.mineralDeposit")
-	@JsonIgnore
-	Set<MineralDepositCommodityOrder> mineralDepositCommodityOrders;
-
-	public Set<MineralDepositCommodityOrder> getMineralDepositCommodityOrder() {
-		return mineralDepositCommodityOrders;
-	}
-
-	public void setMineralDepositCommodityOrder(Set<MineralDepositCommodityOrder> mineralDepositCommodityOrder) {
-		this.mineralDepositCommodityOrders = mineralDepositCommodityOrder;
-	}*/
 
 	@ManyToMany
 	@JsonIgnore
@@ -63,9 +52,6 @@ public class MineralDeposit extends SpatialEntity {
 					@JoinColumn(name = "ENO", referencedColumnName = "ENO") })
 	private Set<Province> provinces;
 
-	// @ManyToMany
-	// @JoinTable(schema="MGD",name="REFLINKS")
-	// private List<Reference> references;
 
 	public String getState() {
 		return state;
@@ -75,14 +61,10 @@ public class MineralDeposit extends SpatialEntity {
 		this.state = state;
 	}
 
-	/*public MineralProject getMineralProject() {
-		return mineralProject;
+	public Point getGeometry() {
+		return geometry;
 	}
-
-	public void setMineralProject(MineralProject mineralProject) {
-		this.mineralProject = mineralProject;
-	}*/
-
+	
 	public Set<MineralisedZone> getMineralisedZones() {
 		return mineralisedZones;
 	}
@@ -98,14 +80,6 @@ public class MineralDeposit extends SpatialEntity {
 	public void setOperatingStatus(String operatingStatus) {
 		this.operatingStatus = operatingStatus;
 	}
-
-	// public List<Commodity> getCommodities() {
-	// return commodities;
-	// }
-	//
-	// public void setCommodities(List<Commodity> commodities) {
-	// this.commodities = commodities;
-	// }
 
 	public Set<Province> getProvinces() {
 		return provinces;
@@ -123,11 +97,4 @@ public class MineralDeposit extends SpatialEntity {
 		this.synonyms = synonyms;
 	}
 
-/*	public LinkedHashMap<Commodity, Integer> getOrderedCommodities() {
-		LinkedHashMap<Commodity, Integer> orderedCommodities = new LinkedHashMap<Commodity, Integer>();
-		for (MineralDepositCommodityOrder mdco : getMineralDepositCommodityOrder()) {
-			orderedCommodities.put(mdco.getCommodity(), mdco.getCommodityOrder());
-		}
-		return orderedCommodities;
-	}*/
 }

@@ -1,92 +1,81 @@
 package au.gov.ga.ozmin.model;
 
-import com.vividsolutions.jts.geom.Geometry;
-import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 /**
  * Created by michael on 10/09/2015.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "ENTITY_TYPE", discriminatorType = DiscriminatorType.STRING )
-@Table(schema="A",name="ENTITIES")
+@DiscriminatorColumn(name = "ENTITY_TYPE", discriminatorType = DiscriminatorType.STRING)
+@Table(schema = "A", name = "ENTITIES")
 public abstract class SpatialEntity {
 
-    @Id
-    @Column(name = "ENO")
-    private Long id;
+	@Id
+	@Column(name = "ENO")
+	private Long id;
 
-    @Column(name = "ENTITYID")
-    private String name;
-
-
-
-    @Column(name = "GEOM",updatable = false)
-    @Type(type="org.hibernate.spatial.GeometryType")
-    private Geometry geometry;
-
-    @Column(name = "GEOM_ORIGINAL")
-    @Type(type="org.hibernate.spatial.GeometryType")
-    private Geometry originalGeometry;
-/*
-    @ManyToOne
-    @JoinColumn(name = "PARENT")
-    private SpatialEntity parentSpatialEntity;
-*/
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Geometry getGeometry() {
-        return geometry;
-    }
+	@Column(name = "ENTITYID")
+	private String name;
 
 
-    public double getX() {
-        if (geometry!= null) {
-            return geometry.getCoordinate().x;
+	public Long getId() {
+		return id;
+	}
 
-        }
-        return 0.0;
-    }
-    public double getY() {
-        if (geometry!= null) {
-            return geometry.getCoordinate().y;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-        }
-        return 0.0;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public double getZ() {
-        if (geometry!= null) {
-            return geometry.getCoordinate().z;
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        }
-        return 0.0;
-    }
+	/*public Geometry getGeometry() {
+		return geometry;
+	}
 
+	public double getX() {
+		if (geometry != null) {
+			return geometry.getCoordinate().x;
 
-    public Geometry getOriginalGeometry() {
-        return originalGeometry;
-    }
+		}
+		return 0.0;
+	}
 
-    public void setOriginalGeometry(Geometry originalGeometry) {
-        this.originalGeometry = originalGeometry;
-    }
+	public double getY() {
+		if (geometry != null) {
+			return geometry.getCoordinate().y;
 
+		}
+		return 0.0;
+	}
+
+	public double getZ() {
+		if (geometry != null) {
+			return geometry.getCoordinate().z;
+
+		}
+		return 0.0;
+	}*/
+
+	/*public Geometry getOriginalGeometry() {
+		return originalGeometry;
+	}
+
+	public void setOriginalGeometry(Geometry originalGeometry) {
+		this.originalGeometry = originalGeometry;
+	}*/
 
 }
