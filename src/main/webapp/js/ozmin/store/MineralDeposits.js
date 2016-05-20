@@ -1,13 +1,13 @@
 Ext.define('ozmin.store.MineralDeposits', {
-    extend: 'Ext.data.Store',
-
-    alias: 'store.mineraldeposits',
-    model: 'ozmin.model.grid.MineralDeposit',
-
-    pageSize: 50,
-    remoteSort: true,
-    sorters: [{
-        property: 'lastpost',
-        direction: 'DESC'
-    }]
+	storeId : 'mineralDepositsStore',
+	model : 'ozmim.mdel.grid.MineralDeposit',
+	proxy : {
+		type : 'ajax',
+		url : '/ozmin/mineralDeposits.json',
+		reader : {
+			type : 'json'
+		// rootProperty : 'users'
+		}
+	},
+	autoLoad : true
 });
