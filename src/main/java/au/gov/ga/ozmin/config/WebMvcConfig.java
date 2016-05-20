@@ -15,6 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -33,9 +35,6 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import com.bedatadriven.jackson.datatype.jts.JtsModule;
-import com.fasterxml.jackson.databind.Module;
-
 import au.gov.ga.ozmin.service.CommodityService;
 import au.gov.ga.ozmin.service.MineralDepositService;
 import au.gov.ga.ozmin.service.MineralResourceService;
@@ -46,6 +45,7 @@ import au.gov.ga.ozmin.service.impl.MineralDepositServiceImpl;
 import au.gov.ga.ozmin.service.impl.MineralResourceServiceImpl;
 import au.gov.ga.ozmin.service.impl.ProvinceServiceImpl;
 import au.gov.ga.ozmin.service.impl.SurveyServiceImpl;
+import au.gov.ga.ozmin.util.CustomMapper;
 import au.gov.ga.ozmin.view.ResourceQualityCheckPdfView;
 import au.gov.ga.ozmin.viewresolver.JsonViewResolver;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
@@ -92,10 +92,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		return new SortHandlerMethodArgumentResolver();
 	}
 
-//	@Bean
-//	public ServiceConfig services() {
-//		return new ServiceConfig();
-//	}
+	// @Bean
+	// public ServiceConfig services() {
+	// return new ServiceConfig();
+	// }
 	@Bean
 	public CommodityService commodityService() {
 		return new CommodityServiceImpl();
@@ -207,27 +207,33 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public ViewResolver contentNegotiatingViewResolver(
-			ContentNegotiationManager manager) {
+	public ViewResolver contentNegotiatingViewResolver(ContentNegotiationManager manager) {
 		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 		resolver.setContentNegotiationManager(manager);
 		return resolver;
 	}
-	
+
 	@Bean(name = "jsonViewResolver")
 	public ViewResolver getJsonViewResolver() {
 		return new JsonViewResolver();
 	}
-	
+
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.defaultContentType(MediaType.TEXT_HTML).favorPathExtension(true).ignoreAcceptHeader(true)
 				.mediaType("json", MediaType.APPLICATION_JSON);
 	}
-	
+
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		converters.add(jacksonMessageConverter());
+	};
+
 	@Bean
-	public Module jtsModule() {
-		return new JtsModule();
+	public MappingJackson2HttpMessageConverter jacksonMessageConverter() {
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converter.setObjectMapper(new CustomMapper());
+		return converter;
 	}
 
 	private Properties hibernateProperties() {
