@@ -21,7 +21,7 @@ Ext.define('ozmin.view.main.Main', {
 		},
 		iconCls : 'exec-header-icon',
 		title : {
-			text : 'MyBiz',
+			text : 'OZMIN',
 			textAlign : 'center',
 			flex : 0,
 			minWidth : 160
@@ -74,20 +74,20 @@ Ext.define('ozmin.view.main.Main', {
 			hidden : true
 		}
 	}, {
-		
-		title : 'KPI Overview',
+		//xtype : 'mineral-deposits',
+		title : 'Mineral Deposits',
 		iconCls : 'exec-kpi-icon'
 	}, {
-		
-		title : 'Performance',
+		//xtype : 'mineral-resources',
+		title : 'Mineral Resources',
 		iconCls : 'exec-quarterly-icon'
 	}, {
-	
-		title : 'Profit & Loss',
+		//xtype : 'provicnes',
+		title : 'Provinces',
 		iconCls : 'exec-pl-icon'
 	}, {
-	
-		title : 'Company News',
+		//xtype : 'surveys',
+		title : 'Surveys',
 		iconCls : 'exec-news-icon'
 	} ],
 
