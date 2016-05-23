@@ -36,10 +36,11 @@ public class MineralDepositController {
 	@ResponseBody
 	public List<MineralDeposit> mineralDeposits(@RequestParam(required = false, value = "name") String name,
 			@RequestParam(required = false, value = "operatingStatus") String operatingStatus,
-			@RequestParam(required = false, value = "state") String state) {
+			@RequestParam(required = false, value = "state") String state, 
+			@RequestParam(required=false, value = "provinceName") String provinceName) {
 		name = (name != null) ? "%" + name + "%" : null;
 		return this.mineralDepositService
-				.mineralDeposits(MineralDepositSpecification.searchByParameters(name, operatingStatus, state));
+				.mineralDeposits(MineralDepositSpecification.searchByParameters(name, operatingStatus, state, provinceName));
 	}
 
 	// Index

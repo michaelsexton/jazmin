@@ -13,7 +13,6 @@ import javax.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
-import au.gov.ga.ozmin.model.Commodity;
 import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.model.MineralDeposit_;
 import au.gov.ga.ozmin.model.Province;
@@ -21,7 +20,7 @@ import au.gov.ga.ozmin.model.Province;
 public class MineralDepositSpecification {
 
 	public static Specification<MineralDeposit> searchByParameters(final String qName, final String operatingStatus,
-			final String state) {
+			final String state, final String provinceName) {
 		return new Specification<MineralDeposit>() {
 
 			@Override
@@ -40,6 +39,10 @@ public class MineralDepositSpecification {
 				if (!StringUtils.isEmpty(state)) {
 					final Predicate statePredicate = cb.equal(root.get(MineralDeposit_.state), state);
 					predicates.add(statePredicate);
+				}
+				if (!StringUtils.isEmpty(provinceName)) {
+					final Predicate provinceNamePredicate = MineralDepositSpecification.findByProvince(provinceName).toPredicate(root, query, cb);
+					predicates.add(provinceNamePredicate);
 				}
 
 				return cb.and(predicates.toArray(new Predicate[predicates.size()]));
