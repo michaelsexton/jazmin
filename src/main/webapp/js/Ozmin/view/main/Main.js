@@ -3,11 +3,11 @@
  * the "autoCreateViewport" property. That setting automatically applies the
  * "viewport" plugin to promote that instance of this class to the body element.
  */
-Ext.define('ozmin.view.main.Main', {
+Ext.define('Ozmin.view.main.Main', {
 	extend : 'Ext.tab.Panel',
 	xtype : 'app-main',
 
-	requires : [ 'ozmin.view.*' ],
+	requires : [ 'Ozmin.view.*' ],
 
 
 
@@ -21,7 +21,7 @@ Ext.define('ozmin.view.main.Main', {
 		},
 		iconCls : 'exec-header-icon',
 		title : {
-			text : 'OZMIN',
+			text : 'Ozmin',
 			textAlign : 'center',
 			flex : 0,
 			minWidth : 160
