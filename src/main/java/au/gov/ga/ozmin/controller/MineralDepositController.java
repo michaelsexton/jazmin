@@ -10,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.service.MineralDepositService;
+import au.gov.ga.ozmin.specification.MineralDepositSpecification;
 import au.gov.ga.ozmin.util.Paginator;
 
 /**
@@ -30,13 +32,14 @@ public class MineralDepositController {
 		this.mineralDepositService = ds;
 	}
 
-
-
-	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<MineralDeposit> mineralDeposits() {
-		return this.mineralDepositService.mineralDeposits();
+	public List<MineralDeposit> mineralDeposits(@RequestParam(required = false, value = "name") String name,
+			@RequestParam(required = false, value = "operatingStatus") String operatingStatus,
+			@RequestParam(required = false, value = "state") String state) {
+		name = (name != null) ? "%" + name + "%" : null;
+		return this.mineralDepositService
+				.mineralDeposits(MineralDepositSpecification.searchByParameters(name, operatingStatus, state));
 	}
 
 	// Index
@@ -54,13 +57,14 @@ public class MineralDepositController {
 		MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
 		return mineralDeposit;
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String showDeposit(@PathVariable("id") Long id, Model model) {
 		MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
 		model.addAttribute("deposit", mineralDeposit);
 		model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
-		//model.addAttribute("orders", mineralDeposit.getOrderedCommodities().values());
+		// model.addAttribute("orders",
+		// mineralDeposit.getOrderedCommodities().values());
 		model.addAttribute("provinces", mineralDeposit.getProvinces());
 		return "mineralDeposits/show";
 	}

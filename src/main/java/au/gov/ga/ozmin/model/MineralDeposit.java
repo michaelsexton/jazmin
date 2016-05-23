@@ -1,5 +1,7 @@
 package au.gov.ga.ozmin.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,8 +15,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.annotations.Type;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vividsolutions.jts.geom.Point;
@@ -97,4 +105,7 @@ public class MineralDeposit extends SpatialEntity {
 		this.synonyms = synonyms;
 	}
 
+	
+	
+	
 }

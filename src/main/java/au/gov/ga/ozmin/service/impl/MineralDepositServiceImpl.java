@@ -3,9 +3,11 @@ package au.gov.ga.ozmin.service.impl;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +36,8 @@ public class MineralDepositServiceImpl implements MineralDepositService {
 	}
 
 	@Override
-	public List<MineralDeposit> mineralDeposits() {
-		return this.mineralDepositRepository.findAll();
+	public List<MineralDeposit> mineralDeposits(Specification<MineralDeposit> specification) {
+		return this.mineralDepositRepository.findAll(specification);
 	}
 
 }
