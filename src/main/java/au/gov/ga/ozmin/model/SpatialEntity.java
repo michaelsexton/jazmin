@@ -9,6 +9,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vividsolutions.jts.geom.Geometry;
+
 /**
  * Created by michael on 10/09/2015.
  */
@@ -25,6 +30,13 @@ public abstract class SpatialEntity {
 	@Column(name = "ENTITYID")
 	private String name;
 
+	@Column(name = "GEOM")
+	@Type(type = "org.hibernate.spatial.GeometryType")
+	private Geometry geometry;
+	
+	@Column(name = "GEOM_ORIGINAL")
+	@Type(type = "org.hibernate.spatial.GeometryType")
+	private Geometry originalGeometry;
 
 	public Long getId() {
 		return id;
@@ -42,10 +54,11 @@ public abstract class SpatialEntity {
 		this.name = name;
 	}
 
-	/*public Geometry getGeometry() {
+	public Geometry getGeometry() {
 		return geometry;
 	}
-
+    
+	@JsonIgnore
 	public double getX() {
 		if (geometry != null) {
 			return geometry.getCoordinate().x;
@@ -54,6 +67,7 @@ public abstract class SpatialEntity {
 		return 0.0;
 	}
 
+	@JsonIgnore
 	public double getY() {
 		if (geometry != null) {
 			return geometry.getCoordinate().y;
@@ -62,20 +76,21 @@ public abstract class SpatialEntity {
 		return 0.0;
 	}
 
+	@JsonIgnore
 	public double getZ() {
 		if (geometry != null) {
 			return geometry.getCoordinate().z;
 
 		}
 		return 0.0;
-	}*/
+	}
 
-	/*public Geometry getOriginalGeometry() {
+	public Geometry getOriginalGeometry() {
 		return originalGeometry;
 	}
 
 	public void setOriginalGeometry(Geometry originalGeometry) {
 		this.originalGeometry = originalGeometry;
-	}*/
+	}
 
 }
