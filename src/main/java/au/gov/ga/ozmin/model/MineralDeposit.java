@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @DiscriminatorValue("MINERAL DEPOSIT")
-@SecondaryTable(schema = "MGD", name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name = "ENO"))
+@SecondaryTable(schema = "MGD", name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name = "ENO") )
 public class MineralDeposit extends SpatialEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralDeposit")
@@ -43,6 +43,12 @@ public class MineralDeposit extends SpatialEntity {
 			@JoinColumn(name = "DEPOSNO", referencedColumnName = "ENO") }, inverseJoinColumns = {
 					@JoinColumn(name = "ENO", referencedColumnName = "ENO") })
 	private Set<Province> provinces;
+
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(schema = "MGD", name = "COMMODS", joinColumns = { @JoinColumn(name = "ENO") }, inverseJoinColumns = {
+			@JoinColumn(name = "COMMODID") })
+	private Set<Commodity> commodities;
 
 	public String getState() {
 		return state;

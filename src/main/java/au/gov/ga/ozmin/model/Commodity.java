@@ -1,121 +1,129 @@
 package au.gov.ga.ozmin.model;
 
-
+import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(schema="MGD",name="COMMODTYPES")
-public class Commodity  {
+@Table(schema = "MGD", name = "COMMODTYPES")
+public class Commodity {
 
-    @Id
-    @Column(name="COMMODID")
-    private String id;
+	@Id
+	@Column(name = "COMMODID")
+	private String id;
 
-    @Column(name="commodname")
-    private String name;
+	@Column(name = "commodname")
+	private String name;
 
-    @Column(name = "convertedcommod")
-    private String convertedCommodity;
+	@Column(name = "convertedcommod")
+	private String convertedCommodity;
 
-    @Column(name = "conversionfactor")
-    private double conversionFactor;
+	@Column(name = "conversionfactor")
+	private double conversionFactor;
 
-    @ManyToOne
-    @JoinColumn(name = "displayunit")
-    private Unit mineralUnit;
+	@ManyToOne
+	@JoinColumn(name = "displayunit")
+	private Unit mineralUnit;
 
-    @ManyToOne
-    @JoinColumn(name = "oreunit")
-    private Unit oreUnit;
+	@ManyToOne
+	@JoinColumn(name = "oreunit")
+	private Unit oreUnit;
 
-    @ManyToOne
-    @JoinColumn(name = "gradeunit")
-    private Unit gradeUnit;
+	@ManyToOne
+	@JoinColumn(name = "gradeunit")
+	private Unit gradeUnit;
 
-    @ManyToOne
-    @JoinColumn(name = "priceunit")
-    private Unit priceUnit;
-    
-//    @OneToMany(mappedBy="id.commodity")
-//    List<MineralDepositCommodityOrder> mineralDepositCommodityOrder;
-    
-    protected Commodity() {}
-    
-    public Commodity(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-    
-    public String getId() {
-        return id;
-    }
+	@ManyToOne
+	@JoinColumn(name = "priceunit")
+	private Unit priceUnit;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(schema = "MGD", name = "COMMODS", joinColumns = {
+			@JoinColumn(name = "COMMODID") }, inverseJoinColumns = { @JoinColumn(name = "ENO") })
+	private Set<MineralDeposit> mineralDeposits;
 
-    public String getName() {
+	// @OneToMany(mappedBy="id.commodity")
+	// List<MineralDepositCommodityOrder> mineralDepositCommodityOrder;
 
-        return name;
-    }
+	protected Commodity() {
+	}
 
-    public void setName(String name) {
+	public Commodity(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
-        this.name = name;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getConvertedCommodity() {
-        return convertedCommodity;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setConvertedCommodity(String convertedCommodity) {
-        this.convertedCommodity = convertedCommodity;
-    }
+	public String getName() {
 
-    public double getConversionFactor() {
-        return conversionFactor;
-    }
+		return name;
+	}
 
-    public void setConversionFactor(double conversionFactor) {
-        this.conversionFactor = conversionFactor;
-    }
+	public void setName(String name) {
 
-    public Unit getPriceUnit() {
-        return priceUnit;
-    }
+		this.name = name;
+	}
 
-    public void setPriceUnit(Unit priceUnit) {
-        this.priceUnit = priceUnit;
-    }
+	public String getConvertedCommodity() {
+		return convertedCommodity;
+	}
 
-    public Unit getMineralUnit() {
-        return mineralUnit;
-    }
+	public void setConvertedCommodity(String convertedCommodity) {
+		this.convertedCommodity = convertedCommodity;
+	}
 
-    public void setMineralUnit(Unit mineralUnit) {
-        this.mineralUnit = mineralUnit;
-    }
+	public double getConversionFactor() {
+		return conversionFactor;
+	}
 
-    public Unit getOreUnit() {
-        return oreUnit;
-    }
+	public void setConversionFactor(double conversionFactor) {
+		this.conversionFactor = conversionFactor;
+	}
 
-    public void setOreUnit(Unit oreUnit) {
-        this.oreUnit = oreUnit;
-    }
+	public Unit getPriceUnit() {
+		return priceUnit;
+	}
 
-    public Unit getGradeUnit() {
-        return gradeUnit;
-    }
+	public void setPriceUnit(Unit priceUnit) {
+		this.priceUnit = priceUnit;
+	}
 
-    public void setGradeUnit(Unit gradeUnit) {
-        this.gradeUnit = gradeUnit;
-    }
+	public Unit getMineralUnit() {
+		return mineralUnit;
+	}
 
-    @Override
-    public String toString(){
-        return "id="+id+", name="+name ;
-    }
+	public void setMineralUnit(Unit mineralUnit) {
+		this.mineralUnit = mineralUnit;
+	}
+
+	public Unit getOreUnit() {
+		return oreUnit;
+	}
+
+	public void setOreUnit(Unit oreUnit) {
+		this.oreUnit = oreUnit;
+	}
+
+	public Unit getGradeUnit() {
+		return gradeUnit;
+	}
+
+	public void setGradeUnit(Unit gradeUnit) {
+		this.gradeUnit = gradeUnit;
+	}
+
+	@Override
+	public String toString() {
+		return "id=" + id + ", name=" + name;
+	}
 }
