@@ -36,11 +36,13 @@ public class MineralDepositController {
 	@ResponseBody
 	public List<MineralDeposit> mineralDeposits(@RequestParam(required = false, value = "name") String name,
 			@RequestParam(required = false, value = "operatingStatus") String operatingStatus,
-			@RequestParam(required = false, value = "state") String state, 
-			@RequestParam(required=false, value = "provinceName") String provinceName) {
+			@RequestParam(required = false, value = "state") String state,
+			@RequestParam(required = false, value = "provinceName") String provinceName,
+			@RequestParam(required = false, value = "commodity") String commodity,
+			@RequestParam(required = false, value = "companyName") String companyName) {
 		name = (name != null) ? "%" + name + "%" : null;
-		return this.mineralDepositService
-				.mineralDeposits(MineralDepositSpecification.searchByParameters(name, operatingStatus, state, provinceName));
+		return this.mineralDepositService.mineralDeposits(MineralDepositSpecification.searchByParameters(name,
+				operatingStatus, state, provinceName, commodity, companyName));
 	}
 
 	// Index
@@ -54,6 +56,7 @@ public class MineralDepositController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
 	public MineralDeposit deposit(@PathVariable("id") Long id) {
 		MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
 		return mineralDeposit;
