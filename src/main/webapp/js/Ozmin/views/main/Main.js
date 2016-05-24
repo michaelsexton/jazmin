@@ -3,11 +3,27 @@
  * the "autoCreateViewport" property. That setting automatically applies the
  * "viewport" plugin to promote that instance of this class to the body element.
  */
-Ext.define('Ozmin.view.main.Main', {
+Ext.define('Ozmin.views.main.Main', {
 	extend : 'Ext.tab.Panel',
 	xtype : 'app-main',
 
-	requires : [ 'Ozmin.view.*' ],
+
+	width: 400,
+  height: 400,
+  renderTo: document.body,
+  items: [{
+      title: 'Foo'
+  }, {
+      title: 'Bar',
+      tabConfig: {
+          title: 'Custom Title',
+          tooltip: 'A button tooltip'
+      }
+  }]
+});
+	
+	/*
+	requires : [ 'Ozmin.views.*' ],
 
 
 
@@ -74,7 +90,7 @@ Ext.define('Ozmin.view.main.Main', {
 			hidden : true
 		}
 	}, {
-		//xtype : 'mineral-deposits',
+	//	xtype : 'mineraldeposit',
 		title : 'Mineral Deposits',
 		iconCls : 'exec-kpi-icon'
 	}, {
@@ -116,4 +132,4 @@ Ext.define('Ozmin.view.main.Main', {
 			click : 'onMenuClick'
 		}
 	}
-});
+});*/

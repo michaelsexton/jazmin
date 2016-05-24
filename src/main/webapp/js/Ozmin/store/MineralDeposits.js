@@ -1,6 +1,7 @@
-Ext.define('ozmin.store.MineralDeposits', {
+Ext.define('Ozmin.store.MineralDeposits', {
+  extend: 'Ext.data.Store',
 	storeId : 'mineralDepositsStore',
-	model : 'ozmim.mdel.grid.MineralDeposit',
+	model : 'Ozmin.models.grid.MineralDeposit',
 	proxy : {
 		type : 'ajax',
 		url : '/ozmin/mineralDeposits.json',
