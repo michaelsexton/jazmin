@@ -49,6 +49,12 @@ public class MineralDeposit extends SpatialEntity {
 	@JoinTable(schema = "MGD", name = "COMMODS", joinColumns = { @JoinColumn(name = "ENO") }, inverseJoinColumns = {
 			@JoinColumn(name = "COMMODID") })
 	private Set<Commodity> commodities;
+	
+	@ManyToMany
+	@JsonIgnore
+	@JoinTable(schema = "MGD", name = "OWNERSHIP", joinColumns = { @JoinColumn(name = "ENO") }, inverseJoinColumns = {
+			@JoinColumn(name = "COMPANYID") })
+	private Set<Company> companies;
 
 	public String getState() {
 		return state;
