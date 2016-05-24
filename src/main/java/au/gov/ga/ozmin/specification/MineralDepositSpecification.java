@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
 import au.gov.ga.ozmin.model.Commodity;
+import au.gov.ga.ozmin.model.Company;
 import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.model.MineralDeposit_;
 import au.gov.ga.ozmin.model.Province;
@@ -22,7 +23,7 @@ import au.gov.ga.ozmin.model.Province;
 public class MineralDepositSpecification {
 
 	public static Specification<MineralDeposit> searchByParameters(final String name, final String operatingStatus,
-			final String state, final String provinceName, final String commodity) {
+			final String state, final String provinceName, final String commodity, final String companyName) {
 		return new Specification<MineralDeposit>() {
 
 			@Override
@@ -34,7 +35,6 @@ public class MineralDepositSpecification {
 					predicates.add(namePredicate);
 				}
 				if (!StringUtils.isEmpty(operatingStatus)) {
-					System.out.println(operatingStatus);
 					final Predicate operatingStatusPredicate = cb.equal(root.get(MineralDeposit_.operatingStatus),
 							operatingStatus);
 					predicates.add(operatingStatusPredicate);
@@ -49,10 +49,14 @@ public class MineralDepositSpecification {
 					predicates.add(provinceNamePredicate);
 				}
 				if (!StringUtils.isEmpty(commodity)) {
-					System.out.println(commodity);
 					final Predicate commodityPredicate = MineralDepositSpecification.findByCommodity(commodity)
 							.toPredicate(root, query, cb);
 					predicates.add(commodityPredicate);
+				}
+				if (!StringUtils.isEmpty(companyName)) {
+					final Predicate companyPredicate = MineralDepositSpecification.findByCompany(companyName)
+							.toPredicate(root, query, cb);
+					predicates.add(companyPredicate);
 				}
 
 				return cb.and(predicates.toArray(new Predicate[predicates.size()]));
@@ -96,22 +100,36 @@ public class MineralDepositSpecification {
 		};
 
 	}
-	
-	public static Specification<MineralDeposit> findByCommodity(final String commodity) {
+
+	public static Specification<MineralDeposit> findByCommodity(final String commodityId) {
 		return new Specification<MineralDeposit>() {
-			
-	
+
 			@Override
 			public Predicate toPredicate(Root<MineralDeposit> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				final Subquery<String> commodityQuery = query.subquery(String.class);
 				final Root<Commodity> commodity = commodityQuery.from(Commodity.class);
 				final Join<Commodity, MineralDeposit> deposits = commodity.join("mineralDeposits");
-				Path<String> test = deposits.<String> get("id");
 				commodityQuery.select(deposits.<String> get("id"));
-				commodityQuery.where(cb.equal(commodity.<String> get("id"), commodity));
-				System.out.println(commodity);
+				commodityQuery.where(cb.equal(commodity.<String> get("id"), commodityId));
 				return cb.in(root.get("id")).value(commodityQuery);
-				
+
+			}
+		};
+	}
+
+	public static Specification<MineralDeposit> findByCompany(final String companyName) {
+		
+		return new Specification<MineralDeposit>() {
+
+			@Override
+			public Predicate toPredicate(Root<MineralDeposit> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				final Subquery<Long> companyQuery = query.subquery(Long.class);
+				final Root<Company> company = companyQuery.from(Company.class);
+				final Join<Company, MineralDeposit> deposits = company.join("mineralDeposits");
+				System.out.println(companyName);
+				companyQuery.select(deposits.<Long> get("id"));
+				companyQuery.where(cb.like(company.<String> get("name"), "%" + companyName + "%"));
+				return cb.in(root.get("id")).value(companyQuery);
 			}
 		};
 	}
