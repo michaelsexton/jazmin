@@ -2,6 +2,7 @@ package au.gov.ga.ozmin.service;
 
 import java.util.Date;
 import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ public interface MineralResourceService {
 
 	Page<MineralResource> listMineralResourcesForAdministration(Pageable pageable, String enteredBy, Date startDate,
 			Date endDate);
+
+    List<MineralResource> mineralResources();
 
 	MineralResource getMineralResourceById(Long id);
 	

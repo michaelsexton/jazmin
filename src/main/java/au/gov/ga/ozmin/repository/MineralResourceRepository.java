@@ -1,10 +1,12 @@
 package au.gov.ga.ozmin.repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -49,4 +51,7 @@ public interface MineralResourceRepository extends PagingAndSortingRepository<Mi
 			+ "mr.enteredBy = ?2")
 	Set<MineralDeposit> findResourcesCollectionForQaByDeposit(String qaStatus,
 			String enteredBy) ;
+	
+	List<MineralResource> findAll();
+
 }

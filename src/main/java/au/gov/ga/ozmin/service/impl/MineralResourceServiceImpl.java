@@ -1,6 +1,7 @@
 package au.gov.ga.ozmin.service.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -51,5 +52,10 @@ public class MineralResourceServiceImpl implements MineralResourceService {
 			return this.mineralResourceRepository.findByQaStatusAndEnteredByAndEntryDateBetween(pageable, "U",
 					enteredBy, startDate, endDate);
 		}
+	}
+
+	@Override
+	public List<MineralResource> mineralResources() {
+		return this.mineralResourceRepository.findAll();
 	}
 }

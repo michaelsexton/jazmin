@@ -24,52 +24,52 @@ import au.gov.ga.ozmin.util.Paginator;
 @Controller
 @RequestMapping("/mineralDeposits")
 public class MineralDepositController {
-	private MineralDepositService mineralDepositService;
+    private MineralDepositService mineralDepositService;
 
-	@Autowired(required = true)
-	@Qualifier(value = "mineralDepositService")
-	public void setMineralDepositService(MineralDepositService ds) {
-		this.mineralDepositService = ds;
-	}
+    @Autowired(required = true)
+    @Qualifier(value = "mineralDepositService")
+    public void setMineralDepositService(MineralDepositService ds) {
+        this.mineralDepositService = ds;
+    }
 
-	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public List<MineralDeposit> mineralDeposits(@RequestParam(required = false, value = "name") String name,
-			@RequestParam(required = false, value = "operatingStatus") String operatingStatus,
-			@RequestParam(required = false, value = "state") String state,
-			@RequestParam(required = false, value = "provinceName") String provinceName,
-			@RequestParam(required = false, value = "commodity") String commodity,
-			@RequestParam(required = false, value = "companyName") String companyName) {
-		name = (name != null) ? "%" + name + "%" : null;
-		return this.mineralDepositService.mineralDeposits(MineralDepositSpecification.searchByParameters(name,
-				operatingStatus, state, provinceName, commodity, companyName));
-	}
+    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<MineralDeposit> mineralDeposits(@RequestParam(required = false, value = "name") String name,
+            @RequestParam(required = false, value = "operatingStatus") String operatingStatus,
+            @RequestParam(required = false, value = "state") String state,
+            @RequestParam(required = false, value = "provinceName") String provinceName,
+            @RequestParam(required = false, value = "commodity") String commodity,
+            @RequestParam(required = false, value = "companyName") String companyName) {
+        name = (name != null) ? "%" + name + "%" : null;
+        return this.mineralDepositService.mineralDeposits(MineralDepositSpecification.searchByParameters(name,
+                operatingStatus, state, provinceName, commodity, companyName));
+    }
 
-	// Index
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String mineralDepositsPage(Model model, Pageable pageable) {
-		Paginator<MineralDeposit> mineralDepositsPage = new Paginator<MineralDeposit>(
-				mineralDepositService.mineralDepositsPage(pageable), "/mineralDeposits");
-		model.addAttribute("mineralDepositsPage", mineralDepositsPage);
+    // Index
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String mineralDepositsPage(Model model, Pageable pageable) {
+        Paginator<MineralDeposit> mineralDepositsPage = new Paginator<MineralDeposit>(
+                mineralDepositService.mineralDepositsPage(pageable), "/mineralDeposits");
+        model.addAttribute("mineralDepositsPage", mineralDepositsPage);
 
-		return "mineralDeposits/index";
-	}
+        return "mineralDeposits/index";
+    }
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public MineralDeposit deposit(@PathVariable("id") Long id) {
-		MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
-		return mineralDeposit;
-	}
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public MineralDeposit deposit(@PathVariable("id") Long id) {
+        MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
+        return mineralDeposit;
+    }
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String showDeposit(@PathVariable("id") Long id, Model model) {
-		MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
-		model.addAttribute("deposit", mineralDeposit);
-		model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
-		// model.addAttribute("orders",
-		// mineralDeposit.getOrderedCommodities().values());
-		model.addAttribute("provinces", mineralDeposit.getProvinces());
-		return "mineralDeposits/show";
-	}
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String showDeposit(@PathVariable("id") Long id, Model model) {
+        MineralDeposit mineralDeposit = this.mineralDepositService.getDepositById(id);
+        model.addAttribute("deposit", mineralDeposit);
+        model.addAttribute("mineralisedZones", mineralDeposit.getMineralisedZones());
+        // model.addAttribute("orders",
+        // mineralDeposit.getOrderedCommodities().values());
+        model.addAttribute("provinces", mineralDeposit.getProvinces());
+        return "mineralDeposits/show";
+    }
 }

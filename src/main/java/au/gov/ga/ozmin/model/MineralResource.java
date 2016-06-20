@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(schema = "MGD", name = "RESOURCES")
@@ -93,14 +95,16 @@ public class MineralResource {
 	private String activityCode;
 	
 	// Related models
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralResource")
+	private Set<ResourceGrade> resourceGrades;
 	
 	@ManyToOne
+	@JsonIgnore
 	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name = "ENO")
 	private MineralisedZone mineralisedZone;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralResource")
-	private Set<ResourceGrade> resourceGrades;
+
 
 	public String getAccessCode() {
 		return accessCode;
