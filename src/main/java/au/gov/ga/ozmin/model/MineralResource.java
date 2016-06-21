@@ -16,7 +16,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
@@ -28,9 +32,12 @@ public class MineralResource {
 	private Long id;
 
 	@Column(name = "RECORDDATE")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date recordDate;
 
 	@ManyToOne
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
+	@JsonIdentityReference(alwaysAsId = true)
 	@JoinColumn(name = "UNIT_QUANTITY")
 	private Unit oreUnit;
 	
@@ -62,10 +69,6 @@ public class MineralResource {
 	@Column(name = "OTHER")
 	private Double other;
 
-	// CDM Admin fields
-
-	
-
 	@Column(name = "QA_STATUS_CODE")
 	private String qaStatus;
 
@@ -73,6 +76,7 @@ public class MineralResource {
 	private String qaBy;
 
 	@Column(name = "QADATE")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date qaDate;
 	
 	@Column(name = "ACCESS_CODE")
@@ -82,10 +86,12 @@ public class MineralResource {
 	private String enteredBy;
 
 	@Column(name = "ENTRYDATE")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date entryDate;
 
 	
 	@Column(name = "LASTUPDATE")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date lastUpdate;
 	
 	@Column(name = "UPDATEDBY")
@@ -95,16 +101,17 @@ public class MineralResource {
 	private String activityCode;
 	
 	// Related models
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralResource")
+	@JsonIgnore
 	private Set<ResourceGrade> resourceGrades;
 	
 	@ManyToOne
-	@JsonIgnore
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
 	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name = "ENO")
 	private MineralisedZone mineralisedZone;
-
-
 
 	public String getAccessCode() {
 		return accessCode;

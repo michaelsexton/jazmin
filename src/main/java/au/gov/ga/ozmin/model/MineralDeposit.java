@@ -10,11 +10,18 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * Created by michael on 10/09/2015.
@@ -28,6 +35,13 @@ public class MineralDeposit extends SpatialEntity {
 	@JsonIgnore
 	private Set<MineralisedZone> mineralisedZones;
 
+	@ManyToOne
+	@Fetch(FetchMode.JOIN)
+	@JoinColumn(name = "PARENT")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
+	private MineralProject mineralProject;
+	
 	@Column(name = "OPERATING_STATUS", table = "DEPOSITS")
 	private String operatingStatus;
 
@@ -55,6 +69,9 @@ public class MineralDeposit extends SpatialEntity {
 	@JoinTable(schema = "MGD", name = "OWNERSHIP", joinColumns = { @JoinColumn(name = "ENO") }, inverseJoinColumns = {
 			@JoinColumn(name = "COMPANYID") })
 	private Set<Company> companies;
+	
+	
+	
 
 	public String getState() {
 		return state;
