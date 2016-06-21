@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.model.MineralResource;
 import au.gov.ga.ozmin.service.MineralResourceService;
+import au.gov.ga.ozmin.specification.MineralResourceSpecification;
 import au.gov.ga.ozmin.util.Paginator;
 import au.gov.ga.ozmin.view.ResourceQualityCheckPdfView;
 
@@ -53,8 +54,10 @@ public class MineralResourceController {
         
     @RequestMapping(value="", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<MineralResource> mineralResources (@RequestParam(required=false, value = "qaStatusCode") String qaStatusCode) {
-        return this.mineralResourceService.mineralResources();
+    public List<MineralResource> mineralResources (@RequestParam(required=false, value = "qaStatus") String qaStatus,
+    		@RequestParam(value = "enteredBy", required = false) String enteredBy,
+			@RequestParam(value = "entryDate", required = false) @DateTimeFormat(iso = ISO.DATE) Date entryDate) {
+        return this.mineralResourceService.mineralResources(MineralResourceSpecification.searchByParameters(qaStatus, enteredBy));
     }
         
 

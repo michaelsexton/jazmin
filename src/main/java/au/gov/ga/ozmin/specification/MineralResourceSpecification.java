@@ -16,16 +16,20 @@ import au.gov.ga.ozmin.model.MineralResource_;
 
 public class MineralResourceSpecification {
 	
-	public static Specification<MineralResource> searchByParameters(final String qaStatus) {
+	public static Specification<MineralResource> searchByParameters(final String qaStatus, final String enteredBy) {
 		return new Specification<MineralResource>() {
 			
 			@Override
 			public Predicate toPredicate(Root<MineralResource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				final Collection<Predicate> predicates = new ArrayList<>();
 				if (!StringUtils.isEmpty(qaStatus)) {
-					final Predicate namePredicate = MineralResourceSpecification.findByQaStatusCode(qaStatus)
+					final Predicate qaStatusPredicate = MineralResourceSpecification.findByQaStatusCode(qaStatus)
 							.toPredicate(root, query, cb);
-					predicates.add(namePredicate);
+					predicates.add(qaStatusPredicate);
+				}
+				if (!StringUtils.isEmpty(enteredBy)) {
+					final Predicate enteredByPredicate = MineralResourceSpecification.findByEnteredBy(enteredBy).toPredicate(root, query, cb);
+					predicates.add(enteredByPredicate);
 				}
 				return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 			}
@@ -39,6 +43,17 @@ public class MineralResourceSpecification {
 			public Predicate toPredicate(Root<MineralResource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				return cb.equal(root.get(MineralResource_.qaStatus), qaStatus);
 			}
+		};
+	}
+	
+	public static Specification<MineralResource> findByEnteredBy(final String enteredBy) {
+		return new Specification<MineralResource>() {
+			
+			@Override
+			public Predicate toPredicate(Root<MineralResource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				return cb.equal(root.get(MineralResource_.enteredBy), enteredBy); 
+			}
+		
 		};
 	}
 }

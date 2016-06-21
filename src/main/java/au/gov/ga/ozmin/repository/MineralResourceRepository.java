@@ -52,6 +52,6 @@ public interface MineralResourceRepository extends PagingAndSortingRepository<Mi
 	Set<MineralDeposit> findResourcesCollectionForQaByDeposit(String qaStatus,
 			String enteredBy) ;
 	
-	List<MineralResource> findAll();
+	List<MineralResource> findAll(Specification<MineralResource> specification);
 
 }

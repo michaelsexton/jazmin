@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import au.gov.ga.ozmin.model.MineralDeposit;
 import au.gov.ga.ozmin.model.MineralResource;
 import au.gov.ga.ozmin.repository.MineralResourceRepository;
 import au.gov.ga.ozmin.service.MineralResourceService;
+import au.gov.ga.ozmin.specification.MineralResourceSpecification;
 
 @Service
 public class MineralResourceServiceImpl implements MineralResourceService {
@@ -55,7 +57,7 @@ public class MineralResourceServiceImpl implements MineralResourceService {
 	}
 
 	@Override
-	public List<MineralResource> mineralResources() {
-		return this.mineralResourceRepository.findAll();
+	public List<MineralResource> mineralResources(Specification<MineralResource> specification) {
+		return this.mineralResourceRepository.findAll(specification);
 	}
 }
