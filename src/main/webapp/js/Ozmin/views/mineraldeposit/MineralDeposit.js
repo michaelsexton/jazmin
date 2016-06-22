@@ -1,6 +1,6 @@
-Ext.define('Ozmin.view.mineraldeposit.MineralDeposit', {
+Ext.define('Ozmin.views.mineraldeposit.MineralDeposit', {
   extend : 'Ext.panel.Panel',
-  xtype : 'mineraldeposit',
+  alias : 'widget.mineraldeposit',
 
   config : {
     activeState : null,
