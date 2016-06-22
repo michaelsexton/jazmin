@@ -57,7 +57,7 @@ public class MineralResourceServiceImpl implements MineralResourceService {
 	}
 
 	@Override
-	public List<MineralResource> mineralResources(Specification<MineralResource> specification) {
-		return this.mineralResourceRepository.findAll(specification);
+	public Page<MineralResource> mineralResources(Specification<MineralResource> specification, Pageable pageable) {
+		return this.mineralResourceRepository.findAll(specification, pageable);
 	}
 }

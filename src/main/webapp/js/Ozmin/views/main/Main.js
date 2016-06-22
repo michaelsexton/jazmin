@@ -7,7 +7,7 @@ Ext.define('Ozmin.views.main.Main', {
     extend : 'Ext.tab.Panel',
     xtype : 'app-main',
 
-    requires : [ 'Ozmin.views.*' ],
+    requires : [ 'Ozmin.views.mineraldeposit.MineralDeposit','Ozmin.views.mineralresources.MineralResource' ],
 
     tabBarHeaderPosition : 1,
     titleRotation : 0,
@@ -63,6 +63,10 @@ Ext.define('Ozmin.views.main.Main', {
         xtype : 'mineraldeposits',
         title : 'Mineral Deposits',
         iconCls : 'exec-kpi-icon'
+    }, {
+        xtype : 'mineralresource',
+        title : 'Mineral Resources'
+
     } /*
          * , { xtype : 'mineralresources', title : 'Mineral Resources', iconCls :
          * 'exec-quarterly-icon' }, { xtype : 'provicnes', title : 'Provinces',

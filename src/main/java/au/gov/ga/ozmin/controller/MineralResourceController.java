@@ -2,11 +2,11 @@ package au.gov.ga.ozmin.controller;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -36,30 +36,20 @@ public class MineralResourceController {
 	public void setMineralResourceService(MineralResourceService mrs) {
 		this.mineralResourceService = mrs;
 	}
-	
+
 	@Autowired
 	@Qualifier(value = "resourceQualityCheckPdfView")
 	private ResourceQualityCheckPdfView resourceQualityCheckPdfView;
 
-	// Index
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String listResources(Model model, Pageable pageable) {
-		Paginator<MineralResource> resourcesPage = new Paginator<MineralResource>(
-				mineralResourceService.listMineralResources(pageable), "/mineralResources");
-
-		model.addAttribute("listMineralResources", resourcesPage);
-
-		return "mineralResources/index";
+	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Page<MineralResource> mineralResources(@RequestParam(required = false, value = "qaStatus") String qaStatus,
+			@RequestParam(value = "enteredBy", required = false) String enteredBy,
+			@RequestParam(value = "entryDate", required = false) @DateTimeFormat(iso = ISO.DATE) Date entryDate,
+			Pageable pageable) {
+		return this.mineralResourceService
+				.mineralResources(MineralResourceSpecification.searchByParameters(qaStatus, enteredBy), pageable);
 	}
-        
-    @RequestMapping(value="", method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public List<MineralResource> mineralResources (@RequestParam(required=false, value = "qaStatus") String qaStatus,
-    		@RequestParam(value = "enteredBy", required = false) String enteredBy,
-			@RequestParam(value = "entryDate", required = false) @DateTimeFormat(iso = ISO.DATE) Date entryDate) {
-        return this.mineralResourceService.mineralResources(MineralResourceSpecification.searchByParameters(qaStatus, enteredBy));
-    }
-        
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getResourceById(@PathVariable("id") Long id, Model model) {
@@ -123,14 +113,14 @@ public class MineralResourceController {
 	public String resourcesQualityCheck(Model model, Pageable pageable) {
 		return "mineralResources/qa";
 	}
-	
+
 	@RequestMapping(value = "/qa.pdf", method = RequestMethod.GET)
 	public ModelAndView resourcesQualityCheckPrintable(
 			@RequestParam(value = "qaStatus", defaultValue = "U") String qaStatus,
-			@RequestParam(value = "enteredBy", defaultValue = "MSEXTON1") String enteredBy
-			) {
-		Set<MineralDeposit> resourcesCollection = mineralResourceService.mineralResourcesCollectionForQualityCheck(qaStatus,enteredBy);
-		
+			@RequestParam(value = "enteredBy", defaultValue = "MSEXTON1") String enteredBy) {
+		Set<MineralDeposit> resourcesCollection = mineralResourceService
+				.mineralResourcesCollectionForQualityCheck(qaStatus, enteredBy);
+
 		return new ModelAndView(resourceQualityCheckPdfView, "resourcesCollection", resourcesCollection);
 	}
 

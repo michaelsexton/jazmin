@@ -12,5 +12,5 @@ Ext.application({
 
   requires : [ 'Ozmin.*' ],
 
-  stores: ['MineralDeposits']
+  stores: ['MineralDeposits','MineralResources']
 });

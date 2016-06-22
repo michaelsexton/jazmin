@@ -19,7 +19,7 @@ public interface MineralResourceService {
 	Page<MineralResource> listMineralResourcesForAdministration(Pageable pageable, String enteredBy, Date startDate,
 			Date endDate);
 
-    List<MineralResource> mineralResources(Specification<MineralResource> specification);
+	Page<MineralResource> mineralResources(Specification<MineralResource> specification, Pageable pageable);
 
 	MineralResource getMineralResourceById(Long id);
 	
