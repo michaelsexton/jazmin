@@ -3,9 +3,11 @@
  */
 Ext.define('Ozmin.views.grid.Paging', {
   extend : 'Ext.grid.Panel',
+  alias : 'widget.mineraldeposits',
+  
   title : 'Mineral Deposits',
   initComponent : function() {
-    this.store = Ozmin.stores.MineralDeposits;
+    this.store = new Ozmin.store.MineralDeposits;
     this.columns = this._buildColumns();
     this.callParent();
   },
