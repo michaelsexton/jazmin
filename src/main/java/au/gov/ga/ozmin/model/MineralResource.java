@@ -107,8 +107,8 @@ public class MineralResource {
 	private Set<ResourceGrade> resourceGrades;
 	
 	@ManyToOne
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
+	/*@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)*/
 	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name = "ENO")
 	private MineralisedZone mineralisedZone;
