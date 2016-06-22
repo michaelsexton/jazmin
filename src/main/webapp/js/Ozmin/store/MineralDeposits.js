@@ -1,6 +1,10 @@
 Ext.define('Ozmin.store.MineralDeposits', {
     extend : 'Ext.data.Store',
 
+    contstructor : function(cfg) {
+        var me = this;
+    },
+
     storeId : 'mineralDepositsStore',
     model : 'Ozmin.models.grid.MineralDeposit',
 
@@ -8,25 +12,24 @@ Ext.define('Ozmin.store.MineralDeposits', {
     remoteSort : true,
 
     proxy : new Ext.data.proxy.Ajax({
-        $configStrict: false,
+        $configStrict : false,
         url : '/ozmin/mineralDeposits.json',
         reader : {
             type : 'json',
             rootProperty : 'content'
         },
-        encodeSorters : _sorter()
-    }),
-    autoLoad : true
-    
-    _sorter : function(sorters) {
-        var length = sorters.length, sortStrs = [], sorter, i;
+        encodeSorters : function(sorters) {
+            var length = sorters.length, sortStrs = [], sorter, i;
 
-        for (i = 0; i < length; i++) {
-            sorter = sorters[i];
+            for (i = 0; i < length; i++) {
+                sorter = sorters[i];
 
-            sortStrs[i] = sorter._property + ',' + sorter._direction
+                sortStrs[i] = sorter._property + ',' + sorter._direction
+            }
+            console.log(sortStrs.join(","));
+            return sortStrs.join(",");
         }
-        console.log(sortStrs.join(","));
-        return sortStrs.join(",");
-    }
+    }),
+    autoLoad : true,
+
 });
