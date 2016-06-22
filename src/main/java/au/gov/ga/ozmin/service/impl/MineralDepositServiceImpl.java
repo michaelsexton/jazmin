@@ -1,9 +1,6 @@
 package au.gov.ga.ozmin.service.impl;
 
-import java.util.List;
-
 import javax.inject.Inject;
-import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,8 +33,8 @@ public class MineralDepositServiceImpl implements MineralDepositService {
 	}
 
 	@Override
-	public List<MineralDeposit> mineralDeposits(Specification<MineralDeposit> specification) {
-		return this.mineralDepositRepository.findAll(specification);
+	public Page<MineralDeposit> mineralDeposits(Specification<MineralDeposit> specification, Pageable pageable) {
+		return this.mineralDepositRepository.findAll(specification, pageable);
 	}
 
 }

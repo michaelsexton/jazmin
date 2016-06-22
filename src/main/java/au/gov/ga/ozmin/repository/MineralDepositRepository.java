@@ -1,19 +1,16 @@
 package au.gov.ga.ozmin.repository;
 
-import java.util.List;
-
-import javax.persistence.criteria.Predicate;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import au.gov.ga.ozmin.model.MineralDeposit;
 
 public interface MineralDepositRepository
-		extends JpaRepository<MineralDeposit, Long>, JpaSpecificationExecutor<MineralDeposit> {
-	List<MineralDeposit> findByName(String name);
+		extends PagingAndSortingRepository<MineralDeposit, Long>, JpaSpecificationExecutor<MineralDeposit> {
 
-	List<MineralDeposit> findAll(Specification<MineralDeposit> specification);
+	Page<MineralDeposit> findAll(Specification<MineralDeposit> specification, Pageable pageable);
 
 }

@@ -1,9 +1,8 @@
 package au.gov.ga.ozmin.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,15 +33,16 @@ public class MineralDepositController {
 
     @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<MineralDeposit> mineralDeposits(@RequestParam(required = false, value = "name") String name,
+    public Page<MineralDeposit> mineralDeposits(@RequestParam(required = false, value = "name") String name,
             @RequestParam(required = false, value = "operatingStatus") String operatingStatus,
             @RequestParam(required = false, value = "state") String state,
             @RequestParam(required = false, value = "provinceName") String provinceName,
             @RequestParam(required = false, value = "commodity") String commodity,
-            @RequestParam(required = false, value = "companyName") String companyName) {
+            @RequestParam(required = false, value = "companyName") String companyName,
+            Pageable pageable) {
         name = (name != null) ? "%" + name + "%" : null;
         return this.mineralDepositService.mineralDeposits(MineralDepositSpecification.searchByParameters(name,
-                operatingStatus, state, provinceName, commodity, companyName));
+                operatingStatus, state, provinceName, commodity, companyName), pageable);
     }
 
     // Index

@@ -1,7 +1,7 @@
 /**
  * This example demonstrates using a paging display.
  */
-Ext.define('Ozmin.views.grid.Paging', {
+Ext.define('Ozmin.views.mineraldeposit.grid.Paging', {
   extend : 'Ext.grid.Panel',
   alias : 'widget.mineraldeposits',
   
@@ -18,10 +18,13 @@ Ext.define('Ozmin.views.grid.Paging', {
   _buildColumns : function() {
     return [ {
       text : 'ENO',
-      dataIndex : 'id'
+      dataIndex : 'id',
+      sortable: true
+          
     }, {
       text : 'Name',
       dataIndex : 'name',
+      sortable: true,
       flex : 1
     }, {
       text : 'Operating Status',
