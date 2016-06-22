@@ -7,7 +7,7 @@ Ext.define('Ozmin.app.Application', {
 
   // defaultToken '!deposits', // '!kpi/clicks'
 
-  views : [ 'Ozmin.views.*','Ozmin.views.grid.Paging' ],
+  views : [ 'Ozmin.views.*','Ozmin.views.mineraldeposit.grid.Paging' ],
 
   launch : function() {
     
