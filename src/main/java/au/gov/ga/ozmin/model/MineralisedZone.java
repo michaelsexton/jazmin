@@ -8,6 +8,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Created by michael on 10/09/2015.
  */
@@ -22,6 +24,7 @@ public class MineralisedZone extends SpatialEntity {
     
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralisedZone")
+    @JsonIgnore
     private Set<MineralResource> mineralResources;
 
 
