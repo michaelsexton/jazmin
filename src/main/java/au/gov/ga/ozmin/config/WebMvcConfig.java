@@ -133,7 +133,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean(destroyMethod = "close")
 	public BasicDataSource dataSource() {
 		BasicDataSource basicDataSource = new BasicDataSource();
-		basicDataSource.setDriverClassName(env.getProperty("jdbc.className"));
+		basicDataSource.setDriverClassName(env.getProperty("jdbc.driver_class"));
 		basicDataSource.setUrl(env.getProperty("jdbc.url"));
 		basicDataSource.setUsername(env.getProperty("jdbc.username"));
 		basicDataSource.setPassword(env.getProperty("jdbc.password"));
@@ -241,9 +241,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 			private static final long serialVersionUID = 1L;
 
 			{
+				
 				setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-				setProperty("hibernate.spatial.connection_finder",
-						env.getProperty("hibernate.spatial.connection_finder"));
+				// setProperty("hibernate.spatial.connection_finder",
+				//		env.getProperty("hibernate.spatial.connection_finder"));
 				setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 			}
 		};

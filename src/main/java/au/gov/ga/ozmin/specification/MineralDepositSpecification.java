@@ -29,7 +29,7 @@ public class MineralDepositSpecification {
 			@Override
 			public Predicate toPredicate(Root<MineralDeposit> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				final Collection<Predicate> predicates = new ArrayList<>();
-				if (!StringUtils.isEmpty(name)) {
+				/*if (!StringUtils.isEmpty(name)) {
 					final Predicate namePredicate = MineralDepositSpecification.findByNameOrSynonym(name)
 							.toPredicate(root, query, cb);
 					predicates.add(namePredicate);
@@ -57,7 +57,7 @@ public class MineralDepositSpecification {
 					final Predicate companyPredicate = MineralDepositSpecification.findByCompany(companyName)
 							.toPredicate(root, query, cb);
 					predicates.add(companyPredicate);
-				}
+				}*/
 
 				return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 
@@ -71,7 +71,7 @@ public class MineralDepositSpecification {
 	 * @param name
 	 * @return
 	 */
-	public static Specification<MineralDeposit> findByNameOrSynonym(final String name) {
+	/*public static Specification<MineralDeposit> findByNameOrSynonym(final String name) {
 		return new Specification<MineralDeposit>() {
 
 			@Override
@@ -81,7 +81,7 @@ public class MineralDepositSpecification {
 
 			}
 		};
-	}
+	}*/
 
 	public static Specification<MineralDeposit> findByProvince(final String provinceName) {
 		return new Specification<MineralDeposit>() {

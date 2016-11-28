@@ -29,10 +29,10 @@
 			<artifactId>hibernate-spatial</artifactId>
 			<version>4.3</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -118,9 +118,22 @@
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>4.3.10.Final</version>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.0.1.FINAL</version>
 		</dependency>
+        
+      <!--  <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-jpamodelgen</artifactId>
+        <version>4.3.10.Final</version></dependency>-->
+        
+        <dependency><groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>9.4-1201-jdbc41</version></dependency>
+        <dependency>
+        <groupId>org.postgis</groupId>
+        <artifactId>postgis-jdbc</artifactId>
+        <version>1.5.2</version></dependency>
 	</dependencies>
 
 
