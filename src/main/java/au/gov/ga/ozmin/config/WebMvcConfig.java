@@ -92,10 +92,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		return new SortHandlerMethodArgumentResolver();
 	}
 
-	// @Bean
-	// public ServiceConfig services() {
-	// return new ServiceConfig();
-	// }
+
 	@Bean
 	public CommodityService commodityService() {
 		return new CommodityServiceImpl();
@@ -165,7 +162,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
 		hibernateJpaVendorAdapter.setShowSql(true);
 		hibernateJpaVendorAdapter.setGenerateDdl(false);
-		hibernateJpaVendorAdapter.setDatabasePlatform("org.hibernate.spatial.dialect.oracle.OracleSpatial10gDialect");
+		
+		hibernateJpaVendorAdapter.setDatabasePlatform("org.hibernate.spatial.dialect.postgis.PostgisDialect");
 		return hibernateJpaVendorAdapter;
 	}
 
@@ -237,16 +235,17 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	}
 
 	private Properties hibernateProperties() {
-		return new Properties() {
+		return new Properties(); /*{
 			private static final long serialVersionUID = 1L;
 
 			{
 				
 				setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+				setProperty("hibernate.temp.use_jdbc_metadata_defaults", env.getProperty("hibernate.temp.use_jdbc_metadata_defaults"));
 				// setProperty("hibernate.spatial.connection_finder",
 				//		env.getProperty("hibernate.spatial.connection_finder"));
 				setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 			}
-		};
+		};*/
 	}
 }
