@@ -23,12 +23,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-/**
- * Created by michael on 10/09/2015.
- */
 @Entity
 @DiscriminatorValue("MINERAL DEPOSIT")
-//@SecondaryTable(schema = "MGD", name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name = "ENO") )
+@SecondaryTable(schema = "MGD", name = "DEPOSITS", pkJoinColumns = @PrimaryKeyJoinColumn(name = "ENO") )
 public class MineralDeposit extends SpatialEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralDeposit")
@@ -42,14 +39,14 @@ public class MineralDeposit extends SpatialEntity {
 	@JsonIdentityReference(alwaysAsId = true)
 	private MineralProject mineralProject;
 	
-	/*@Column(name = "OPERATING_STATUS", table = "DEPOSITS")
+	@Column(name = "OPERATING_STATUS", table = "DEPOSITS")
 	private String operatingStatus;
 
 	@Column(name = "STATE", table = "DEPOSITS")
 	private String state;
 
 	@Column(name = "SYNONYMS", table = "DEPOSITS")
-	private String synonyms;*/
+	private String synonyms;
 
 	@ManyToMany
 	@JsonIgnore
@@ -73,13 +70,13 @@ public class MineralDeposit extends SpatialEntity {
 	
 	
 
-	/*public String getState() {
+	public String getState() {
 		return state;
 	}
 
 	public void setState(String state) {
 		this.state = state;
-	}*/
+	}
 
 	public Set<MineralisedZone> getMineralisedZones() {
 		return mineralisedZones;
@@ -89,14 +86,14 @@ public class MineralDeposit extends SpatialEntity {
 		this.mineralisedZones = mineralisedZones;
 	}
 
-	/*public String getOperatingStatus() {
+	public String getOperatingStatus() {
 		return operatingStatus;
 	}
 
 	public void setOperatingStatus(String operatingStatus) {
 		this.operatingStatus = operatingStatus;
 	}
-*/
+
 	public Set<Province> getProvinces() {
 		return provinces;
 	}
@@ -104,13 +101,13 @@ public class MineralDeposit extends SpatialEntity {
 	public void setProvinces(Set<Province> provinces) {
 		this.provinces = provinces;
 	}
-/*
+
 	public String getSynonyms() {
 		return synonyms;
 	}
 
 	public void setSynonyms(String synonyms) {
 		this.synonyms = synonyms;
-	}*/
+	}
 
 }

@@ -199,7 +199,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		ServletContextTemplateResolver servletContextTemplateResolver = new ServletContextTemplateResolver();
 		servletContextTemplateResolver.setPrefix("/WEB-INF/views/");
 		servletContextTemplateResolver.setSuffix(".html");
-		servletContextTemplateResolver.setTemplateMode("HTML5");
+		servletContextTemplateResolver.setTemplateMode("LEGACYHTML5");
 		servletContextTemplateResolver.setCacheable(false);
 		return servletContextTemplateResolver;
 	}
@@ -235,7 +235,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	}
 
 	private Properties hibernateProperties() {
-		return new Properties(); /*{
+		return new Properties() {
 			private static final long serialVersionUID = 1L;
 
 			{
@@ -246,6 +246,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 				//		env.getProperty("hibernate.spatial.connection_finder"));
 				setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 			}
-		};*/
+		};
 	}
 }

@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      <p>
+        Search:
+        <input ng-model="$ctrl.query" />
+      </p>
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+
+      <ul class="mineralDeposits">
+        <li ng-repeat="mineralDeposit in $ctrl.mineralDeposits | filter:$ctrl.query "
+            class="thumbnail phone-list-item">
+          <a href="#!/mineralDeposits/{{mineralDeposit.id}}" class="thumb">
+            <p>{{deposit.name}}</p>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>

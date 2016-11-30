@@ -29,10 +29,8 @@
 			<artifactId>hibernate-spatial</artifactId>
 			<version>4.3</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-		</dependency>-->
+		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc6</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
@@ -61,20 +59,20 @@
 			<artifactId>spring-data-commons</artifactId>
 			<version>1.10.2.RELEASE</version>
 		</dependency>
+		<!-- <dependency> <groupId>org.webjars</groupId> <artifactId>jquery</artifactId> 
+			<version>2.1.4</version> </dependency> <dependency> <groupId>org.webjars</groupId> 
+			<artifactId>jquery-ui</artifactId> <version>1.11.4</version> </dependency> 
+			<dependency> <groupId>org.webjars</groupId> <artifactId>openlayers</artifactId> 
+			<version>2.13.1</version> </dependency> -->
 		<dependency>
 			<groupId>org.webjars</groupId>
-			<artifactId>jquery</artifactId>
-			<version>2.1.4</version>
+			<artifactId>angularjs</artifactId>
+			<version>1.5.8</version>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>jquery-ui</artifactId>
-			<version>1.11.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>openlayers</artifactId>
-			<version>2.13.1</version>
+			<groupId>net.sourceforge.nekohtml</groupId>
+			<artifactId>nekohtml</artifactId>
+			<version>1.9.15</version>
 		</dependency>
 		<dependency>
 			<groupId>com.lowagie</groupId>
@@ -119,33 +117,28 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.0.1.FINAL</version>
+			<version>4.3.10.Final</version>
 		</dependency>
-        
-      <!--  <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-jpamodelgen</artifactId>
-        <version>4.3.10.Final</version></dependency>-->
-        
-        <dependency><groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>9.4-1201-jdbc41</version></dependency>
-        <dependency>
-        <groupId>org.postgis</groupId>
-        <artifactId>postgis-jdbc</artifactId>
-        <version>1.5.2</version></dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>4.3.10.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1201-jdbc41</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgis</groupId>
+			<artifactId>postgis-jdbc</artifactId>
+			<version>1.5.2</version>
+		</dependency>
 	</dependencies>
 
 
-	<repositories>
-		<repository>
-			<id>Hibernate Spatial repo</id>
-			<url>http://www.hibernatespatial.org/repository</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 	<distributionManagement>
 		<repository>
 			<id>internal.repo</id>
@@ -159,9 +152,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-					<compilerArgument>-Xlint:all</compilerArgument>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArguments>
+						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+					</compilerArguments>
+
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
 				</configuration>
@@ -173,7 +169,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
