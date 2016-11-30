@@ -237,11 +237,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	private Properties hibernateProperties() {
 		return new Properties() {
 			private static final long serialVersionUID = 1L;
-
 			{
 				
 				setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-				setProperty("hibernate.temp.use_jdbc_metadata_defaults", env.getProperty("hibernate.temp.use_jdbc_metadata_defaults"));
+				//setProperty("hibernate.temp.use_jdbc_metadata_defaults", env.getProperty("hibernate.temp.use_jdbc_metadata_defaults"));
 				// setProperty("hibernate.spatial.connection_finder",
 				//		env.getProperty("hibernate.spatial.connection_finder"));
 				setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));

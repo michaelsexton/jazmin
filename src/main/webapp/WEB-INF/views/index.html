@@ -1,12 +1,16 @@
 <!doctype html>
 <html lang="en" ng-app="ozminApp">
 <head>
+<meta charset="utf-8">
 <!--  <base href="/ozmin/" />-->
 <title>OZMIN</title>
 <script type="text/javascript"
 	src="webjars/angularjs/1.5.8/angular.js"></script>
+	<script type="text/javascript" src='js/app.module.js'></script>
 	
-	<script type="text/javascript"
+	<script src="js/mineral-deposits/mineral-deposits.module.js"></script>
+	<script src="js/mineral-deposits/mineral-deposits.component.js"></script>
+<!-- 	<script type="text/javascript"
 	src="webjars/angularjs/1.5.8/angular-resource.js"></script>
 	
 	<script type="text/javascript"	
@@ -22,13 +26,13 @@
 	
 	
 	<script type="text/javascript" src="js/mineral-deposits/mineral-deposits.module.js"></script>
-	<script type="text/javascript" src="js/mineral-deposits/mineral-deposits.component.js"></script>
+	<script type="text/javascript" src="js/mineral-deposits/mineral-deposits.component.js"></script> -->
 
 
 </head>
 <body>
-	<div class="view-container">
-		<div ng-view class="view-frame"></div>
-	</div>
+
+<mineral-deposits></mineral-deposits>
+
 </body>
 </html>
