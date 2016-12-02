@@ -7,15 +7,7 @@
 
     </div>
     <div class="col-md-10">
-      <!--Body content-->
-
-      <ul class="deposits">
-        <li ng-repeat="deposit in $ctrl.deposits | filter:$ctrl.query">
-          <span>{{deposit.name}}</span>
-          <p>{{deposit.operatingStatus}}</p>
-          <p>{{deposit.synonyms}}</p>
-        </li>
-      </ul>
+      <div ui-grid="mineralDepositList" class="myGrid"></div>
 
     </div>
   </div>

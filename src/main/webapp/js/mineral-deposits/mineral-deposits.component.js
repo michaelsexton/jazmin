@@ -2,11 +2,19 @@ angular.
   module('mineralDeposits').
   component('mineralDeposits', {
 	templateUrl: 'js/mineral-deposits/mineral-deposits.template.html',
-    controller: function MineralDepositsController($http) {
+    controller: function MineralDepositsController($scope,$http) {
     	var self = this;
    
-    	$http.get('mineralDeposits.json').then(function(response) {
-    		self.deposits = response.data.content;
+    	$scope.mineralDepositList ={
+    			columnDefs: [
+    			             { name: 'name', enableFiltering: false },
+    			             { name: 'state' },
+    			             { name: 'operatingStatus', enableFiltering: false}
+    			           ]
+    	}
+    	
+    	$http.get('mineralDeposits.json?operatingStatus=&state=NSW').then(function(response) {
+    		$scope.mineralDepositList.data = response.data.content;
     	});
     }
   });
