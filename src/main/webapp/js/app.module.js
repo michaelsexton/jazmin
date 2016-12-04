@@ -1,2 +1,2 @@
 // Define the `phonecatApp` module
-angular.module('ozminApp', [ 'ngRoute', 'mineralDeposits', 'ui.grid' ]);
+angular.module('ozminApp', [ 'core', 'ngRoute', 'mineralDeposits', 'ui.grid' ]);

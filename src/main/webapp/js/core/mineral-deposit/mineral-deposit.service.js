@@ -5,10 +5,14 @@ angular.module('core.mineralDeposit').factory('MineralDeposit',
 			return $resource('mineralDeposits.json', {}, {
 				query : {
 					method : 'GET',
-				/*	params : {
-						mineralDepositId : 'mineralDeposits'
-					},*/
-					isArray : true
+					params : {
+						operatingStatus: 'operating mine',
+						state: 'WA'
+					},
+					isArray : true,
+					transformResponse: function(data) {
+						return angular.fromJson(data).content;
+					}
 				}
 			});
 		} ]);
