@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import au.gov.ga.ozmin.resources.IdentifiedResouce;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -99,7 +100,10 @@ public class MineralResource {
 	
 	@Column(name = "ACTIVITY_CODE")
 	private String activityCode;
-	
+
+	private Set<IdentifiedResource> identifiedResource;
+
+
 	// Related models
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralResource")
