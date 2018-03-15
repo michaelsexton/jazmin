@@ -1,19 +1,13 @@
 package au.gov.ga.ozmin.model;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import au.gov.ga.ozmin.resources.IdentifiedResouce;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -101,12 +95,21 @@ public class MineralResource {
 	@Column(name = "ACTIVITY_CODE")
 	private String activityCode;
 
-	private Set<IdentifiedResource> identifiedResource;
-
-
+    @Transient
+	private List<BigDecimal> identifiedResource = new ArrayList<> ();
 	// Related models
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "mineralResource")
+
+    @PostLoad
+    private void calculateIdentifiedResource(){
+        for (ResourceGrade resourceGrade : resourceGrades) {
+            BigDecimal pvr = proven != null ? BigDecimal.valueOf(proven) : BigDecimal.ZERO;
+            BigDecimal pbr = probable != null ? BigDecimal.valueOf(probable) : BigDecimal.ZERO;
+
+            identifiedResource.add(pvr.add(pbr));
+        }
+    }
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mineralResource")
 	@JsonIgnore
 	private Set<ResourceGrade> resourceGrades;
 	
@@ -293,6 +296,8 @@ public class MineralResource {
 		this.updatedBy = updatedBy;
 	}
 
-	
+	public List<BigDecimal> getIdentifiedResource(){
+	    return identifiedResource;
+    }
 	
 }
