@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(schema = "MGD", name = "RESOURCE_GRADES")
 public class ResourceGrade {
@@ -26,31 +28,31 @@ public class ResourceGrade {
 
 	@ManyToOne
 	@JoinColumn(name = "UNIT_GRADE")
-	private Unit gradeUnit;
+	private MineralUnit gradeUnit;
 
 	@Column(name = "PVR")
-	private Double proven;
+	private BigDecimal proven;
 
 	@Column(name = "PBR")
-	private Double probable;
+	private BigDecimal probable;
 
 	@Column(name = "PPR")
-	private Double provenAndProbable;
+	private BigDecimal provenAndProbable;
 
 	@Column(name = "MRS")
-	private Double measured;
+	private BigDecimal measured;
 
 	@Column(name = "IDR")
-	private Double indicated;
+	private BigDecimal indicated;
 
 	@Column(name = "MID")
-	private Double measuredAndIndicated;
+	private BigDecimal measuredAndIndicated;
 
 	@Column(name = "IFR")
-	private Double inferred;
+	private BigDecimal inferred;
 
 	@Column(name = "OTHER")
-	private Double other;
+	private BigDecimal other;
 
 	@AttributeOverrides({ @AttributeOverride(name = "mainClassification", column = @Column(name = "PVR_CLASS1") ),
 			@AttributeOverride(name = "secondClassification", column = @Column(name = "PVR_CLASS2") ),
@@ -185,75 +187,75 @@ public class ResourceGrade {
 		this.commodity = commodity;
 	}
 
-	public Unit getGradeUnit() {
+	public MineralUnit getGradeUnit() {
 		return gradeUnit;
 	}
 
-	public void setGradeUnit(Unit gradeUnit) {
+	public void setGradeUnit(MineralUnit gradeUnit) {
 		this.gradeUnit = gradeUnit;
 	}
 
-	public Double getProven() {
+	public BigDecimal getProven() {
 		return proven;
 	}
 
-	public void setProven(Double proven) {
+	public void setProven(BigDecimal proven) {
 		this.proven = proven;
 	}
 
-	public Double getProbable() {
+	public BigDecimal getProbable() {
 		return probable;
 	}
 
-	public void setProbable(Double probable) {
+	public void setProbable(BigDecimal probable) {
 		this.probable = probable;
 	}
 
-	public Double getProvenAndProbable() {
+	public BigDecimal getProvenAndProbable() {
 		return provenAndProbable;
 	}
 
-	public void setProvenAndProbable(Double provenAndProbable) {
+	public void setProvenAndProbable(BigDecimal provenAndProbable) {
 		this.provenAndProbable = provenAndProbable;
 	}
 
-	public Double getMeasured() {
+	public BigDecimal getMeasured() {
 		return measured;
 	}
 
-	public void setMeasured(Double measured) {
+	public void setMeasured(BigDecimal measured) {
 		this.measured = measured;
 	}
 
-	public Double getIndicated() {
+	public BigDecimal getIndicated() {
 		return indicated;
 	}
 
-	public void setIndicated(Double indicated) {
+	public void setIndicated(BigDecimal indicated) {
 		this.indicated = indicated;
 	}
 
-	public Double getMeasuredAndIndicated() {
+	public BigDecimal getMeasuredAndIndicated() {
 		return measuredAndIndicated;
 	}
 
-	public void setMeasuredAndIndicated(Double measuredAndIndicated) {
+	public void setMeasuredAndIndicated(BigDecimal measuredAndIndicated) {
 		this.measuredAndIndicated = measuredAndIndicated;
 	}
 
-	public Double getInferred() {
+	public BigDecimal getInferred() {
 		return inferred;
 	}
 
-	public void setInferred(Double inferred) {
+	public void setInferred(BigDecimal inferred) {
 		this.inferred = inferred;
 	}
 
-	public Double getOther() {
+	public BigDecimal getOther() {
 		return other;
 	}
 
-	public void setOther(Double other) {
+	public void setOther(BigDecimal other) {
 		this.other = other;
 	}
 

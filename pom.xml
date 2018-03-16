@@ -20,6 +20,17 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
+			<groupId>tec.uom</groupId>
+			<artifactId>uom-se</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.opower.unitsofmeasure</groupId>
+			<artifactId>jackson-module-unitsofmeasure</artifactId>
+			<version>1.3.4</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 			<version>1.2.7.RELEASE</version>

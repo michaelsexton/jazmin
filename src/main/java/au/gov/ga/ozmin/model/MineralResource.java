@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import au.gov.ga.ozmin.resources.IdentifiedResource;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.Type;
 
 
 @Entity
@@ -34,35 +36,36 @@ public class MineralResource {
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "code")
 	@JsonIdentityReference(alwaysAsId = true)
 	@JoinColumn(name = "UNIT_QUANTITY")
-	private Unit oreUnit;
+	private MineralUnit oreUnit;
 	
 	// TODO: Make a boolean or enum
 	@Column(name = "INCLUSIVE")
-	private String inclusive;
+    @Type(type="yes_no")
+	private Boolean inclusive;
 
 	@Column(name = "PVR")
-	private Double proven;
+	private BigDecimal proven;
 
 	@Column(name = "PBR")
-	private Double probable;
+	private BigDecimal probable;
 
 	@Column(name = "PPR")
-	private Double provenAndProbable;
+	private BigDecimal provenAndProbable;
 
 	@Column(name = "MRS")
-	private Double measured;
+	private BigDecimal measured;
 
 	@Column(name = "IDR")
-	private Double indicated;
+	private BigDecimal indicated;
 
 	@Column(name = "MID")
-	private Double measuredAndIndicated;
+	private BigDecimal measuredAndIndicated;
 
 	@Column(name = "IFR")
-	private Double inferred;
+	private BigDecimal inferred;
 
 	@Column(name = "OTHER")
-	private Double other;
+	private BigDecimal other;
 
 	@Column(name = "QA_STATUS_CODE")
 	private String qaStatus;
@@ -96,16 +99,13 @@ public class MineralResource {
 	private String activityCode;
 
     @Transient
-	private List<BigDecimal> identifiedResource = new ArrayList<> ();
+	private List<IdentifiedResource> identifiedResource = new ArrayList<> ();
 	// Related models
 
     @PostLoad
     private void calculateIdentifiedResource(){
         for (ResourceGrade resourceGrade : resourceGrades) {
-            BigDecimal pvr = proven != null ? BigDecimal.valueOf(proven) : BigDecimal.ZERO;
-            BigDecimal pbr = probable != null ? BigDecimal.valueOf(probable) : BigDecimal.ZERO;
-
-            identifiedResource.add(pvr.add(pbr));
+            identifiedResource.add(new IdentifiedResource(this, resourceGrade));
         }
     }
 
@@ -140,11 +140,11 @@ public class MineralResource {
 		return id;
 	}
 
-	public Double getIndicated() {
+	public BigDecimal getIndicated() {
 		return indicated;
 	}
 
-	public Double getInferred() {
+	public BigDecimal getInferred() {
 		return inferred;
 	}
 
@@ -152,11 +152,11 @@ public class MineralResource {
 		return lastUpdate;
 	}
 
-	public Double getMeasured() {
+	public BigDecimal getMeasured() {
 		return measured;
 	}
 
-	public Double getMeasuredAndIndicated() {
+	public BigDecimal getMeasuredAndIndicated() {
 		return measuredAndIndicated;
 	}
 
@@ -164,23 +164,23 @@ public class MineralResource {
 		return mineralisedZone;
 	}
 
-	public Unit getOreUnit() {
+	public MineralUnit getOreUnit() {
 		return oreUnit;
 	}
 
-	public Double getOther() {
+	public BigDecimal getOther() {
 		return other;
 	}
 
-	public Double getProbable() {
+	public BigDecimal getProbable() {
 		return probable;
 	}
 
-	public Double getProven() {
+	public BigDecimal getProven() {
 		return proven;
 	}
 
-	public Double getProvenAndProbable() {
+	public BigDecimal getProvenAndProbable() {
 		return provenAndProbable;
 	}
 
@@ -228,11 +228,11 @@ public class MineralResource {
 		this.id = id;
 	}
 
-	public void setIndicated(Double indicated) {
+	public void setIndicated(BigDecimal indicated) {
 		this.indicated = indicated;
 	}
 
-	public void setInferred(Double inferred) {
+	public void setInferred(BigDecimal inferred) {
 		this.inferred = inferred;
 	}
 
@@ -240,11 +240,11 @@ public class MineralResource {
 		this.lastUpdate = lastUpdate;
 	}
 
-	public void setMeasured(Double measured) {
+	public void setMeasured(BigDecimal measured) {
 		this.measured = measured;
 	}
 
-	public void setMeasuredAndIndicated(Double measuredAndIndicated) {
+	public void setMeasuredAndIndicated(BigDecimal measuredAndIndicated) {
 		this.measuredAndIndicated = measuredAndIndicated;
 	}
 
@@ -252,23 +252,23 @@ public class MineralResource {
 		this.mineralisedZone = mineralisedZone;
 	}
 
-	public void setOreUnit(Unit oreUnit) {
+	public void setOreUnit(MineralUnit oreUnit) {
 		this.oreUnit = oreUnit;
 	}
 
-	public void setOther(Double other) {
+	public void setOther(BigDecimal other) {
 		this.other = other;
 	}
 
-	public void setProbable(Double probable) {
+	public void setProbable(BigDecimal probable) {
 		this.probable = probable;
 	}
 
-	public void setProven(Double proven) {
+	public void setProven(BigDecimal proven) {
 		this.proven = proven;
 	}
 
-	public void setProvenAndProbable(Double provenAndProbable) {
+	public void setProvenAndProbable(BigDecimal provenAndProbable) {
 		this.provenAndProbable = provenAndProbable;
 	}
 
@@ -296,8 +296,15 @@ public class MineralResource {
 		this.updatedBy = updatedBy;
 	}
 
-	public List<BigDecimal> getIdentifiedResource(){
+	public List<IdentifiedResource> getIdentifiedResource(){
 	    return identifiedResource;
     }
-	
+
+    public Boolean getInclusive() {
+        return inclusive;
+    }
+
+    public void setInclusive(Boolean inclusive) {
+        this.inclusive = inclusive;
+    }
 }

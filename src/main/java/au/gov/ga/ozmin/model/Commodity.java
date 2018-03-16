@@ -25,19 +25,19 @@ public class Commodity {
 
 	@ManyToOne
 	@JoinColumn(name = "displayunit")
-	private Unit mineralUnit;
+	private MineralUnit mineralUnit;
 
 	@ManyToOne
 	@JoinColumn(name = "oreunit")
-	private Unit oreUnit;
+	private MineralUnit oreUnit;
 
 	@ManyToOne
 	@JoinColumn(name = "gradeunit")
-	private Unit gradeUnit;
+	private MineralUnit gradeUnit;
 
 	@ManyToOne
 	@JoinColumn(name = "priceunit")
-	private Unit priceUnit;
+	private MineralUnit priceUnit;
 
 	@ManyToMany
 	@JsonIgnore
@@ -90,35 +90,35 @@ public class Commodity {
 		this.conversionFactor = conversionFactor;
 	}
 
-	public Unit getPriceUnit() {
+	public MineralUnit getPriceUnit() {
 		return priceUnit;
 	}
 
-	public void setPriceUnit(Unit priceUnit) {
+	public void setPriceUnit(MineralUnit priceUnit) {
 		this.priceUnit = priceUnit;
 	}
 
-	public Unit getMineralUnit() {
+	public MineralUnit getMineralUnit() {
 		return mineralUnit;
 	}
 
-	public void setMineralUnit(Unit mineralUnit) {
+	public void setMineralUnit(MineralUnit mineralUnit) {
 		this.mineralUnit = mineralUnit;
 	}
 
-	public Unit getOreUnit() {
+	public MineralUnit getOreUnit() {
 		return oreUnit;
 	}
 
-	public void setOreUnit(Unit oreUnit) {
+	public void setOreUnit(MineralUnit oreUnit) {
 		this.oreUnit = oreUnit;
 	}
 
-	public Unit getGradeUnit() {
+	public MineralUnit getGradeUnit() {
 		return gradeUnit;
 	}
 
-	public void setGradeUnit(Unit gradeUnit) {
+	public void setGradeUnit(MineralUnit gradeUnit) {
 		this.gradeUnit = gradeUnit;
 	}
 

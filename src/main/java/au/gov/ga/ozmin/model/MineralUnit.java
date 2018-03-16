@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema="MGD",name="UNIT_CODES")
-public class Unit {
+public class MineralUnit {
 
     @Id
     @Column(name="UNITCODE")
