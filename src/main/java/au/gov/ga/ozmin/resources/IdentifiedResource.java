@@ -5,6 +5,7 @@ import au.gov.ga.ozmin.model.Commodity;
 import au.gov.ga.ozmin.model.MineralResource;
 import au.gov.ga.ozmin.model.MineralUnit;
 import au.gov.ga.ozmin.model.ResourceGrade;
+import au.gov.ga.ozmin.resources.exceptions.IdentifiedResourceException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -40,7 +41,7 @@ public class IdentifiedResource implements Serializable{
 
 
     /* Make a factory */
-    public IdentifiedResource(MineralResource mineralResource, ResourceGrade resourceGrade) {
+    public IdentifiedResource(MineralResource mineralResource, ResourceGrade resourceGrade) throws IdentifiedResourceException {
         MineralUnit oreUnit = mineralResource.getOreUnit();
         MineralUnit gradeUnit = resourceGrade.getGradeUnit();
         String commodity = resourceGrade.getCommodity().getId();

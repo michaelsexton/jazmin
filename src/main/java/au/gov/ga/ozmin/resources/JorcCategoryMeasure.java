@@ -1,9 +1,9 @@
 package au.gov.ga.ozmin.resources;
 
 import au.gov.ga.ozmin.model.MineralUnit;
+import au.gov.ga.ozmin.resources.exceptions.IdentifiedResourceException;
+import au.gov.ga.ozmin.util.GAUnit;
 import tec.uom.se.quantity.Quantities;
-import tec.uom.se.unit.MetricPrefix;
-import tec.uom.se.unit.Units;
 
 import javax.measure.Quantity;
 import javax.measure.Unit;
@@ -19,14 +19,21 @@ public class JorcCategoryMeasure implements CommodityMeasure {
 
     private String commodity;
 
-    JorcCategoryMeasure(BigDecimal oreValue, MineralUnit oreUnits, BigDecimal gradeValue, MineralUnit gradeUnits, String commodity) {
-        Unit<Mass> kg = Units.KILOGRAM;
-        Unit<Dimensionless> percent = Units.PERCENT;
+    JorcCategoryMeasure(BigDecimal oreValue, MineralUnit oreUnits, BigDecimal gradeValue, MineralUnit gradeUnits, String commodity) throws IdentifiedResourceException {
 
 
-        this.ore = Quantities.getQuantity(oreValue != null ? oreValue : BigDecimal.ZERO, kg);
+        /**
+         * Move below to MineralUnits class
+         */
+        Unit r_units = GAUnit.getUnitBySymbol(oreUnits.getCode());
+        Unit g_units = GAUnit.getUnitBySymbol(gradeUnits.getCode());
 
-        this.grade = Quantities.getQuantity(gradeValue != null ? gradeValue : BigDecimal.ZERO, percent);
+
+
+
+        this.ore = Quantities.getQuantity(oreValue != null ? oreValue : BigDecimal.ZERO, r_units);
+
+        this.grade = Quantities.getQuantity(gradeValue != null ? gradeValue : BigDecimal.ZERO, g_units);
 
         this.commodity = commodity;
     }
@@ -44,7 +51,7 @@ public class JorcCategoryMeasure implements CommodityMeasure {
 
     @Override
     public Quantity<Mass> getContainedCommodity() {
-        return (Quantity<Mass>) ore.multiply(grade.to(Units.ONE));
+        return (Quantity<Mass>) ore.multiply(grade);
     }
 
     @Override

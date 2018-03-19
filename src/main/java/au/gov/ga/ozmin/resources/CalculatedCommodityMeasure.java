@@ -4,7 +4,6 @@ import tec.uom.se.quantity.Quantities;
 import tec.uom.se.unit.Units;
 
 import javax.measure.Quantity;
-import javax.measure.Unit;
 import javax.measure.quantity.Dimensionless;
 import javax.measure.quantity.Mass;
 
@@ -31,7 +30,8 @@ public class CalculatedCommodityMeasure implements CommodityMeasure {
         if (ore.getValue().intValue() == 0) {
             return Quantities.getQuantity(0, Units.PERCENT);
         }
-        return ((Quantity<Dimensionless>) containedCommodity.divide(ore)).to(Units.PERCENT);
+        Quantity<Dimensionless> newQuantity = (Quantity<Dimensionless>) containedCommodity.divide(ore);
+        return newQuantity.to(Units.PERCENT);
     }
 
     @Override

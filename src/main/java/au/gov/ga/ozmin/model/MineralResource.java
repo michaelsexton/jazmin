@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import au.gov.ga.ozmin.resources.IdentifiedResource;
+import au.gov.ga.ozmin.resources.exceptions.IdentifiedResourceException;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -103,7 +104,7 @@ public class MineralResource {
 	// Related models
 
     @PostLoad
-    private void calculateIdentifiedResource(){
+    private void calculateIdentifiedResource() throws IdentifiedResourceException {
         for (ResourceGrade resourceGrade : resourceGrades) {
             identifiedResource.add(new IdentifiedResource(this, resourceGrade));
         }
