@@ -1,9 +1,10 @@
 package au.gov.ga.ozmin.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import au.gov.ga.ozmin.resources.exceptions.IdentifiedResourceException;
+import au.gov.ga.ozmin.util.GAUnit;
+
+import javax.measure.Unit;
+import javax.persistence.*;
 
 @Entity
 @Table(schema="MGD",name="UNIT_CODES")
@@ -24,6 +25,18 @@ public class MineralUnit {
 
     public String getCode() {
         return code;
+    }
+
+    @Transient
+    private Unit units;
+
+    @PostLoad
+    private  void loadUnits() throws IdentifiedResourceException {
+        this.units = GAUnit.getUnitBySymbol(code);
+    }
+
+    public Unit getUnits() {
+        return units;
     }
 
     public void setCode(String code) {

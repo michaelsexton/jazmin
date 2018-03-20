@@ -19,21 +19,11 @@ public class JorcCategoryMeasure implements CommodityMeasure {
 
     private String commodity;
 
-    JorcCategoryMeasure(BigDecimal oreValue, MineralUnit oreUnits, BigDecimal gradeValue, MineralUnit gradeUnits, String commodity) throws IdentifiedResourceException {
+    JorcCategoryMeasure(BigDecimal oreValue, Unit oreUnits, BigDecimal gradeValue, Unit gradeUnits, String commodity) throws IdentifiedResourceException {
 
+        this.ore = Quantities.getQuantity(oreValue != null ? oreValue : BigDecimal.ZERO, oreUnits);
 
-        /**
-         * Move below to MineralUnits class
-         */
-        Unit r_units = GAUnit.getUnitBySymbol(oreUnits.getCode());
-        Unit g_units = GAUnit.getUnitBySymbol(gradeUnits.getCode());
-
-
-
-
-        this.ore = Quantities.getQuantity(oreValue != null ? oreValue : BigDecimal.ZERO, r_units);
-
-        this.grade = Quantities.getQuantity(gradeValue != null ? gradeValue : BigDecimal.ZERO, g_units);
+        this.grade = Quantities.getQuantity(gradeValue != null ? gradeValue : BigDecimal.ZERO, gradeUnits);
 
         this.commodity = commodity;
     }
@@ -51,6 +41,7 @@ public class JorcCategoryMeasure implements CommodityMeasure {
 
     @Override
     public Quantity<Mass> getContainedCommodity() {
+        ore.getUnit();
         return (Quantity<Mass>) ore.multiply(grade);
     }
 
@@ -72,6 +63,11 @@ public class JorcCategoryMeasure implements CommodityMeasure {
     @Override
     public CommodityMeasure subtract(CommodityMeasure measure) {
         return null;
+    }
+
+    @Override
+    public CommodityMeasure multiply(BigDecimal number) {
+        return new CalculatedCommodityMeasure(this.ore.multiply(number), this.getContainedCommodity().multiply(number), this.commodity);
     }
 
 

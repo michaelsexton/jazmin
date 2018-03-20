@@ -6,6 +6,7 @@ import tec.uom.se.unit.Units;
 import javax.measure.Quantity;
 import javax.measure.quantity.Dimensionless;
 import javax.measure.quantity.Mass;
+import java.math.BigDecimal;
 
 public class CalculatedCommodityMeasure implements CommodityMeasure {
 
@@ -46,16 +47,23 @@ public class CalculatedCommodityMeasure implements CommodityMeasure {
 
     @Override
     public CommodityMeasure add(CommodityMeasure measure){
-        if (!this.commodity.equals(measure.getCommodity())) {
-            return null;
+        if (measure != null && this.commodity != null && this.commodity.equals(measure.getCommodity())) {
+            Quantity<Mass> calculatedOre = this.ore.add(measure.getOre());
+            Quantity<Mass> calculatedContainedCommodity = this.getContainedCommodity().add(measure.getContainedCommodity());
+            return new CalculatedCommodityMeasure(calculatedOre, calculatedContainedCommodity, this.commodity);
         }
-        Quantity<Mass> calculatedOre = this.ore.add(measure.getOre());
-        Quantity<Mass> calculatedContainedCommodity = this.getContainedCommodity().add(measure.getContainedCommodity());
-        return new CalculatedCommodityMeasure(calculatedOre,calculatedContainedCommodity, this.commodity);
+        return this;
     }
 
     @Override
     public CommodityMeasure subtract(CommodityMeasure measure) {
         return null;
     }
+
+    @Override
+    public CommodityMeasure multiply(BigDecimal number) {
+        return new CalculatedCommodityMeasure(this.ore.multiply(number), this.containedCommodity.multiply(number), this.commodity);
+    }
+
+
 }

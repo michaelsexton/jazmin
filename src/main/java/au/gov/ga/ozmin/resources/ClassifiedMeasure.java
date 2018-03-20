@@ -12,6 +12,6 @@ public class ClassifiedMeasure extends JorcCategoryMeasure {
     private EconomicClassification secondaryClassification;
 
     public ClassifiedMeasure(BigDecimal oreValue, MineralUnit oreUnits, BigDecimal gradeValue, MineralUnit gradeUnits, String commodity) throws IdentifiedResourceException {
-        super(oreValue, oreUnits, gradeValue, gradeUnits, commodity);
+        super(oreValue, oreUnits.getUnits(), gradeValue, gradeUnits.getUnits(), commodity);
     }
 }

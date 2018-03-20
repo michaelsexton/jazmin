@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class IdentifiedResource implements Serializable{
 
 
+    public static final IdentifiedResource ZERO;
 
     private CommodityMeasure reserve;
 
@@ -29,6 +30,8 @@ public class IdentifiedResource implements Serializable{
 
     private CommodityMeasure inferred;
 
+    private String commodity;
+
     private CommodityMeasure proven;
     private CommodityMeasure probable;
     private CommodityMeasure provenAndProbable;
@@ -37,22 +40,56 @@ public class IdentifiedResource implements Serializable{
     private CommodityMeasure measuredAndIndicated;
     private CommodityMeasure jorcInferred;
     private CommodityMeasure other;
-    private Boolean inclusive;
+    private Boolean inclusive = true;
 
 
-    /* Make a factory */
+    public IdentifiedResource() {
+        this.proven = ZeroCommodityMeasure.getInstance();
+        this.probable = ZeroCommodityMeasure.getInstance();
+        this.provenAndProbable = ZeroCommodityMeasure.getInstance();
+        this.measured = ZeroCommodityMeasure.getInstance();
+        this.indicated = ZeroCommodityMeasure.getInstance();
+        this.measuredAndIndicated = ZeroCommodityMeasure.getInstance();
+        this.inferred = ZeroCommodityMeasure.getInstance();
+        this.other = ZeroCommodityMeasure.getInstance();
+        this.commodity = null;
+    }
+
+    public IdentifiedResource(CommodityMeasure proven, CommodityMeasure probable, CommodityMeasure provenAndProbable,
+                              CommodityMeasure measured, CommodityMeasure indicated, CommodityMeasure measuredAndIndicated,
+                              CommodityMeasure inferred, CommodityMeasure other, String commodity, Boolean inclusive) {
+        this.proven = proven;
+        this.probable = probable;
+        this.provenAndProbable = provenAndProbable;
+        this.measured = measured;
+        this.indicated = indicated;
+        this.measuredAndIndicated = measuredAndIndicated;
+        this.inferred = inferred;
+        this.other = other;
+        this.commodity = commodity;
+
+        this.inclusive = inclusive;
+
+
+        this.reserve = calculateReserve();
+        this.demonstrated = calculateDemonstrated();
+        this.total = calculateTotal();
+    }
+
+
     public IdentifiedResource(MineralResource mineralResource, ResourceGrade resourceGrade) throws IdentifiedResourceException {
         MineralUnit oreUnit = mineralResource.getOreUnit();
         MineralUnit gradeUnit = resourceGrade.getGradeUnit();
+
         String commodity = resourceGrade.getCommodity().getId();
-        this.proven = new JorcCategoryMeasure(mineralResource.getProven(), oreUnit, resourceGrade.getProven(), gradeUnit, commodity);
-        this.probable = new JorcCategoryMeasure(mineralResource.getProbable(), oreUnit, resourceGrade.getProbable(), gradeUnit, commodity);
-        this.provenAndProbable = new JorcCategoryMeasure(mineralResource.getProvenAndProbable(), oreUnit, resourceGrade.getProvenAndProbable(), gradeUnit, commodity);
-        this.measured = new JorcCategoryMeasure(mineralResource.getMeasured(), oreUnit, resourceGrade.getMeasured(),gradeUnit, commodity);
-        this.indicated = new JorcCategoryMeasure(mineralResource.getIndicated(), oreUnit, resourceGrade.getIndicated(), gradeUnit, commodity);
-        this.measuredAndIndicated = new JorcCategoryMeasure(mineralResource.getMeasuredAndIndicated(), oreUnit, resourceGrade.getMeasuredAndIndicated(), gradeUnit, commodity);
-        this.jorcInferred = new JorcCategoryMeasure(mineralResource.getInferred(), oreUnit, resourceGrade.getInferred(), gradeUnit, commodity);
-        this.other = new JorcCategoryMeasure(mineralResource.getOther(), oreUnit, resourceGrade.getOther(), gradeUnit, commodity);
+        this.proven = new JorcCategoryMeasure(mineralResource.getProven(), oreUnit.getUnits(), resourceGrade.getProven(), gradeUnit.getUnits(), commodity);
+        this.probable = new JorcCategoryMeasure(mineralResource.getProbable(), oreUnit.getUnits(), resourceGrade.getProbable(), gradeUnit.getUnits(), commodity);
+        this.provenAndProbable = new JorcCategoryMeasure(mineralResource.getProvenAndProbable(), oreUnit.getUnits(), resourceGrade.getProvenAndProbable(), gradeUnit.getUnits(), commodity);
+        this.measured = new JorcCategoryMeasure(mineralResource.getMeasured(), oreUnit.getUnits(), resourceGrade.getMeasured(),gradeUnit.getUnits(), commodity);
+        this.indicated = new JorcCategoryMeasure(mineralResource.getIndicated(), oreUnit.getUnits(), resourceGrade.getIndicated(), gradeUnit.getUnits(), commodity);
+        this.measuredAndIndicated = new JorcCategoryMeasure(mineralResource.getMeasuredAndIndicated(), oreUnit.getUnits(), resourceGrade.getMeasuredAndIndicated(), gradeUnit.getUnits(), commodity);
+        this.jorcInferred = new JorcCategoryMeasure(mineralResource.getInferred(), oreUnit.getUnits(), resourceGrade.getInferred(), gradeUnit.getUnits(), commodity);
+        this.other = new JorcCategoryMeasure(mineralResource.getOther(), oreUnit.getUnits(), resourceGrade.getOther(), gradeUnit.getUnits(), commodity);
 
         this.inclusive = mineralResource.getInclusive();
 
@@ -67,6 +104,8 @@ public class IdentifiedResource implements Serializable{
         this.demonstrated = demonstrated;
         this.total = total;
     }
+
+
 
     private CommodityMeasure calculateReserve() {
         return proven.add(probable).add(provenAndProbable);
@@ -104,5 +143,9 @@ public class IdentifiedResource implements Serializable{
         CommodityMeasure calculatedDemonstrated = demonstrated.add(identifiedResource.getDemonstrated());
         CommodityMeasure calculatedTotal = total.add(identifiedResource.getTotal());
         return new IdentifiedResource(calculatedReserve,calculatedDemonstrated,calculatedTotal);
+    }
+
+    static {
+        ZERO = new IdentifiedResource();
     }
 }
