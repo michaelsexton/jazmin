@@ -1,8 +1,11 @@
 package au.gov.ga.ozmin.model;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 import javax.persistence.*;
+
+import au.gov.ga.ozmin.resources.CommodityConvertor;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,11 +20,12 @@ public class Commodity {
 	@Column(name = "commodname")
 	private String name;
 
-	@Column(name = "convertedcommod")
-	private String convertedCommodity;
+	@ManyToOne
+	@JoinColumn(name = "convertedcommod")
+	private Commodity convertedCommodity;
 
 	@Column(name = "conversionfactor")
-	private double conversionFactor;
+	private BigDecimal conversionFactor;
 
 	@ManyToOne
 	@JoinColumn(name = "displayunit")
@@ -44,6 +48,22 @@ public class Commodity {
 	@JoinTable(schema = "MGD", name = "COMMODS", joinColumns = {
 			@JoinColumn(name = "COMMODID") }, inverseJoinColumns = { @JoinColumn(name = "ENO") })
 	private Set<MineralDeposit> mineralDeposits;
+
+
+	@Transient
+    private CommodityConvertor commodityConvertor;
+
+	@PostLoad
+    private void mapConvertedCommodities(){
+	    if (this.equals(convertedCommodity)){
+            this.commodityConvertor = new CommodityConvertor(id, name, mineralUnit.getUnits(), oreUnit.getUnits(), gradeUnit.getUnits());
+        }
+	    this.commodityConvertor = new CommodityConvertor(id, name, mineralUnit.getUnits(),oreUnit.getUnits(),gradeUnit.getUnits(), convertedCommodity.getCommodityConvertor(), conversionFactor);
+    }
+
+    public CommodityConvertor getCommodityConvertor() {
+        return this.commodityConvertor;
+    }
 
 	// @OneToMany(mappedBy="id.commodity")
 	// List<MineralDepositCommodityOrder> mineralDepositCommodityOrder;
@@ -74,19 +94,19 @@ public class Commodity {
 		this.name = name;
 	}
 
-	public String getConvertedCommodity() {
+	public Commodity getConvertedCommodity() {
 		return convertedCommodity;
 	}
 
-	public void setConvertedCommodity(String convertedCommodity) {
+	public void setConvertedCommodity(Commodity convertedCommodity) {
 		this.convertedCommodity = convertedCommodity;
 	}
 
-	public double getConversionFactor() {
+	public BigDecimal getConversionFactor() {
 		return conversionFactor;
 	}
 
-	public void setConversionFactor(double conversionFactor) {
+	public void setConversionFactor(BigDecimal conversionFactor) {
 		this.conversionFactor = conversionFactor;
 	}
 

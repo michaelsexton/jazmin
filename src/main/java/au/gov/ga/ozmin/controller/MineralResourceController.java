@@ -1,5 +1,6 @@
 package au.gov.ga.ozmin.controller;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
@@ -45,10 +46,13 @@ public class MineralResourceController {
 	@ResponseBody
 	public Page<MineralResource> mineralResources(@RequestParam(required = false, value = "qaStatus") String qaStatus,
 			@RequestParam(value = "enteredBy", required = false) String enteredBy,
-			@RequestParam(value = "entryDate", required = false) @DateTimeFormat(iso = ISO.DATE) Date entryDate,
+			@RequestParam(value = "entryDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate entryDate,
 			Pageable pageable) {
-		return this.mineralResourceService
-				.mineralResources(MineralResourceSpecification.searchByParameters(qaStatus, enteredBy), pageable);
+
+	    Page<MineralResource> mineralResources = this.mineralResourceService.mineralResources(MineralResourceSpecification.findMostRecentResource(entryDate), pageable);
+		return mineralResources;
+		//return this.mineralResourceService
+				//.mineralResources(MineralResourceSpecification.searchByParameters(qaStatus, enteredBy), pageable);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

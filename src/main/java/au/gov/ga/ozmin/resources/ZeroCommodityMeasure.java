@@ -1,8 +1,8 @@
 package au.gov.ga.ozmin.resources;
 
+import au.gov.ga.ozmin.util.GAUnit;
 import tec.uom.se.AbstractQuantity;
 import tec.uom.se.quantity.Quantities;
-import tec.uom.se.unit.Units;
 
 import javax.measure.Quantity;
 import javax.measure.quantity.Dimensionless;
@@ -26,7 +26,7 @@ public class ZeroCommodityMeasure implements CommodityMeasure {
 
     @Override
     public Quantity<Mass> getOre() {
-        return Quantities.getQuantity(0, Units.GRAM);
+        return Quantities.getQuantity(0, GAUnit.MEGATONNE);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ZeroCommodityMeasure implements CommodityMeasure {
 
     @Override
     public Quantity<Mass> getContainedCommodity() {
-        return Quantities.getQuantity(0, Units.GRAM);
+        return Quantities.getQuantity(0, GAUnit.KILOTONNE);
     }
 
     @Override
@@ -57,5 +57,20 @@ public class ZeroCommodityMeasure implements CommodityMeasure {
     @Override
     public CommodityMeasure multiply(BigDecimal number) {
         return INSTANCE;
+    }
+
+    @Override
+    public CommodityMeasure convert() {
+        return this;
+    }
+
+    @Override
+    public int compareTo(CommodityMeasure c) {
+        if (c instanceof CommodityMeasure) {
+            BigDecimal thisValue =  (BigDecimal) getContainedCommodity().getValue();
+            BigDecimal thatValue = (BigDecimal) c.getContainedCommodity().getValue();
+            return thisValue.compareTo(thatValue);
+        }
+        return 0;
     }
 }

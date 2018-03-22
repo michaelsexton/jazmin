@@ -1,13 +1,13 @@
 package au.gov.ga.ozmin.specification;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 
+import au.gov.ga.ozmin.model.MineralisedZone;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
@@ -54,6 +54,23 @@ public class MineralResourceSpecification {
 				return cb.equal(root.get(MineralResource_.enteredBy), enteredBy); 
 			}
 		
+		};
+	}
+
+	public static Specification<MineralResource> findMostRecentResource(LocalDate recordDate) {
+
+		return new Specification<MineralResource>() {
+			@Override
+			public Predicate toPredicate(Root<MineralResource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				final Subquery<Date> dateQuery = query.subquery(Date.class);
+				final Root<MineralResource> maxMineralResource = dateQuery.from(MineralResource.class);
+				dateQuery.select(cb.greatest(maxMineralResource.get(MineralResource_.recordDate)));
+				dateQuery.where(cb.equal(maxMineralResource.get(MineralResource_.mineralisedZone),root.get(MineralResource_.mineralisedZone)));
+
+				return cb.equal(root.get(MineralResource_.recordDate),dateQuery);
+
+               // return cb.equal(root.get(MineralResource_.inclusive),false);
+            }
 		};
 	}
 }

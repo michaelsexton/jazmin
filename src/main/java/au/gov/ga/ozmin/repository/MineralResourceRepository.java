@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.jpa.criteria.expression.function.AggregationFunction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -51,7 +52,10 @@ public interface MineralResourceRepository extends PagingAndSortingRepository<Mi
 			+ "mr.enteredBy = ?2")
 	Set<MineralDeposit> findResourcesCollectionForQaByDeposit(String qaStatus,
 			String enteredBy) ;
-	
+
 	Page<MineralResource> findAll(Specification<MineralResource> specification, Pageable pageable);
+
+
+
 
 }

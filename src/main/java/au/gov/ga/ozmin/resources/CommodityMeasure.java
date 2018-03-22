@@ -9,7 +9,7 @@ import javax.measure.quantity.Mass;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public interface CommodityMeasure extends Serializable {
+public interface CommodityMeasure extends Serializable, Comparable<CommodityMeasure> {
 
     Quantity<Mass> getOre();
 
@@ -25,4 +25,10 @@ public interface CommodityMeasure extends Serializable {
     CommodityMeasure subtract(CommodityMeasure measure);
 
     CommodityMeasure multiply(BigDecimal number);
+
+    /**
+     * @return Returns a new CommodityMeasure that has any necessary conversion factors applied.
+     * By default it should return itself.
+     */
+    CommodityMeasure convert();
 }

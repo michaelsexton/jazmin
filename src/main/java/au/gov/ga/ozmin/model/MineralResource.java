@@ -1,6 +1,7 @@
 package au.gov.ga.ozmin.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -118,7 +119,8 @@ public class MineralResource {
 	@ManyToOne
 	/*@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	@JsonIdentityReference(alwaysAsId = true)*/
-	@Fetch(FetchMode.JOIN)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
 	@JoinColumn(name = "ENO")
 	private MineralisedZone mineralisedZone;
 

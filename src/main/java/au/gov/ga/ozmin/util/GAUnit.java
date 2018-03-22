@@ -2,6 +2,7 @@ package au.gov.ga.ozmin.util;
 
 import au.gov.ga.ozmin.resources.exceptions.IdentifiedResourceException;
 import si.uom.quantity.Density;
+import systems.uom.ucum.UCUM;
 import tec.uom.lib.common.function.Nameable;
 import tec.uom.se.AbstractSystemOfUnits;
 import tec.uom.se.AbstractUnit;
@@ -51,7 +52,47 @@ public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
             case "ppm":
                 return PARTS_PER_MILLION;
             case "g/bcm":
-                return GRAMS_PER_BANK_CUBIC_METRE;
+                return GRAMS_PER_TONNE;
+            case "Kg/t":
+                return KILOGRAMS_PER_TONNE;
+            case "Kg":
+                return KILOGRAM;
+            case "m3":
+                return TONNE;
+            case "Mc":
+                return MILLION_CARAT;
+            case "Mm3":
+                return MEGATONNE;
+            case "c/t":
+                return CARATS_PER_TONNE;
+            case "c":
+                return CARAT;
+            case "Kg/m3":
+                return KILOGRAMS_PER_TONNE;
+            case "g/m3":
+                return GRAMS_PER_TONNE;
+            case "bcm":
+                return TONNE;
+            case "Gt":
+                return GIGATONNE;
+            case "ton":
+                return TON;
+            case "LT0M":
+                return PERCENTAGE;
+            case "Gl":
+                return GIGALITRE;
+            case "l":
+                return LITRE;
+            case "Kton":
+                return KILOTON;
+            case "Kg/bcm":
+                return KILOGRAMS_PER_TONNE;
+            case "g/lcm":
+                return GRAMS_PER_TONNE;
+            case "Mton":
+                return MEGATON;
+            case "oz/ton":
+                return OUNCES_PER_TON;
             default:
                 throw new IdentifiedResourceException(symbol);
         }
@@ -74,29 +115,29 @@ public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
 
     public static final Unit<Mass> OUNCE = addUnit(GAUnit.TONNE.multiply(0.00002834949));
     public static final Unit<Mass> POUND = addUnit(GAUnit.OUNCE.multiply(12));
-//    public static final Unit<Mass> TON = addUnit(UCUM.LONG_TON);
-//    public static final Unit<Mass> MEGATON = addUnit(MetricPrefix.MEGA(GAUnit.TON));
-//    public static final Unit<Mass> KILOTON = addUnit(MetricPrefix.KILO(GAUnit.TON));
+    public static final Unit<Mass> TON = addUnit(UCUM.LONG_TON);
+    public static final Unit<Mass> MEGATON = addUnit(MEGA(GAUnit.TON));
+    public static final Unit<Mass> KILOTON = addUnit(KILO(GAUnit.TON));
 //
-//    public static final Unit<Mass> CARAT = addUnit(UCUM.CARAT_METRIC);
-//    public static final Unit<Mass> MILLION_CARAT = addUnit(new ProductUnit<Mass>(UCUM.MILLIONS.multiply(GAUnit.CARAT)));
+    public static final Unit<Mass> CARAT = addUnit(UCUM.CARAT_METRIC);
+    public static final Unit<Mass> MILLION_CARAT = addUnit(new ProductUnit<Mass>(UCUM.MILLIONS.multiply(GAUnit.CARAT)));
 //
 //    public static final Unit<Energy> JOULE = addUnit(Units.JOULE);
 //    public static final Unit<Energy> PETAJOULE = addUnit(MetricPrefix.PETA(Units.JOULE));
 
     public static final Unit<Dimensionless> PERCENTAGE = addUnit(Units.PERCENT);
     public static final Unit<Dimensionless> GRAMS_PER_TONNE = addUnit(new ProductUnit<Dimensionless>(GAUnit.GRAM.divide(GAUnit.TONNE)));
-//    public static final Unit<Dimensionless> KILOGRAMS_PER_TONNE = addUnit(new ProductUnit<Dimensionless>(GAUnit.KILOGRAM.divide(GAUnit.TONNE)));
+    public static final Unit<Dimensionless> KILOGRAMS_PER_TONNE = addUnit(new ProductUnit<Dimensionless>(GAUnit.KILOGRAM.divide(GAUnit.TONNE)));
 //
 //
-//    //public static final Unit<Dimensionless> OUNCES_PER_TON = addUnit(new ProductUnit<Dimensionless>(GAUnit.OUNCE.divide(GAUnit.TON)));
+    public static final Unit<Dimensionless> OUNCES_PER_TON = addUnit(new ProductUnit<Dimensionless>(GAUnit.OUNCE.divide(GAUnit.TON)));
 //
     public static final Unit<Dimensionless> PARTS_PER_MILLION = addUnit(ONE.divide(1E6));
 //
-//    public static final Unit<Dimensionless> CARATS_PER_TONNE =  addUnit(new ProductUnit<Dimensionless>(GAUnit.CARAT.divide(GAUnit.TONNE)));
+    public static final Unit<Dimensionless> CARATS_PER_TONNE =  addUnit(new ProductUnit<Dimensionless>(GAUnit.CARAT.divide(GAUnit.TONNE)));
 //
-//    public static final Unit<Density> GRAMS_PER_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.GRAM.divide(GAUnit.CUBIC_METRE)));
-//    public static final Unit<Density> KILOGRAMS_PER_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.KILOGRAM.divide(GAUnit.CUBIC_METRE)));
+    public static final Unit<Density> GRAMS_PER_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.GRAM.divide(GAUnit.CUBIC_METRE)));
+    public static final Unit<Density> KILOGRAMS_PER_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.KILOGRAM.divide(GAUnit.CUBIC_METRE)));
 //
     public static final Unit<Density> GRAMS_PER_BANK_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.GRAM.divide(GAUnit.BANK_CUBIC_METRE)));
 //    public static final Unit<Density> KILOGRAMS_PER_BANK_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.KILOGRAM.divide(GAUnit.BANK_CUBIC_METRE)));

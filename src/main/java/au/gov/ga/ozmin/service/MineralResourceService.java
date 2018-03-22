@@ -22,5 +22,6 @@ public interface MineralResourceService {
 	Page<MineralResource> mineralResources(Specification<MineralResource> specification, Pageable pageable);
 
 	MineralResource getMineralResourceById(Long id);
-	
+
+
 }

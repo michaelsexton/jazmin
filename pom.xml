@@ -35,6 +35,12 @@
 			<version>LATEST</version>
 		</dependency>
 
+		<dependency>
+			<groupId>systems.uom</groupId>
+			<artifactId>systems-ucum-java8</artifactId>
+			<version>LATEST</version>
+		</dependency>
+
        <!-- <dependency>
             <groupId>tec.uom.lib</groupId>
             <artifactId>uom-lib-common</artifactId>
