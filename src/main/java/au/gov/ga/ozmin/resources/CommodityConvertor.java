@@ -11,7 +11,7 @@ public class CommodityConvertor {
 
     private String commodityName;
 
-    private BigDecimal converstionFactor;
+    private BigDecimal conversionFactor;
 
     private CommodityConvertor convertedCommodity;
 
@@ -28,12 +28,12 @@ public class CommodityConvertor {
     public CommodityConvertor(String commodity, String commodityName, Unit mineralUnit, Unit oreUnit, Unit gradeUnit, CommodityConvertor convertedCommodity, BigDecimal conversionFactor) {
         this.commodity = commodity;
         this.commodityName = commodityName;
-        this.converstionFactor = conversionFactor;
+        this.conversionFactor = conversionFactor;
         this.mineralUnit = mineralUnit;
         this.oreUnit = oreUnit;
         this.gradeUnit = gradeUnit;
         this.convertedCommodity = convertedCommodity;
-        this.converstionFactor = conversionFactor;
+        this.conversionFactor = conversionFactor;
     }
 
     public String getCommodity() {
@@ -45,7 +45,7 @@ public class CommodityConvertor {
     }
 
     public BigDecimal getConverstionFactor() {
-        return converstionFactor;
+        return conversionFactor;
     }
 
     public Unit getMineralUnit() {

@@ -19,6 +19,7 @@ import javax.measure.quantity.Volume;
 import static tec.uom.se.AbstractUnit.ONE;
 import static tec.uom.se.unit.MetricPrefix.*;
 
+
 public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
 
     private static final GAUnit INSTANCE = new GAUnit();
@@ -32,9 +33,8 @@ public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
         return null;
     }
 
-    public static Unit getUnitBySymbol(String symbol) throws IdentifiedResourceException {
-        switch (symbol)
-        {
+    public static Unit<?> getUnitBySymbol(String symbol) throws IdentifiedResourceException {
+        switch (symbol) {
             case "Kt":
                 return KILOTONNE;
             case "%":
@@ -94,11 +94,12 @@ public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
             case "oz/ton":
                 return OUNCES_PER_TON;
             default:
-                throw new IdentifiedResourceException(symbol);
+                return OUNCES_PER_TON;
         }
     }
 
     public static final Unit<Volume> CUBIC_METRE = addUnit(Units.CUBIC_METRE);
+
     public static final Unit<Volume> MEGA_CUBIC_METRE = addUnit(MEGA(Units.CUBIC_METRE));
     public static final Unit<Volume> LITRE = addUnit(Units.LITRE);
     public static final Unit<Volume> GIGALITRE = addUnit(GIGA(Units.LITRE));
@@ -112,13 +113,12 @@ public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
     public static final Unit<Mass> GIGATONNE = addUnit(GIGA(GAUnit.TONNE));
 
 
-
     public static final Unit<Mass> OUNCE = addUnit(GAUnit.TONNE.multiply(0.00002834949));
     public static final Unit<Mass> POUND = addUnit(GAUnit.OUNCE.multiply(12));
     public static final Unit<Mass> TON = addUnit(UCUM.LONG_TON);
     public static final Unit<Mass> MEGATON = addUnit(MEGA(GAUnit.TON));
     public static final Unit<Mass> KILOTON = addUnit(KILO(GAUnit.TON));
-//
+    //
     public static final Unit<Mass> CARAT = addUnit(UCUM.CARAT_METRIC);
     public static final Unit<Mass> MILLION_CARAT = addUnit(new ProductUnit<Mass>(UCUM.MILLIONS.multiply(GAUnit.CARAT)));
 //
@@ -128,27 +128,23 @@ public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
     public static final Unit<Dimensionless> PERCENTAGE = addUnit(Units.PERCENT);
     public static final Unit<Dimensionless> GRAMS_PER_TONNE = addUnit(new ProductUnit<Dimensionless>(GAUnit.GRAM.divide(GAUnit.TONNE)));
     public static final Unit<Dimensionless> KILOGRAMS_PER_TONNE = addUnit(new ProductUnit<Dimensionless>(GAUnit.KILOGRAM.divide(GAUnit.TONNE)));
-//
+    //
 //
     public static final Unit<Dimensionless> OUNCES_PER_TON = addUnit(new ProductUnit<Dimensionless>(GAUnit.OUNCE.divide(GAUnit.TON)));
-//
+    //
     public static final Unit<Dimensionless> PARTS_PER_MILLION = addUnit(ONE.divide(1E6));
-//
-    public static final Unit<Dimensionless> CARATS_PER_TONNE =  addUnit(new ProductUnit<Dimensionless>(GAUnit.CARAT.divide(GAUnit.TONNE)));
-//
+    //
+    public static final Unit<Dimensionless> CARATS_PER_TONNE = addUnit(new ProductUnit<Dimensionless>(GAUnit.CARAT.divide(GAUnit.TONNE)));
+    //
     public static final Unit<Density> GRAMS_PER_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.GRAM.divide(GAUnit.CUBIC_METRE)));
     public static final Unit<Density> KILOGRAMS_PER_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.KILOGRAM.divide(GAUnit.CUBIC_METRE)));
-//
+    //
     public static final Unit<Density> GRAMS_PER_BANK_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.GRAM.divide(GAUnit.BANK_CUBIC_METRE)));
 //    public static final Unit<Density> KILOGRAMS_PER_BANK_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.KILOGRAM.divide(GAUnit.BANK_CUBIC_METRE)));
 //    public static final Unit<Density> GRAMS_PER_LOOSE_CUBIC_METRE = addUnit(new ProductUnit<Density>(GAUnit.GRAM.divide(GAUnit.BANK_CUBIC_METRE)));
 
 
-
-
     //public static final Unit<Information> = new AlternateUnit<SpecificVolume>();
-
-
 
 
     private static <U extends Unit<Q>, Q extends Quantity<Q>> U addUnit(U unit) {
@@ -159,10 +155,8 @@ public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
     /**
      * Adds a new unit and maps it to the specified quantity type.
      *
-     * @param unit
-     *            the unit being added.
-     * @param type
-     *            the quantity type.
+     * @param unit the unit being added.
+     * @param type the quantity type.
      * @return <code>unit</code>.
      */
     private static <U extends AbstractUnit<?>> U addUnit(U unit, Class<? extends Quantity<?>> type) {
@@ -186,7 +180,7 @@ public final class GAUnit extends AbstractSystemOfUnits implements Nameable {
 
     static {
         try {
-            SimpleUnitFormat.getInstance().label(TONNE,"t");
+            SimpleUnitFormat.getInstance().label(TONNE, "t");
             System.out.println("TRYOIN");
         } catch (Throwable t) {
             System.out.println("Blaaaa");

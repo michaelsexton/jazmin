@@ -17,30 +17,31 @@ public class Commodity {
 	@Column(name = "COMMODID")
 	private String id;
 
-	@Column(name = "commodname")
+	@Column(name = "COMMODNAME")
 	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = "convertedcommod")
+	@JsonIgnore
+	@JoinColumn(name = "CONVERTEDCOMMOD")
 	private Commodity convertedCommodity;
 
-	@Column(name = "conversionfactor")
+	@Column(name = "CONVERSIONFACTOR")
 	private BigDecimal conversionFactor;
 
 	@ManyToOne
-	@JoinColumn(name = "displayunit")
+	@JoinColumn(name = "DISPLAYUNIT")
 	private MineralUnit mineralUnit;
 
 	@ManyToOne
-	@JoinColumn(name = "oreunit")
+	@JoinColumn(name = "OREUNIT")
 	private MineralUnit oreUnit;
 
 	@ManyToOne
-	@JoinColumn(name = "gradeunit")
+	@JoinColumn(name = "GRADEUNIT")
 	private MineralUnit gradeUnit;
 
 	@ManyToOne
-	@JoinColumn(name = "priceunit")
+	@JoinColumn(name = "PRICEUNIT")
 	private MineralUnit priceUnit;
 
 	@ManyToMany
@@ -51,6 +52,7 @@ public class Commodity {
 
 
 	@Transient
+	@JsonIgnore
     private CommodityConvertor commodityConvertor;
 
 	@PostLoad

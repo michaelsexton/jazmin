@@ -2,6 +2,7 @@ package au.gov.ga.ozmin.model;
 
 import au.gov.ga.ozmin.resources.exceptions.IdentifiedResourceException;
 import au.gov.ga.ozmin.util.GAUnit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.measure.Unit;
 import javax.persistence.*;
@@ -28,10 +29,12 @@ public class MineralUnit {
     }
 
     @Transient
+    @JsonIgnore
     private Unit units;
 
     @PostLoad
     private  void loadUnits() throws IdentifiedResourceException {
+        System.out.println(code);
         this.units = GAUnit.getUnitBySymbol(code);
     }
 

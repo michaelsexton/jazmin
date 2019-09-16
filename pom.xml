@@ -14,32 +14,38 @@
 	</parent>
 
 	<dependencies>
-		<!--<dependency>
+		<dependency>
 			<groupId>javax.measure</groupId>
 			<artifactId>unit-api</artifactId>
             <version>1.0</version>
-		</dependency> -->
-        <dependency>
-            <groupId>tec.uom</groupId>
-            <artifactId>uom-se</artifactId>
-            <version>1.0.8</version>
-        </dependency>
+		</dependency>
+
+		<dependency>
+			<groupId>tec.uom</groupId>
+			<artifactId>uom-se</artifactId>
+			<version>LATEST</version>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>tec.uom</groupId>-->
+<!--			<artifactId>uom-se</artifactId>-->
+<!--			<version>1.0.8</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>systems.uom</groupId>
 			<artifactId>systems-ucum-java8</artifactId>
-			<version>LATEST</version>
+			<version>RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>systems.uom</groupId>
 			<artifactId>systems-quantity</artifactId>
-			<version>LATEST</version>
+			<version>RELEASE</version>
 		</dependency>
 
-		<dependency>
-			<groupId>systems.uom</groupId>
-			<artifactId>systems-ucum-java8</artifactId>
-			<version>LATEST</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>systems.uom</groupId>-->
+<!--			<artifactId>systems-ucum-java8</artifactId>-->
+<!--			<version>RELEASE</version>-->
+<!--		</dependency>-->
 
        <!-- <dependency>
             <groupId>tec.uom.lib</groupId>
@@ -157,8 +163,15 @@
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<version>4.3.10.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>com.opower.unitsofmeasure</groupId>
+			<artifactId>jackson-module-unitsofmeasure</artifactId>
+			<version>1.3.5-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
 
-    </dependencies>
+
+	</dependencies>
 
 
 	<repositories>
@@ -170,13 +183,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	<distributionManagement>
-		<repository>
-			<id>internal.repo</id>
-			<name>Temporary Staging Repository</name>
-			<url>file://${project.build.directory}/mvn-repo</url>
-		</repository>
-	</distributionManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -203,7 +210,7 @@
 			<dependency>
 				<groupId>com.oracle</groupId>
 				<artifactId>ojdbc6</artifactId>
-				<version>11.2.0.3</version>
+				<version>11.2.0.4</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
